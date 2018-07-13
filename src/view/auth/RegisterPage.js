@@ -15,7 +15,7 @@ class Register extends Component {
 
     return (
       <AuthPage
-        actionTitle="Sign Up"
+        actionTitle="Sign up"
         onSubmit={ registerUser }
         renderSwitch={ () => <Link to="/login">Have an account?</Link> }
         showUsernameField

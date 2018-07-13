@@ -15,7 +15,7 @@ class LoginPage extends Component {
 
     return (
       <AuthPage
-        actionTitle="Sign In"
+        actionTitle="Sign in"
         onSubmit={ signInUser }
         renderSwitch={ () => <Link to="/register">Need an account?</Link> }
       />
