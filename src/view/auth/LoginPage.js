@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AuthPage from './AuthPage';
 import { signInUser } from '../../state/auth';
 
 class LoginPage extends Component {
   static propTypes = {
-    signInUser: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired
-  };
-
-  handleSuccess = () => {
-    this.props.history.push('/');
+    signInUser: PropTypes.func.isRequired
   };
 
   render() {
@@ -22,7 +17,6 @@ class LoginPage extends Component {
       <AuthPage
         actionTitle="Sign In"
         onSubmit={ signInUser }
-        onSuccess={ this.handleSuccess }
         renderSwitch={ () => <Link to="/register">Need an account?</Link> }
       />
     );
@@ -33,4 +27,4 @@ const mapDispatchToProps = {
   signInUser
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(LoginPage));
+export default connect(null, mapDispatchToProps)(LoginPage);

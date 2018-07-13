@@ -1,47 +1,36 @@
-import keyMirror from 'keymirror-nested';
-
-export const actionTypes = keyMirror({
-  SIGN_IN_REQUEST: null,
-  SIGN_IN_SUCCESS: null,
-  SIGN_IN_ERROR: null,
-  REGISTER_REQUEST: null,
-  REGISTER_SUCCESS: null,
-  REGISTER_ERROR: null,
-  UPDATE_AUTH_FIELD: null
-}, '/', 'AUTH');
+import { AUTH } from '../actionTypes';
 
 const initialState = {
-  user: {},
+  userAuthInfo: {},
   errors: null,
   isLoading: false
 };
 
 export const authReducer = (state = initialState, action) => {
   switch(action.type) {
-    case actionTypes.UPDATE_AUTH_FIELD:
+    case AUTH.UPDATE_AUTH_FIELD:
       return {
         ...state,
-        user: {
-          ...state.user,
-          ...action.user
+        userAuthInfo: {
+          ...state.userAuthInfo,
+          ...action.userAuthInfo
         }
       };
-    case actionTypes.SIGN_IN_REQUEST:
-    case actionTypes.REGISTER_REQUEST:
+    case AUTH.SIGN_IN_REQUEST:
+    case AUTH.REGISTER_REQUEST:
       return {
         ...state,
         isLoading: true,
         errors: null
       };
-    case actionTypes.SIGN_IN_SUCCESS:
-    case actionTypes.REGISTER_SUCCESS:
+    case AUTH.SIGN_IN_SUCCESS:
+    case AUTH.REGISTER_SUCCESS:
       return {
         ...state,
-        user: action.user,
         isLoading: false
       };
-    case actionTypes.SIGN_IN_ERROR:
-    case actionTypes.REGISTER_ERROR:
+    case AUTH.SIGN_IN_ERROR:
+    case AUTH.REGISTER_ERROR:
       return {
         ...state,
         errors: action.errors,
@@ -52,9 +41,9 @@ export const authReducer = (state = initialState, action) => {
   }
 };
 
-export const updateAuthField = (user) => ({
-  type: actionTypes.UPDATE_AUTH_FIELD,
-  user
+export const updateAuthField = (userAuthInfo) => ({
+  type: AUTH.UPDATE_AUTH_FIELD,
+  userAuthInfo
 });
 
 export const signInUser = (userInfo) => (dispatch, _, container) => {
@@ -67,42 +56,42 @@ export const signInUser = (userInfo) => (dispatch, _, container) => {
 }
 
 const signInUserRequest = {
-  type: actionTypes.SIGN_IN_REQUEST
+  type: AUTH.SIGN_IN_REQUEST
 };
 
 const signInUserSuccess = (user) => ({
-  type: actionTypes.SIGN_IN_SUCCESS,
+  type: AUTH.SIGN_IN_SUCCESS,
   success: true,
   user
 });
 
 const signInUserError = (errors) => ({
-  type: actionTypes.SIGN_IN_ERROR,
+  type: AUTH.SIGN_IN_ERROR,
   success: false,
   errors
 });
 
-export const registerUser = (userInfo) => (dispatch, _, container) => {
+export const registerUser = (userAuthInfo) => (dispatch, _, container) => {
   dispatch(registerUserRequest);
 
-  return container.registerUser(userInfo, {
+  return container.registerUser(userAuthInfo, {
     onSuccess: (user) => dispatch(registerUserSuccess(user)),
     onError: (error) => dispatch(registerUserError(error.errors))
   });
 }
 
 const registerUserRequest = {
-  type: actionTypes.REGISTER_REQUEST
+  type: AUTH.REGISTER_REQUEST
 };
 
 const registerUserSuccess = (user) => ({
-  type: actionTypes.REGISTER_SUCCESS,
+  type: AUTH.REGISTER_SUCCESS,
   success: true,
   user
 });
 
 const registerUserError = (errors) => ({
-  type: actionTypes.REGISTER_ERROR,
+  type: AUTH.REGISTER_ERROR,
   success: false,
   errors
 });

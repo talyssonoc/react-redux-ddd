@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "keymirror-nested": "^1.0.3",
+    "lodash.throttle": "^4.1.1",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

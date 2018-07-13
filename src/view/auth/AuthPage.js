@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ErrorMessages from '../error/ErrorMessages';
 import { updateAuthField } from '../../state/auth';
@@ -7,11 +8,11 @@ import { updateAuthField } from '../../state/auth';
 class AuthPage extends Component {
   static propTypes = {
     actionTitle: PropTypes.string,
-    user: PropTypes.object.isRequired,
+    user: PropTypes.object,
+    userAuthInfo: PropTypes.object.isRequired,
     errors: PropTypes.object,
     showUsernameField: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    onSuccess: PropTypes.func.isRequired,
     updateAuthField: PropTypes.func.isRequired,
     renderSwitch: PropTypes.func.isRequired
   };
@@ -26,30 +27,30 @@ class AuthPage extends Component {
     this.props.updateAuthField({ [name]: value });
   };
 
-  handleSubmit = async (event) => {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     const {
-      user,
-      onSubmit,
-      onSuccess
+      userAuthInfo,
+      onSubmit
     } = this.props
 
-    const result = await onSubmit(user);
-
-    if(result.success) {
-      onSuccess();
-    }
+    onSubmit(userAuthInfo);
   };
 
   render() {
     const {
       actionTitle,
       user,
+      userAuthInfo,
       errors,
       showUsernameField,
       renderSwitch
     } = this.props;
+
+    if(user) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <div className="auth-page">
@@ -73,7 +74,7 @@ class AuthPage extends Component {
                           className="form-control form-control-lg"
                           type="username"
                           placeholder="Username"
-                          value={ user.username || '' }
+                          value={ userAuthInfo.username || '' }
                           name="username"
                           onChange={ this.updateField }
                         />
@@ -86,7 +87,7 @@ class AuthPage extends Component {
                       className="form-control form-control-lg"
                       type="email"
                       placeholder="Email"
-                      value={ user.email || '' }
+                      value={ userAuthInfo.email || '' }
                       name="email"
                       onChange={ this.updateField }
                     />
@@ -97,7 +98,7 @@ class AuthPage extends Component {
                       className="form-control form-control-lg"
                       type="password"
                       placeholder="Password"
-                      value={ user.password || '' }
+                      value={ userAuthInfo.password || '' }
                       name="password"
                       onChange={ this.updateField }
                     />
@@ -120,8 +121,9 @@ class AuthPage extends Component {
   }
 }
 
-const mapStateToProps = ({ auth }) => ({
-  user: auth.user,
+const mapStateToProps = ({ auth, user }) => ({
+  user: user,
+  userAuthInfo: auth.userAuthInfo,
   isLoading: auth.isLoading,
   errors: auth.errors
 });
