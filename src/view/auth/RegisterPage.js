@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import AuthPage from './AuthPage';
 import { signInUser } from '../../state/auth';
 
-class LoginPage extends Component {
+class Register extends Component {
   static propTypes = {
     signInUser: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired
@@ -20,10 +20,11 @@ class LoginPage extends Component {
 
     return (
       <AuthPage
-        actionTitle="Sign In"
+        actionTitle="Sign Up"
         onSubmit={ signInUser }
         onSuccess={ this.handleSuccess }
-        renderSwitch={ () => <Link to="/register">Need an account?</Link> }
+        renderSwitch={ () => <Link to="/login">Have an account?</Link> }
+        showUsernameField
       />
     );
   }
@@ -33,4 +34,4 @@ const mapDispatchToProps = {
   signInUser
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(LoginPage));
+export default withRouter(connect(null, mapDispatchToProps)(Register));

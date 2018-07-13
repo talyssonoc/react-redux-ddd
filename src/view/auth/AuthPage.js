@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ErrorMessages from '../error/ErrorMessages';
+import { updateAuthField } from '../../state/auth';
 
 class AuthPage extends Component {
   static propTypes = {
     actionTitle: PropTypes.string,
     user: PropTypes.object.isRequired,
     errors: PropTypes.object,
+    showUsernameField: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onSuccess: PropTypes.func.isRequired,
     updateAuthField: PropTypes.func.isRequired,
     renderSwitch: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    showUsernameField: false
   };
 
   updateField = (event) => {
@@ -40,6 +47,7 @@ class AuthPage extends Component {
       actionTitle,
       user,
       errors,
+      showUsernameField,
       renderSwitch
     } = this.props;
 
@@ -58,6 +66,21 @@ class AuthPage extends Component {
 
               <form onSubmit={ this.handleSubmit }>
                 <fieldset>
+                  {
+                    showUsernameField && (
+                      <fieldset className="form-group">
+                        <input
+                          className="form-control form-control-lg"
+                          type="username"
+                          placeholder="Username"
+                          value={ user.username || '' }
+                          name="username"
+                          onChange={ this.updateField }
+                        />
+                      </fieldset>
+                    )
+                  }
+
                   <fieldset className="form-group">
                     <input
                       className="form-control form-control-lg"
@@ -97,4 +120,14 @@ class AuthPage extends Component {
   }
 }
 
-export default AuthPage;
+const mapStateToProps = ({ auth }) => ({
+  user: auth.user,
+  isLoading: auth.isLoading,
+  errors: auth.errors
+});
+
+const mapDispatchToProps = {
+  updateAuthField
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthPage);
