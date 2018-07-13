@@ -44,6 +44,7 @@ class AuthPage extends Component {
       user,
       userAuthInfo,
       errors,
+      isLoading,
       showUsernameField,
       renderSwitch
     } = this.props;
@@ -77,6 +78,7 @@ class AuthPage extends Component {
                           value={ userAuthInfo.username || '' }
                           name="username"
                           onChange={ this.updateField }
+                          disabled={ isLoading }
                         />
                       </fieldset>
                     )
@@ -90,6 +92,7 @@ class AuthPage extends Component {
                       value={ userAuthInfo.email || '' }
                       name="email"
                       onChange={ this.updateField }
+                      disabled={ isLoading }
                     />
                   </fieldset>
 
@@ -101,12 +104,14 @@ class AuthPage extends Component {
                       value={ userAuthInfo.password || '' }
                       name="password"
                       onChange={ this.updateField }
+                      disabled={ isLoading }
                     />
                   </fieldset>
 
                   <button
                     className="btn btn-lg btn-primary pull-xs-right"
                     type="submit"
+                    disabled={ isLoading }
                   >
                     { actionTitle }
                   </button>
