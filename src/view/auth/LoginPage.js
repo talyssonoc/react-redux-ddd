@@ -2,27 +2,32 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import linkState from 'linkstate';
-import { signInUser } from '../../../state/user';
+import { updateAuthField, signInUser } from '../../state/auth';
 
 class Login extends Component {
   static propTypes = {
+    user: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    errors: PropTypes.array,
     signInUser: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired
   };
 
-  state = {
-    email: '',
-    password: ''
+  updateField = (event) => {
+    const { name, value } = event.target;
+
+    this.props.updateAuthField({ [name]: value });
   };
 
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { email, password } = this.state;
-    const { signInUser, history } = this.props
+    const {
+      user,
+      signInUser, history
+    } = this.props
 
-    const result = await signInUser({ email, password });
+    const result = await signInUser(user);
 
     if(result.success) {
       history.push('/');
@@ -30,7 +35,7 @@ class Login extends Component {
   };
 
   render() {
-    const { email, password } = this.state;
+    const { user } = this.props;
 
     return (
       <div className="auth-page">
@@ -52,8 +57,9 @@ class Login extends Component {
                       className="form-control form-control-lg"
                       type="email"
                       placeholder="Email"
-                      value={ email }
-                      onChange={ linkState(this, 'email') }
+                      value={ user.email || '' }
+                      name="email"
+                      onChange={ this.updateField }
                     />
                   </fieldset>
 
@@ -62,8 +68,9 @@ class Login extends Component {
                       className="form-control form-control-lg"
                       type="password"
                       placeholder="Password"
-                      value={ password }
-                      onChange={ linkState(this, 'password') }
+                      value={ user.password || '' }
+                      name="password"
+                      onChange={ this.updateField }
                     />
                   </fieldset>
 
@@ -85,8 +92,15 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = ({ auth }) => ({
+  user: auth.user,
+  isLoading: auth.isLoading,
+  errors: auth.errors
+});
+
 const mapDispatchToProps = {
-  signInUser
+  signInUser,
+  updateAuthField
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(Login));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

@@ -1,11 +1,11 @@
 export default ({ conduitApiService }) => ({
   async fromAuthInfo(userAuthInfo) {
     try {
-      const response = await conduitApiService.post('users/login', {
+      const { data } = await conduitApiService.post('users/login', {
         user: userAuthInfo
       });
 
-      return response.user;
+      return data.user;
     } catch(ajaxError) {
       const error = new Error();
       error.errors = ajaxError.response.data.errors;

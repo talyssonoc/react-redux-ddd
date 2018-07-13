@@ -3,23 +3,31 @@ import keyMirror from 'keymirror-nested';
 export const actionTypes = keyMirror({
   SIGN_IN_REQUEST: null,
   SIGN_IN_SUCCESS: null,
-  SIGN_IN_ERROR: null
-}, '/', 'USER');
+  SIGN_IN_ERROR: null,
+  UPDATE_AUTH_FIELD: null
+}, '/', 'AUTH');
 
 const initialState = {
-  user: null,
+  user: {},
   errors: null,
   isLoading: false
 };
 
-export const userReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action) => {
   switch(action.type) {
+    case actionTypes.UPDATE_AUTH_FIELD:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...action.user
+        }
+      };
     case actionTypes.SIGN_IN_REQUEST:
       return {
         ...state,
         isLoading: true,
-        errors: null,
-        user: null
+        errors: null
       };
     case actionTypes.SIGN_IN_SUCCESS:
       return {
@@ -37,6 +45,11 @@ export const userReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export const updateAuthField = (user) => ({
+  type: actionTypes.UPDATE_AUTH_FIELD,
+  user
+});
 
 export const signInUser = (userInfo) => (dispatch, _, container) => {
   dispatch(signInUserRequest);
