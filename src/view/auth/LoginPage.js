@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import ErrorMessages from '../error/ErrorMessages';
 import { updateAuthField, signInUser } from '../../state/auth';
 
 class Login extends Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
-    errors: PropTypes.array,
+    errors: PropTypes.object,
     signInUser: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired
   };
@@ -35,7 +36,7 @@ class Login extends Component {
   };
 
   render() {
-    const { user } = this.props;
+    const { user, errors } = this.props;
 
     return (
       <div className="auth-page">
@@ -49,6 +50,8 @@ class Login extends Component {
                   Need an account?
                 </Link>
               </p>
+
+              <ErrorMessages errors={ errors } />
 
               <form onSubmit={ this.handleSubmit }>
                 <fieldset>
