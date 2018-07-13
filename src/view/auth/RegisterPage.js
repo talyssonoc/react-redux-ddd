@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import AuthPage from './AuthPage';
-import { signInUser } from '../../state/auth';
+import { registerUser } from '../../state/auth';
 
 class Register extends Component {
   static propTypes = {
-    signInUser: PropTypes.func.isRequired,
+    registerUser: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired
   };
 
@@ -16,12 +16,12 @@ class Register extends Component {
   };
 
   render() {
-    const { signInUser } = this.props;
+    const { registerUser } = this.props;
 
     return (
       <AuthPage
         actionTitle="Sign Up"
-        onSubmit={ signInUser }
+        onSubmit={ registerUser }
         onSuccess={ this.handleSuccess }
         renderSwitch={ () => <Link to="/login">Have an account?</Link> }
         showUsernameField
@@ -31,7 +31,7 @@ class Register extends Component {
 }
 
 const mapDispatchToProps = {
-  signInUser
+  registerUser
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(Register));

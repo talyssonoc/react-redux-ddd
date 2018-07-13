@@ -1,6 +1,7 @@
 import * as conduitApiService from './infra/conduit/conduitApiService';
 import makeUserRepository from './infra/user/userRepository';
 import makeSignInUser from './app/user/signInUser';
+import makeRegisterUser from './app/user/registerUser';
 
 // Infra
 const userRepository = makeUserRepository({
@@ -12,6 +13,11 @@ const signInUser = makeSignInUser({
   userRepository
 });
 
+const registerUser = makeRegisterUser({
+  userRepository
+});
+
 export {
-  signInUser
+  signInUser,
+  registerUser
 };
