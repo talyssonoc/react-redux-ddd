@@ -1,18 +1,20 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+/* @flow */
+import React, { Fragment, Node } from 'react';
 import Nav from './Nav';
 import Footer from './Footer';
 
-const Layout = ({ children }) => (
-  <Fragment>
-    <Nav />
-    { children }
-    <Footer />
-  </Fragment>
-);
+export type Props = { children: Node };
 
-Layout.propTypes = {
-  children: PropTypes.node.isRequired
+const Layout = (props: Props) => {
+  const { children } = props;
+
+  return (
+    <Fragment>
+      <Nav />
+      { children }
+      <Footer />
+    </Fragment>
+  );
 };
 
 export default Layout;

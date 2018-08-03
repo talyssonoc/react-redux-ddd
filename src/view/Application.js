@@ -1,16 +1,18 @@
+/* @flow */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import Router from './Router';
 
-const Application = ({ store }) => (
-  <Provider store={ store }>
-    <Router />
-  </Provider>
-);
+export type Props = { store: Object };
 
-Application.propTypes = {
-  store: PropTypes.object.isRequired
+const Application = (props: Props) => {
+  const { store } = props;
+
+  return (
+    <Provider store={ store }>
+      <Router />
+    </Provider>
+  );
 };
 
 export default Application;

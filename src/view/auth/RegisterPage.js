@@ -1,14 +1,14 @@
+/* @flow */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AuthPage from './AuthPage';
 import { registerUser } from '../../state/auth';
 
+type Props = { registerUser: Function };
+
 class Register extends Component {
-  static propTypes = {
-    registerUser: PropTypes.func.isRequired
-  };
+  props: Props;
 
   render() {
     const { registerUser } = this.props;
