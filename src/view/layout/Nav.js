@@ -13,7 +13,6 @@ const Nav = (props: Props) => (
       <a className="navbar-brand" href="index.html">conduit</a>
       <ul className="nav navbar-nav pull-xs-right">
         <li className="nav-item">
-          { /* Add "active" class when you're on that page" */ }
           <NavLink
             className="nav-link"
             to="/"
