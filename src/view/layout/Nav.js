@@ -1,7 +1,13 @@
-import React from 'react';
+/* @flow */
+import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const Nav = () => (
+type Props = {
+  user: Object
+};
+
+const Nav = (props: Props) => (
    <nav className="navbar navbar-light">
     <div className="container">
       <a className="navbar-brand" href="index.html">conduit</a>
@@ -17,28 +23,53 @@ const Nav = () => (
             Home
           </NavLink>
         </li>
-        <li className="nav-item">
-          <a className="nav-link" href="">
-            <i className="ion-compose"></i>&nbsp;New Post
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="">
-            <i className="ion-gear-a"></i>&nbsp;Settings
-          </a>
-        </li>
-        <li className="nav-item">
-          <NavLink
-            className="nav-link"
-            to="/register"
-            activeClassName="active"
-          >
-            Sign up
-          </NavLink>
-        </li>
+        {
+          props.user && (
+            <Fragment>
+              <li className="nav-item">
+                <a className="nav-link" href="">
+                  <i className="ion-compose"></i>&nbsp;New Post
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="">
+                  <i className="ion-gear-a"></i>&nbsp;Settings
+                </a>
+              </li>
+            </Fragment>
+          )
+        }
+        {
+          !props.user && (
+            <Fragment>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  to="/login"
+                  activeClassName="active"
+                >
+                  Sign In
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  to="/register"
+                  activeClassName="active"
+                >
+                  Sign up
+                </NavLink>
+              </li>
+            </Fragment>
+          )
+        }
       </ul>
     </div>
   </nav>
 );
 
-export default Nav;
+const mapStateToProps = ({ user }) => ({
+  user
+});
+
+export default connect(mapStateToProps)(Nav);
