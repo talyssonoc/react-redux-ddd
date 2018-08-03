@@ -27,12 +27,17 @@ export const authReducer = (state = initialState, action) => {
     case AUTH.REGISTER_SUCCESS:
       return {
         ...state,
+        userAuthInfo: {},
         isLoading: false
       };
     case AUTH.SIGN_IN_ERROR:
     case AUTH.REGISTER_ERROR:
       return {
         ...state,
+        userAuthInfo: {
+          ...state.userAuthInfo,
+          password: null
+        },
         errors: action.errors,
         isLoading: false
       };
