@@ -1,21 +1,23 @@
+/* @flow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import ErrorMessages from '../error/ErrorMessages';
 import { updateAuthField } from '../../state/auth';
 
+type Props = {
+  actionTitle?: string,
+  user?: Object,
+  userAuthInfo: Object,
+  errors?: Object,
+  showUsernameField: boolean,
+  onSubmit: Function,
+  updateAuthField: Function,
+  renderSwitch: Function,
+};
+
 class AuthPage extends Component {
-  static propTypes = {
-    actionTitle: PropTypes.string,
-    user: PropTypes.object,
-    userAuthInfo: PropTypes.object.isRequired,
-    errors: PropTypes.object,
-    showUsernameField: PropTypes.bool.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    updateAuthField: PropTypes.func.isRequired,
-    renderSwitch: PropTypes.func.isRequired
-  };
+  props: Props;
 
   static defaultProps = {
     showUsernameField: false

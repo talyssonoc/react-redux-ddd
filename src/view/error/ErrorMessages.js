@@ -1,8 +1,11 @@
+/* @flow */
 import React from 'react';
-import PropTypes from 'prop-types';
+export type Props = { errors?: Object };
 
-const ErrorMessages = ({ errors }) => (
-  errors ? (
+const ErrorMessages = (props: Props) => {
+  const { errors } = props;
+
+  return errors ? (
     <ul className="error-messages">
       {
         Object.keys(errors).map((errorName) => (
@@ -12,11 +15,7 @@ const ErrorMessages = ({ errors }) => (
         ))
       }
     </ul>
-  ) : null
-);
-
-ErrorMessages.propTypes = {
-  errors: PropTypes.object
+  ) : null;
 };
 
 export default ErrorMessages;
