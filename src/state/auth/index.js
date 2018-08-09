@@ -66,13 +66,11 @@ const signInUserRequest = {
 
 const signInUserSuccess = (user) => ({
   type: AUTH.SIGN_IN_SUCCESS,
-  success: true,
   user
 });
 
 const signInUserError = (errors) => ({
   type: AUTH.SIGN_IN_ERROR,
-  success: false,
   errors
 });
 
@@ -91,12 +89,10 @@ const registerUserRequest = {
 
 const registerUserSuccess = (user) => ({
   type: AUTH.REGISTER_SUCCESS,
-  success: true,
   user
 });
 
 const registerUserError = (errors) => ({
   type: AUTH.REGISTER_ERROR,
-  success: false,
   errors
 });

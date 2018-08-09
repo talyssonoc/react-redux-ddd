@@ -10,3 +10,5 @@ const axios = Axios.create({
 });
 
 export const post = (url, ...options) => axios.post(url, ...options);
+
+export const get = (url, ...options) => axios.get(url, ...options);

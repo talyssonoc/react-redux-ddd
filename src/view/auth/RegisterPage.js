@@ -7,9 +7,7 @@ import { registerUser } from '../../state/auth';
 
 type Props = { registerUser: Function };
 
-class Register extends Component {
-  props: Props;
-
+class Register extends Component<Props> {
   render() {
     const { registerUser } = this.props;
 

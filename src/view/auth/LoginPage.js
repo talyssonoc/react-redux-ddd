@@ -7,9 +7,7 @@ import { signInUser } from '../../state/auth';
 
 type Props = { signInUser: Function };
 
-class LoginPage extends Component {
-  props: Props;
-
+class LoginPage extends Component<Props> {
   render() {
     const { signInUser } = this.props;
 

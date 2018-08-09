@@ -1,5 +1,5 @@
 /* @flow */
-import React, { Fragment, Node } from 'react';
+import React, { Fragment, type Node } from 'react';
 import Nav from './Nav';
 import Footer from './Footer';
 
