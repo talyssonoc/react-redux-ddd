@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
     "keymirror-nested": "^1.0.3",
     "lodash.throttle": "^4.1.1",
     "react": "^16.4.1",

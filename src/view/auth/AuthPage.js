@@ -14,11 +14,10 @@ type Props = {
   onSubmit: Function,
   updateAuthField: Function,
   renderSwitch: Function,
+  isLoading: boolean
 };
 
-class AuthPage extends Component {
-  props: Props;
-
+class AuthPage extends Component<Props> {
   static defaultProps = {
     showUsernameField: false
   };
