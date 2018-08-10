@@ -3,7 +3,6 @@ import type { Dispatch, Reducer } from 'redux';
 import type { FeedState } from './';
 import typeof * as Container from '../../container';
 import type { User } from '../../domain/user';
-import type { Article, Feed } from '../../domain/article';
 import type { GetState } from '../store';
 import { ARTICLE } from '../actionTypes';
 
