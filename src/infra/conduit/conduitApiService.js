@@ -1,5 +1,6 @@
 /* @flow */
 import Axios, { type AxiosXHRConfigBase } from 'axios';
+import type { User } from '../../domain/user';
 
 const API_URL: string = process.env.REACT_APP_API_URL || '';
 
@@ -10,11 +11,16 @@ const axios = Axios.create({
   }
 });
 
-export const post = (url: string, options: ?AxiosXHRConfigBase<any, any>) => axios.post(url, options);
+type Options = $Shape<AxiosXHRConfigBase<any, any>>;
 
-export const get = (url: string, options: ?AxiosXHRConfigBase<any, any>) => axios.get(url, options);
+export const post = (url: string, options?: Options | mixed) => axios.post(url, options);
 
-export const authGet = (url, user, options = {}) => get(url, {
+export const get = (url: string, options?: Options) => axios.get(url, options);
+
+export const authGet = (url: string, user: User, options: Options = {}) =>
+  get(url, withUserToken(options, user));
+
+const withUserToken = (options: Options, user: User): Options => ({
   ...options,
   headers: {
     ...options.headers,
