@@ -1,12 +1,24 @@
+/* @flow */
+import type { Dispatch, Reducer } from 'redux';
+import typeof * as Container from '../../container';
+import type { User } from '../../domain/user';
+import type { Article, Feed } from '../../domain/article';
+import type { GetState } from '../store';
 import { ARTICLE } from '../actionTypes';
 
-const initialState = {
+export type UserFeedState = {|
+  articles: Array<Article>,
+  isLoading: bool,
+  error: ?Object
+|};
+
+const initialState: UserFeedState = {
   articles: [],
   isLoading: false,
   error: null
 };
 
-export const userFeedReducer = (state = initialState, action) => {
+export const userFeedReducer: Reducer<UserFeedState, any> = (state = initialState, action) => {
   switch(action.type) {
     case ARTICLE.LOAD_USER_FEED_REQUEST:
       return {
@@ -34,12 +46,12 @@ export const userFeedReducer = (state = initialState, action) => {
   }
 };
 
-export const loadUserFeed = () => (dispatch, getState, container) => {
+export const loadUserFeed = () => (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
   dispatch(loadUserFeedRequest);
 
   const { user } = getState();
 
-  container.getUserFeed(user, {
+  container.getUserFeed(((user: any): User), {
     onSuccess: (feed) => dispatch(loadUserFeedSuccess(feed)),
     onError: (error) => dispatch(loadUserFeedError(error))
   });

@@ -1,3 +1,4 @@
+/* @flow */
 import keyMirror from 'keymirror-nested';
 
 const glue = '/';
