@@ -2,7 +2,6 @@
 import type { Dispatch, Reducer } from 'redux';
 import type { FeedState } from './';
 import typeof * as Container from '../../container';
-import type { Feed } from '../../domain/article';
 import { ARTICLE } from '../actionTypes';
 
 const initialState: FeedState = {
