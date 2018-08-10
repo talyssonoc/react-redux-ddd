@@ -1,12 +1,22 @@
+/* @flow */
+import type { Dispatch, Reducer } from 'redux';
+import typeof * as Container from '../../container';
+import type { Article, Feed } from '../../domain/article';
 import { ARTICLE } from '../actionTypes';
 
-const initialState = {
+export type GlobalFeedState = {|
+  articles: Array<Article>,
+  isLoading: bool,
+  error: ?Error
+|};
+
+const initialState: GlobalFeedState = {
   articles: [],
   isLoading: false,
   error: null
 };
 
-export const globalFeedReducer = (state = initialState, action) => {
+export const globalFeedReducer: Reducer<GlobalFeedState, any> = (state = initialState, action) => {
   switch(action.type) {
     case ARTICLE.LOAD_GLOBAL_FEED_REQUEST:
       return {
@@ -34,7 +44,7 @@ export const globalFeedReducer = (state = initialState, action) => {
   }
 };
 
-export const loadGlobalFeed = () => (dispatch, _, container) => {
+export const loadGlobalFeed = () => (dispatch: Dispatch<any>, _: any, container: Container) => {
   dispatch(loadGlobalFeedRequest);
 
   container.getGlobalFeed({

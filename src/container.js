@@ -1,3 +1,4 @@
+/* @flow */
 import * as conduitApiService from './infra/conduit/conduitApiService';
 import makeUserRepository from './infra/user/userRepository';
 import makeArticleRepository from './infra/article/articleRepository';
@@ -38,3 +39,4 @@ export {
   getGlobalFeed,
   getUserFeed
 };
+

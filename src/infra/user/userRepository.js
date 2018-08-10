@@ -1,4 +1,16 @@
-export default ({ conduitApiService }) => ({
+/* @flow */
+import type { UserRepository } from '../../domain/user';
+import typeof * as ConduitApiService from '../conduit/conduitApiService';
+
+type Dependencies = {
+  conduitApiService: ConduitApiService
+};
+
+class AuthError extends Error {
+  errors: Object
+}
+
+export default ({ conduitApiService }: Dependencies): UserRepository => ({
   fromAuthInfo(userAuthInfo) {
     return this._authUser(userAuthInfo, 'users/login');
   },
@@ -19,7 +31,7 @@ export default ({ conduitApiService }) => ({
   },
 
   _extractErrors(ajaxError) {
-    const error = new Error();
+    const error = new AuthError();
     error.errors = ajaxError.response.data.errors;
 
     return error;

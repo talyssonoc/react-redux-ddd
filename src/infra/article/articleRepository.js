@@ -1,4 +1,13 @@
-export default ({ conduitApiService }) => ({
+/* @flow */
+import type { User } from '../../domain/user';
+import type { Feed, Article, ArticleRepository } from '../../domain/article';
+import typeof * as ConduitApiService from '../conduit/conduitApiService';
+
+type Dependencies = {
+  conduitApiService: ConduitApiService
+};
+
+export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
   async fromGlobalFeed() {
     const { data } = await conduitApiService.get('articles');
 
@@ -21,7 +30,7 @@ export default ({ conduitApiService }) => ({
     };
   },
 
-  _coerceArticle(rawArticle) {
+  _coerceArticle(rawArticle: any) {
     return {
       ...rawArticle,
       createdAt: new Date(rawArticle.createdAt)
