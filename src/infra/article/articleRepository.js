@@ -1,6 +1,5 @@
 /* @flow */
-import type { User } from '../../domain/user';
-import type { Feed, Article, ArticleRepository } from '../../domain/article';
+import type { ArticleRepository } from '../../domain/article';
 import typeof * as ConduitApiService from '../conduit/conduitApiService';
 
 type Dependencies = {
@@ -18,11 +17,7 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
   },
 
  async fromUserFeed(user) {
-    const { data } = await conduitApiService.get('articles/feed', {
-      headers: {
-        Authorization: `Token ${user.token}`
-      }
-    });
+    const { data } = await conduitApiService.authGet('articles/feed', user);
 
     return {
       ...data,
