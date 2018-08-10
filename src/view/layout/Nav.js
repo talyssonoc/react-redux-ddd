@@ -2,9 +2,10 @@
 import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import type { User } from '../../domain/user';
 
 type Props = {
-  user: Object
+  user: User
 };
 
 const Nav = (props: Props) => (

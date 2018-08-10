@@ -1,22 +1,17 @@
 /* @flow */
 import type { Dispatch, Reducer } from 'redux';
+import type { FeedState } from './';
 import typeof * as Container from '../../container';
-import type { Article, Feed } from '../../domain/article';
+import type { Feed } from '../../domain/article';
 import { ARTICLE } from '../actionTypes';
 
-export type GlobalFeedState = {|
-  articles: Array<Article>,
-  isLoading: bool,
-  error: ?Error
-|};
-
-const initialState: GlobalFeedState = {
+const initialState: FeedState = {
   articles: [],
   isLoading: false,
   error: null
 };
 
-export const globalFeedReducer: Reducer<GlobalFeedState, any> = (state = initialState, action) => {
+export const globalFeedReducer: Reducer<FeedState, any> = (state = initialState, action) => {
   switch(action.type) {
     case ARTICLE.LOAD_GLOBAL_FEED_REQUEST:
       return {

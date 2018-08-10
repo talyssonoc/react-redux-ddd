@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import type { User } from '../../domain/user';
 import Feed from '../article/Feed';
 import {
   globalFeed,
-  userFeed
+  userFeed,
+  type FeedState
 } from '../../state/article'
 
 const Tabs = {
@@ -17,9 +19,9 @@ const Tabs = {
 type Tab = $Keys<typeof Tabs>;
 
 type Props = {
-  user: Object,
-  globalFeed: Object,
-  userFeed: Object,
+  user: User,
+  globalFeed: FeedState,
+  userFeed: FeedState,
   loadGlobalFeed: Function,
   loadUserFeed: Function
 };

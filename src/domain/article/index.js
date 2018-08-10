@@ -10,6 +10,7 @@ export type Article = {
 };
 
 export type Author = {
+  username: string,
   image: ?string
 };
 

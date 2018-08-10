@@ -1,10 +1,11 @@
 /* @flow */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import type { Article } from '../../domain/article';
 import FormattedDate from '../date/FormattedDate';
 
 type Props = {
-  article: Object
+  article: Article
 };
 
 const ArticlePreview = ({ article }: Props) => (

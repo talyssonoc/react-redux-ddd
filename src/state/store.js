@@ -7,15 +7,16 @@ import { authReducer as auth, type AuthState } from './auth';
 import { userReducer as user, type UserState } from './user';
 
 import {
-  globalFeed, type GlobalFeedState,
-  userFeed, type UserFeedState
+  globalFeed,
+  userFeed,
+  type FeedState
 } from './article';
 
 type State = {|
   auth: AuthState,
   user: UserState,
-  globalFeed: GlobalFeedState,
-  userFeed: UserFeedState
+  globalFeed: FeedState,
+  userFeed: FeedState
 |};
 
 type Dependencies = {

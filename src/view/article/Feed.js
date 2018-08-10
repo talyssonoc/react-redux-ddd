@@ -1,9 +1,10 @@
 /* @flow */
 import React from 'react';
+import type { FeedState } from '../../state/article';
 import ArticlePreview from './ArticlePreview';
 
 type Props = {
-  feed: Object
+  feed: FeedState
 };
 
 const Feed = ({ feed }: Props) => {
