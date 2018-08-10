@@ -1,6 +1,5 @@
 /* @flow */
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import type { User } from '../../domain/user';
@@ -83,32 +82,32 @@ class HomePage extends Component<Props, State> {
                   {
                     user && (
                       <li className="nav-item">
-                        <Link
+                        <span
+                          role='button'
                           className={
                             classNames('nav-link', {
                               active: isUserFeed
                             })
                           }
-                          to={ `/?feed=${Tabs.USER}` }
                           onClick={ () => this.handleChangeTab(Tabs.USER) }
                         >
                           Your Feed
-                        </Link>
+                        </span>
                       </li>
                     )
                   }
                   <li className="nav-item">
-                    <Link
+                    <span
+                      role='button'
                       className={
                         classNames('nav-link', {
                           active: !isUserFeed
                         })
                       }
-                      to={ `/?feed=${Tabs.GLOBAL}` }
                       onClick={ () => this.handleChangeTab(Tabs.GLOBAL) }
                     >
                       Global Feed
-                    </Link>
+                    </span>
                   </li>
                 </ul>
               </div>
