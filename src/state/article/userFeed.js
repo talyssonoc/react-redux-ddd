@@ -1,24 +1,19 @@
 /* @flow */
 import type { Dispatch, Reducer } from 'redux';
+import type { FeedState } from './';
 import typeof * as Container from '../../container';
 import type { User } from '../../domain/user';
 import type { Article, Feed } from '../../domain/article';
 import type { GetState } from '../store';
 import { ARTICLE } from '../actionTypes';
 
-export type UserFeedState = {|
-  articles: Array<Article>,
-  isLoading: bool,
-  error: ?Object
-|};
-
-const initialState: UserFeedState = {
+const initialState: FeedState = {
   articles: [],
   isLoading: false,
   error: null
 };
 
-export const userFeedReducer: Reducer<UserFeedState, any> = (state = initialState, action) => {
+export const userFeedReducer: Reducer<FeedState, any> = (state = initialState, action) => {
   switch(action.type) {
     case ARTICLE.LOAD_USER_FEED_REQUEST:
       return {

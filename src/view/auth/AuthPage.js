@@ -2,13 +2,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import type { User, UserAuthInfo } from '../../domain/user';
 import ErrorMessages from '../error/ErrorMessages';
 import { updateAuthField } from '../../state/auth';
 
 type Props = {
   actionTitle?: string,
-  user?: Object,
-  userAuthInfo: Object,
+  user: ?User,
+  userAuthInfo: UserAuthInfo,
   errors?: Object,
   showUsernameField: boolean,
   onSubmit: Function,
