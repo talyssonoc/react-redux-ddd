@@ -2,3 +2,4 @@ language: node_js
 script:
   - yarn test
   - yarn e2e:ci
+  - yarn flow
