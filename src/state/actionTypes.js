@@ -25,7 +25,10 @@ export const ARTICLE = keyMirror({
   LOAD_TAG_FEED_ERROR: null,
   LOAD_ARTICLE_REQUEST: null,
   LOAD_ARTICLE_SUCCESS: null,
-  LOAD_ARTICLE_ERROR: null
+  LOAD_ARTICLE_ERROR: null,
+  LOAD_COMMENTS_REQUEST: null,
+  LOAD_COMMENTS_SUCCESS: null,
+  LOAD_COMMENTS_ERROR: null
 }, glue, 'ARTICLE');
 
 export const TAG = keyMirror({

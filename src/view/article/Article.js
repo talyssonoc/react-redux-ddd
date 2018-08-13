@@ -3,26 +3,41 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Markdown from 'react-markdown';
 import { type User } from '../../domain/user';
-import { type Article as ArticleType, type ArticleSlug } from '../../domain/article';
+import type {
+  Article as ArticleType,
+  ArticleSlug,
+  Comment as CommentType
+} from '../../domain/article';
 import { article } from '../../state/article';
 import TagList from '../tag/TagList';
 import ArticleMeta from './ArticleMeta';
+import CommentForm from './CommentForm';
+import Comment from './Comment';
 
 type Props = {
   user: ?User,
   articleSlug: ArticleSlug,
   article: ?ArticleType,
+  comments: Array<CommentType>,
   isLoading: bool,
-  loadArticle: (ArticleSlug) => void
+  loadArticle: (ArticleSlug) => void,
+  loadComments: (ArticleSlug) => void
 };
 
 class Article extends Component<Props> {
   componentDidMount() {
-    this.props.loadArticle(this.props.articleSlug);
+    const {
+      loadArticle,
+      loadComments,
+      articleSlug
+    } = this.props;
+
+    loadArticle(articleSlug);
+    loadComments(articleSlug);
   }
 
   render() {
-    const { user, article, isLoading } = this.props;
+    const { user, article, comments, isLoading } = this.props;
 
     if(isLoading || !article) {
       return null;
@@ -56,59 +71,27 @@ class Article extends Component<Props> {
             <ArticleMeta article={ article } currentUser={ user } />
           </div>
 
-          { /*
-            <div className="row">
+          <div className="row">
 
-              <div className="col-xs-12 col-md-8 offset-md-2">
+            <div className="col-xs-12 col-md-8 offset-md-2">
 
-                <form className="card comment-form">
-                  <div className="card-block">
-                    <textarea className="form-control" placeholder="Write a comment..." rows="3"></textarea>
-                  </div>
-                  <div className="card-footer">
-                    <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img" />
-                    <button className="btn btn-sm btn-primary">
-                     Post Comment
-                    </button>
-                  </div>
-                </form>
+              {
+                user && (
+                  <CommentForm currentUser={ user } />
+                )
+              }
 
-                <div className="card">
-                  <div className="card-block">
-                    <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  </div>
-                  <div className="card-footer">
-                    <a href="" className="comment-author">
-                      <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img" />
-                    </a>
-                    &nbsp;
-                    <a href="" className="comment-author">Jacob Schmidt</a>
-                    <span className="date-posted">Dec 29th</span>
-                  </div>
-                </div>
-
-                <div className="card">
-                  <div className="card-block">
-                    <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  </div>
-                  <div className="card-footer">
-                    <a href="" className="comment-author">
-                      <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img" />
-                    </a>
-                    &nbsp;
-                    <a href="" className="comment-author">Jacob Schmidt</a>
-                    <span className="date-posted">Dec 29th</span>
-                    <span className="mod-options">
-                      <i className="ion-edit"></i>
-                      <i className="ion-trash-a"></i>
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-
+              {
+                comments.map((comment) =>
+                  <Comment
+                    key={ comment.id }
+                    comment={ comment }
+                  />
+                )
+              }
             </div>
-          */ }
+
+          </div>
         </div>
       </div>
     );
@@ -118,12 +101,14 @@ class Article extends Component<Props> {
 const mapStateToProps = ({ article, user }, props) => ({
   user,
   article: article.article,
+  comments: article.comments,
   isLoading: article.isLoading,
   articleSlug: props.match.params.slug
 });
 
 const mapDispatchToProps = {
-  loadArticle: article.loadArticle
+  loadArticle: article.loadArticle,
+  loadComments: article.loadComments,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Article);

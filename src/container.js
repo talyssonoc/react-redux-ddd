@@ -2,6 +2,7 @@
 import * as conduitApiService from './infra/conduit/conduitApiService';
 import makeUserRepository from './infra/user/userRepository';
 import makeArticleRepository from './infra/article/articleRepository';
+import makeCommentRepository from './infra/article/commentRepository';
 import makeTagRepository from './infra/tag/tagRepository';
 import makeSignInUser from './app/user/signInUser';
 import makeRegisterUser from './app/user/registerUser';
@@ -9,6 +10,7 @@ import makeGetGlobalFeed from './app/article/getGlobalFeed';
 import makeGetUserFeed from './app/article/getUserFeed';
 import makeGetTagFeed from './app/article/getTagFeed';
 import makeGetArticle from './app/article/getArticle';
+import makeGetComments from './app/article/getComments';
 import makeGetPopularTags from './app/tag/getPopularTags';
 
 // Infra
@@ -21,6 +23,10 @@ const articleRepository = makeArticleRepository({
 });
 
 const tagRepository = makeTagRepository({
+  conduitApiService
+});
+
+const commentRepository = makeCommentRepository({
   conduitApiService
 });
 
@@ -49,6 +55,10 @@ const getArticle = makeGetArticle({
   articleRepository
 });
 
+const getComments = makeGetComments({
+  commentRepository
+});
+
 const getPopularTags = makeGetPopularTags({
   tagRepository
 });
@@ -60,6 +70,7 @@ export {
   getUserFeed,
   getTagFeed,
   getPopularTags,
-  getArticle
+  getArticle,
+  getComments
 };
 

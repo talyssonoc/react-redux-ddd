@@ -11,11 +11,13 @@ type Props = {
 const ArticlePreview = ({ article }: Props) => (
   <div className="article-preview">
     <div className="article-meta">
-      <a href="profile.html">
+      <Link to={ `/@${article.author.username}` }>
         <img src={ article.author.image } alt={ article.author.username } />
-      </a>
+      </Link>
       <div className="info">
-        <a href="" className="author">{ article.author.username }</a>
+        <Link to={ `/@${article.author.username}` } className="author">
+          { article.author.username }
+        </Link>
         <span className="date">
           <FormattedDate date={ article.createdAt } />
         </span>

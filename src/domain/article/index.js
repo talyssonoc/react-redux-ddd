@@ -32,6 +32,17 @@ export type ArticleRepository = {
   getArticle: (ArticleSlug) => Promise<Article>
 };
 
+export type Comment = {
+  id: number,
+  body: string,
+  author: Author,
+  createdAt: Date
+};
+
+export type CommentRepository = {
+  fromArticle: (ArticleSlug) => Promise<Array<Comment>>
+};
+
 export const isAuthoredBy = (article: Article, user: ?User) => (
   user && (article.author.username === user.username)
 );
