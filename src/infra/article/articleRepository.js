@@ -25,6 +25,17 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
     };
   },
 
+  async fromTagFeed(tag) {
+    const { data } = await conduitApiService.get('articles', {
+      params: { tag }
+    });
+
+    return {
+      ...data,
+      articles: data.articles.map(this._coerceArticle)
+    };
+  },
+
   _coerceArticle(rawArticle: any) {
     return {
       ...rawArticle,

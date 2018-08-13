@@ -20,4 +20,13 @@ export const ARTICLE = keyMirror({
   LOAD_USER_FEED_REQUEST: null,
   LOAD_USER_FEED_SUCCESS: null,
   LOAD_USER_FEED_ERROR: null,
+  LOAD_TAG_FEED_REQUEST: null,
+  LOAD_TAG_FEED_SUCCESS: null,
+  LOAD_TAG_FEED_ERROR: null
 }, glue, 'ARTICLE');
+
+export const TAG = keyMirror({
+  LOAD_POPULAR_TAGS_REQUEST: null,
+  LOAD_POPULAR_TAGS_SUCCESS: null,
+  LOAD_POPULAR_TAGS_ERROR: null
+}, glue, 'TAG');

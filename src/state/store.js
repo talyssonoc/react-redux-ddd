@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import typeof * as Container from '../container';
 import { authReducer as auth, type AuthState } from './auth';
 import { userReducer as user, type UserState } from './user';
+import { popularTagsReducer as popularTags, type PopularTagsState } from './tag';
 
 import {
   globalFeed,
@@ -15,6 +16,7 @@ import {
 type State = {|
   auth: AuthState,
   user: UserState,
+  popularTags: PopularTagsState,
   globalFeed: FeedState,
   userFeed: FeedState
 |};
@@ -29,6 +31,7 @@ export type GetState = () => State;
 const reducer: CombinedReducer<State, any> = combineReducers({
   auth,
   user,
+  popularTags,
   globalFeed: globalFeed.globalFeedReducer,
   userFeed: userFeed.userFeedReducer
 });

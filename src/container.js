@@ -2,10 +2,13 @@
 import * as conduitApiService from './infra/conduit/conduitApiService';
 import makeUserRepository from './infra/user/userRepository';
 import makeArticleRepository from './infra/article/articleRepository';
+import makeTagRepository from './infra/tag/tagRepository';
 import makeSignInUser from './app/user/signInUser';
 import makeRegisterUser from './app/user/registerUser';
 import makeGetGlobalFeed from './app/article/getGlobalFeed';
 import makeGetUserFeed from './app/article/getUserFeed';
+import makeGetTagFeed from './app/article/getTagFeed';
+import makeGetPopularTags from './app/tag/getPopularTags';
 
 // Infra
 const userRepository = makeUserRepository({
@@ -13,6 +16,10 @@ const userRepository = makeUserRepository({
 });
 
 const articleRepository = makeArticleRepository({
+  conduitApiService
+});
+
+const tagRepository = makeTagRepository({
   conduitApiService
 });
 
@@ -33,10 +40,20 @@ const getUserFeed = makeGetUserFeed({
   articleRepository
 });
 
+const getTagFeed = makeGetTagFeed({
+  articleRepository
+});
+
+const getPopularTags = makeGetPopularTags({
+  tagRepository
+});
+
 export {
   signInUser,
   registerUser,
   getGlobalFeed,
-  getUserFeed
+  getUserFeed,
+  getTagFeed,
+  getPopularTags
 };
 

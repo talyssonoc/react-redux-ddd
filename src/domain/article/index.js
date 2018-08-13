@@ -1,5 +1,6 @@
 /* @flow */
 import type { User } from '../user';
+import type { Tag } from '../tag';
 export type Article = {
   title: string,
   description: string,
@@ -21,5 +22,6 @@ export type Feed = {
 
 export type ArticleRepository = {
   fromGlobalFeed: () => Promise<Feed>,
-  fromUserFeed: (User) => Promise<Feed>
+  fromUserFeed: (User) => Promise<Feed>,
+  fromTagFeed: (Tag) => Promise<Feed>
 };
