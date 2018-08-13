@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import type { User } from '../../domain/user';
 
@@ -11,7 +11,7 @@ type Props = {
 const Nav = (props: Props) => (
    <nav className="navbar navbar-light">
     <div className="container">
-      <a className="navbar-brand" href="index.html">conduit</a>
+      <Link className="navbar-brand" to="/">conduit</Link>
       <ul className="nav navbar-nav pull-xs-right">
         <li className="nav-item">
           <NavLink

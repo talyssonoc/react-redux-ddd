@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import type { User } from '../../domain/user';
 import type { Tag } from '../../domain/tag';
 import Feed from '../article/Feed';
-import PopularTagList from '../article/PopularTagList';
+import PopularTagList from '../tag/PopularTagList';
 import {
   globalFeed,
   userFeed,
