@@ -1,18 +1,23 @@
 /* @flow */
 import type { User } from '../user';
 import type { Tag } from '../tag';
-export type Article = {
-  title: string,
-  description: string,
-  slug: string,
-  createdAt: Date,
-  favoritesCount: number,
-  author: Author
-};
 
 export type Author = {
   username: string,
   image: ?string
+};
+
+export type ArticleSlug = string;
+
+export type Article = {
+  title: string,
+  description: string,
+  slug: ArticleSlug,
+  createdAt: Date,
+  favoritesCount: number,
+  author: Author,
+  body: string,
+  tagList: Array<Tag>
 };
 
 export type Feed = {
@@ -23,5 +28,10 @@ export type Feed = {
 export type ArticleRepository = {
   fromGlobalFeed: () => Promise<Feed>,
   fromUserFeed: (User) => Promise<Feed>,
-  fromTagFeed: (Tag) => Promise<Feed>
+  fromTagFeed: (Tag) => Promise<Feed>,
+  getArticle: (ArticleSlug) => Promise<Article>
 };
+
+export const isAuthoredBy = (article: Article, user: ?User) => (
+  user && (article.author.username === user.username)
+);

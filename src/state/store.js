@@ -10,13 +10,16 @@ import { popularTagsReducer as popularTags, type PopularTagsState } from './tag'
 import {
   globalFeed,
   userFeed,
-  type FeedState
+  article,
+  type FeedState,
+  type ArticleState
 } from './article';
 
 type State = {|
   auth: AuthState,
   user: UserState,
   popularTags: PopularTagsState,
+  article: ArticleState,
   globalFeed: FeedState,
   userFeed: FeedState
 |};
@@ -32,6 +35,7 @@ const reducer: CombinedReducer<State, any> = combineReducers({
   auth,
   user,
   popularTags,
+  article: article.articleReducer,
   globalFeed: globalFeed.globalFeedReducer,
   userFeed: userFeed.userFeedReducer
 });

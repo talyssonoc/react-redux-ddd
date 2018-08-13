@@ -8,6 +8,7 @@ import makeRegisterUser from './app/user/registerUser';
 import makeGetGlobalFeed from './app/article/getGlobalFeed';
 import makeGetUserFeed from './app/article/getUserFeed';
 import makeGetTagFeed from './app/article/getTagFeed';
+import makeGetArticle from './app/article/getArticle';
 import makeGetPopularTags from './app/tag/getPopularTags';
 
 // Infra
@@ -44,6 +45,10 @@ const getTagFeed = makeGetTagFeed({
   articleRepository
 });
 
+const getArticle = makeGetArticle({
+  articleRepository
+});
+
 const getPopularTags = makeGetPopularTags({
   tagRepository
 });
@@ -54,6 +59,7 @@ export {
   getGlobalFeed,
   getUserFeed,
   getTagFeed,
-  getPopularTags
+  getPopularTags,
+  getArticle
 };
 

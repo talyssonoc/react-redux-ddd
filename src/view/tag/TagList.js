@@ -5,7 +5,8 @@ import type { Tag } from '../../domain/tag';
 
 export type Props = {
   tags: Array<Tag>,
-  onClickTag: Function
+  onClickTag: Function,
+  tagClassName?: string
 };
 
 const TagList = (props: Props) => (
@@ -15,7 +16,7 @@ const TagList = (props: Props) => (
         <span
           role="button"
           key={ tag }
-          className="tag-pill tag-default"
+          className={ `tag-pill tag-default ${props.tagClassName || ''}` }
           onClick={ () => props.onClickTag(tag) }
         >
           { tag }
@@ -24,5 +25,9 @@ const TagList = (props: Props) => (
     }
   </div>
 );
+
+TagList.defaultProps = {
+  onClickTag: () => {}
+};
 
 export default TagList;
