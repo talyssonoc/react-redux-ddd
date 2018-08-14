@@ -11,8 +11,10 @@ import {
   globalFeed,
   userFeed,
   article,
+  editor,
   type FeedState,
-  type ArticleState
+  type ArticleState,
+  type EditorState
 } from './article';
 
 type State = {|
@@ -21,7 +23,8 @@ type State = {|
   popularTags: PopularTagsState,
   article: ArticleState,
   globalFeed: FeedState,
-  userFeed: FeedState
+  userFeed: FeedState,
+  editor: EditorState
 |};
 
 type Dependencies = {
@@ -37,7 +40,8 @@ const reducer: CombinedReducer<State, any> = combineReducers({
   popularTags,
   article: article.articleReducer,
   globalFeed: globalFeed.globalFeedReducer,
-  userFeed: userFeed.userFeedReducer
+  userFeed: userFeed.userFeedReducer,
+  editor: editor.editorReducer
 });
 
 export default ({ container, initialState }: Dependencies) => (

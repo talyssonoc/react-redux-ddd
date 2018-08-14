@@ -23,6 +23,13 @@ export type Article = Authorable & {
   tagList: Array<Tag>
 };
 
+export type EditingArticle = {
+  title: string,
+  description: string,
+  body: string,
+  tagList: Array<Tag>
+};
+
 export type Feed = {
   articles: Array<Article>,
   articlesCount: number

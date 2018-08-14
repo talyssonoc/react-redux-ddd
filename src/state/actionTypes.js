@@ -14,15 +14,6 @@ export const AUTH = keyMirror({
 }, glue, 'AUTH');
 
 export const ARTICLE = keyMirror({
-  LOAD_GLOBAL_FEED_REQUEST: null,
-  LOAD_GLOBAL_FEED_SUCCESS: null,
-  LOAD_GLOBAL_FEED_ERROR: null,
-  LOAD_USER_FEED_REQUEST: null,
-  LOAD_USER_FEED_SUCCESS: null,
-  LOAD_USER_FEED_ERROR: null,
-  LOAD_TAG_FEED_REQUEST: null,
-  LOAD_TAG_FEED_SUCCESS: null,
-  LOAD_TAG_FEED_ERROR: null,
   LOAD_ARTICLE_REQUEST: null,
   LOAD_ARTICLE_SUCCESS: null,
   LOAD_ARTICLE_ERROR: null,
@@ -33,6 +24,25 @@ export const ARTICLE = keyMirror({
   REMOVE_COMMENT_SUCCESS: null,
   REMOVE_COMMENT_ERROR: null
 }, glue, 'ARTICLE');
+
+export const FEED = keyMirror({
+  LOAD_GLOBAL_FEED_REQUEST: null,
+  LOAD_GLOBAL_FEED_SUCCESS: null,
+  LOAD_GLOBAL_FEED_ERROR: null,
+  LOAD_USER_FEED_REQUEST: null,
+  LOAD_USER_FEED_SUCCESS: null,
+  LOAD_USER_FEED_ERROR: null,
+  LOAD_TAG_FEED_REQUEST: null,
+  LOAD_TAG_FEED_SUCCESS: null,
+  LOAD_TAG_FEED_ERROR: null
+}, glue, 'FEED');
+
+export const EDITOR = keyMirror({
+  UPDATE_FIELD: null,
+  ADD_TAG: null,
+  REMOVE_TAG: null,
+  RESET: null
+}, glue, 'EDITOR');
 
 export const TAG = keyMirror({
   LOAD_POPULAR_TAGS_REQUEST: null,

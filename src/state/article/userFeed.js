@@ -4,7 +4,7 @@ import type { FeedState } from './';
 import typeof * as Container from '../../container';
 import type { User } from '../../domain/user';
 import type { GetState } from '../store';
-import { ARTICLE } from '../actionTypes';
+import { FEED } from '../actionTypes';
 
 const initialState: FeedState = {
   articles: [],
@@ -14,21 +14,21 @@ const initialState: FeedState = {
 
 export const userFeedReducer: Reducer<FeedState, any> = (state = initialState, action) => {
   switch(action.type) {
-    case ARTICLE.LOAD_USER_FEED_REQUEST:
+    case FEED.LOAD_USER_FEED_REQUEST:
       return {
         ...state,
         isLoading: true,
         error: null
       };
 
-    case ARTICLE.LOAD_USER_FEED_SUCCESS:
+    case FEED.LOAD_USER_FEED_SUCCESS:
       return {
         ...state,
         isLoading: false,
         articles: action.feed.articles
       };
 
-    case ARTICLE.LOAD_USER_FEED_ERROR:
+    case FEED.LOAD_USER_FEED_ERROR:
       return {
         ...state,
         isLoading: false,
@@ -52,15 +52,15 @@ export const loadUserFeed = () => (dispatch: Dispatch<any>, getState: GetState, 
 };
 
 const loadUserFeedRequest = {
-  type: ARTICLE.LOAD_USER_FEED_REQUEST
+  type: FEED.LOAD_USER_FEED_REQUEST
 };
 
 const loadUserFeedSuccess = (feed) => ({
-  type: ARTICLE.LOAD_USER_FEED_SUCCESS,
+  type: FEED.LOAD_USER_FEED_SUCCESS,
   feed
 });
 
 const loadUserFeedError = (error) => ({
-  type: ARTICLE.LOAD_USER_FEED_ERROR,
+  type: FEED.LOAD_USER_FEED_ERROR,
   error
 });

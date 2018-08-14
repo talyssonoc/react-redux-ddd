@@ -42,7 +42,7 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
 
       return this._coerceArticle(data.article);
     } catch(ajaxError) {
-      throw conduitApiService.extractError(ajaxError);
+      throw conduitApiService.extractErrors(ajaxError);
     }
   },
 
