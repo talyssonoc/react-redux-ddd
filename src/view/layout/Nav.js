@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Fragment } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import type { User } from '../../domain/user';
 
@@ -27,9 +27,14 @@ const Nav = (props: Props) => (
           props.user && (
             <Fragment>
               <li className="nav-item">
-                <a className="nav-link" href="">
+                <NavLink
+                  className="nav-link"
+                  activeClassName="active"
+                  to="/editor"
+                  exact
+                >
                   <i className="ion-compose"></i>&nbsp;New Post
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="">
@@ -72,4 +77,4 @@ const mapStateToProps = ({ user }) => ({
   user
 });
 
-export default connect(mapStateToProps)(Nav);
+export default withRouter(connect(mapStateToProps)(Nav));
