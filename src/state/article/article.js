@@ -44,27 +44,6 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
         error: action.error
       };
 
-    case ARTICLE.LOAD_COMMENTS_REQUEST:
-      return {
-        ...state,
-        isLoadingComments: true,
-        errorComments: null
-      };
-
-    case ARTICLE.LOAD_COMMENTS_SUCCESS:
-      return {
-        ...state,
-        isLoadingComments: false,
-        comments: action.comments
-      };
-
-    case ARTICLE.LOAD_COMMENTS_ERROR:
-      return {
-        ...state,
-        isLoadingComments: false,
-        errorComments: action.error
-      };
-
     case ARTICLE.ADD_COMMENT_SUCCESS:
       return {
         ...state,
