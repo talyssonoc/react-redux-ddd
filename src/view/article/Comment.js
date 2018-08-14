@@ -1,14 +1,17 @@
 /* @flow */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { type Comment as CommentType } from '../../domain/article';
+import { type User } from '../../domain/user';
+import { isAuthoredBy, type Comment as CommentType } from '../../domain/article';
 import FormattedDate from '../date/FormattedDate';
 
 type Props = {
-  comment: CommentType
+  comment: CommentType,
+  currentUser: ?User,
+  onClickDelete: (CommentType) => void
 };
 
-const Comment = ({ comment }: Props) => (
+const Comment = ({ comment, currentUser, onClickDelete }: Props) => (
   <div className="card">
     <div className="card-block">
       <p className="card-text">{ comment.body }</p>
@@ -28,6 +31,16 @@ const Comment = ({ comment }: Props) => (
       <span className="date-posted">
         <FormattedDate date={ comment.createdAt } />
       </span>
+      {
+        isAuthoredBy(comment, currentUser) && (
+          <span
+            className="mod-options"
+            onClick={ () => onClickDelete(comment) }
+          >
+            <i className="ion-trash-a"></i>
+          </span>
+        )
+      }
     </div>
   </div>
 );

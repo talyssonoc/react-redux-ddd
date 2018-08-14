@@ -25,6 +25,13 @@ export default ({ conduitApiService }: Dependencies): CommentRepository => ({
     return this._coerceComment(data.comment);
   },
 
+  removeComment(comment, { articleSlug, user }) {
+    return conduitApiService.authDel(
+      `articles/${articleSlug}/comments/${comment.id}`,
+      user
+    );
+  },
+
   _coerceComment(rawComment: any) {
     return {
       ...rawComment,

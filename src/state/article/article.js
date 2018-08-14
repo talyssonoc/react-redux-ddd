@@ -74,6 +74,12 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
         ]
       };
 
+    case ARTICLE.REMOVE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        comments: state.comments.filter((comment) => comment.id !== action.comment.id)
+      };
+
     default:
       return state;
   }
@@ -131,5 +137,32 @@ const addCommentSuccess = (comment) => ({
 
 const addCommentError = (error) => ({
   type: ARTICLE.ADD_COMMENT_ERROR,
+  error
+});
+
+export const removeComment = (comment: Comment, articleSlug: ArticleSlug) => {
+  return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
+    dispatch(removeCommentRequest);
+
+    const { user } = getState();
+
+    container.removeComment(comment, { articleSlug, user: ((user: any): User) }, {
+      onSuccess: () => dispatch(removeCommentSuccess(comment)),
+      onError: (error) => dispatch(removeCommentError(error))
+    });
+  };
+};
+
+const removeCommentRequest = {
+  type: ARTICLE.REMOVE_COMMENT_REQUEST
+};
+
+const removeCommentSuccess = (comment) => ({
+  type: ARTICLE.REMOVE_COMMENT_SUCCESS,
+  comment
+});
+
+const removeCommentError = (error) => ({
+  type: ARTICLE.REMOVE_COMMENT_ERROR,
   error
 });

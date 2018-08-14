@@ -28,7 +28,10 @@ export const ARTICLE = keyMirror({
   LOAD_ARTICLE_ERROR: null,
   ADD_COMMENT_REQUEST: null,
   ADD_COMMENT_SUCCESS: null,
-  ADD_COMMENT_ERROR: null
+  ADD_COMMENT_ERROR: null,
+  REMOVE_COMMENT_REQUEST: null,
+  REMOVE_COMMENT_SUCCESS: null,
+  REMOVE_COMMENT_ERROR: null
 }, glue, 'ARTICLE');
 
 export const TAG = keyMirror({

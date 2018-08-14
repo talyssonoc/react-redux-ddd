@@ -7,15 +7,18 @@ export type Author = {
   image: ?string
 };
 
+type Authorable = {
+  author: Author
+};
+
 export type ArticleSlug = string;
 
-export type Article = {
+export type Article = Authorable & {
   title: string,
   description: string,
   slug: ArticleSlug,
   createdAt: Date,
   favoritesCount: number,
-  author: Author,
   body: string,
   tagList: Array<Tag>
 };
@@ -32,18 +35,18 @@ export type ArticleRepository = {
   getArticle: (ArticleSlug) => Promise<Article>
 };
 
-export type Comment = {
+export type Comment = Authorable & {
   id: number,
   body: string,
-  author: Author,
   createdAt: Date
 };
 
 export type CommentRepository = {
   fromArticle: (ArticleSlug) => Promise<Array<Comment>>,
-  addComment: (string, { articleSlug: ArticleSlug, user: User } ) => Promise<Comment>
+  addComment: (string, { articleSlug: ArticleSlug, user: User } ) => Promise<Comment>,
+  removeComment: (Comment, { articleSlug: ArticleSlug, user: User } ) => Promise<void>
 };
 
-export const isAuthoredBy = (article: Article, user: ?User) => (
-  user && (article.author.username === user.username)
+export const isAuthoredBy = (authorable: Authorable, user: ?User) => (
+  user && (authorable.author.username === user.username)
 );
