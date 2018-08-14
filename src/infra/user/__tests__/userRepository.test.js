@@ -12,10 +12,13 @@ describe('Infra :: User :: userRepository', () => {
     }
   });
 
+  const extractErrors = (error) => error.response.data;
+
   describe('#fromAuthInfo', () => {
     it('uses conduitApiService to make the request', async () => {
       conduitApiService = {
-        post: jest.fn().mockReturnValue(successResponse)
+        post: jest.fn().mockReturnValue(successResponse),
+        extractErrors
       };
 
       userRepository = makeUserRepository({ conduitApiService });
@@ -28,7 +31,8 @@ describe('Infra :: User :: userRepository', () => {
     describe('when the request succeeds', () => {
       beforeEach(() => {
         conduitApiService = {
-          post: jest.fn().mockReturnValue(successResponse)
+          post: jest.fn().mockReturnValue(successResponse),
+          extractErrors
         };
 
         userRepository = makeUserRepository({ conduitApiService });
@@ -43,7 +47,8 @@ describe('Infra :: User :: userRepository', () => {
     describe('when the request fails', () => {
       beforeEach(() => {
         conduitApiService = {
-          post: jest.fn().mockReturnValue(failedResponse)
+          post: jest.fn().mockReturnValue(failedResponse),
+          extractErrors
         };
 
         userRepository = makeUserRepository({ conduitApiService });
@@ -61,7 +66,8 @@ describe('Infra :: User :: userRepository', () => {
   describe('#add', () => {
     it('uses conduitApiService to make the request', async () => {
       conduitApiService = {
-        post: jest.fn().mockReturnValue(successResponse)
+        post: jest.fn().mockReturnValue(successResponse),
+        extractErrors
       };
 
       userRepository = makeUserRepository({ conduitApiService });
@@ -74,7 +80,8 @@ describe('Infra :: User :: userRepository', () => {
     describe('when the request succeeds', () => {
       beforeEach(() => {
         conduitApiService = {
-          post: jest.fn().mockReturnValue(successResponse)
+          post: jest.fn().mockReturnValue(successResponse),
+          extractErrors
         };
 
         userRepository = makeUserRepository({ conduitApiService });
@@ -89,7 +96,8 @@ describe('Infra :: User :: userRepository', () => {
     describe('when the request fails', () => {
       beforeEach(() => {
         conduitApiService = {
-          post: jest.fn().mockReturnValue(failedResponse)
+          post: jest.fn().mockReturnValue(failedResponse),
+          extractErrors
         };
 
         userRepository = makeUserRepository({ conduitApiService });
