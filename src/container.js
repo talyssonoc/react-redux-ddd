@@ -10,7 +10,6 @@ import makeGetGlobalFeed from './app/article/getGlobalFeed';
 import makeGetUserFeed from './app/article/getUserFeed';
 import makeGetTagFeed from './app/article/getTagFeed';
 import makeGetArticle from './app/article/getArticle';
-import makeGetComments from './app/article/getComments';
 import makeGetPopularTags from './app/tag/getPopularTags';
 
 // Infra
@@ -52,10 +51,7 @@ const getTagFeed = makeGetTagFeed({
 });
 
 const getArticle = makeGetArticle({
-  articleRepository
-});
-
-const getComments = makeGetComments({
+  articleRepository,
   commentRepository
 });
 
@@ -70,7 +66,6 @@ export {
   getUserFeed,
   getTagFeed,
   getPopularTags,
-  getArticle,
-  getComments
+  getArticle
 };
 

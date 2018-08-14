@@ -20,20 +20,17 @@ type Props = {
   article: ?ArticleType,
   comments: Array<CommentType>,
   isLoading: bool,
-  loadArticle: (ArticleSlug) => void,
-  loadComments: (ArticleSlug) => void
+  loadArticle: (ArticleSlug) => void
 };
 
 class Article extends Component<Props> {
   componentDidMount() {
     const {
       loadArticle,
-      loadComments,
       articleSlug
     } = this.props;
 
     loadArticle(articleSlug);
-    loadComments(articleSlug);
   }
 
   render() {
@@ -107,8 +104,7 @@ const mapStateToProps = ({ article, user }, props) => ({
 });
 
 const mapDispatchToProps = {
-  loadArticle: article.loadArticle,
-  loadComments: article.loadComments,
+  loadArticle: article.loadArticle
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Article);

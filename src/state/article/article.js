@@ -8,18 +8,14 @@ export type ArticleState = {
   article: ?Article,
   isLoading: bool,
   error: ?Object,
-  comments: Array<Comment>,
-  isLoadingComments: bool,
-  errorComments: ?Object
+  comments: Array<Comment>
 };
 
 const initialState: ArticleState = {
   article: null,
   isLoading: false,
   error: null,
-  comments: [],
-  isLoadingComments: false,
-  errorComments: null
+  comments: []
 };
 
 export const articleReducer: Reducer<ArticleState, any> = (state = initialState, action) => {
@@ -35,7 +31,8 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
       return {
         ...state,
         isLoading: false,
-        article: action.article
+        article: action.article,
+        comments: action.comments
       };
 
     case ARTICLE.LOAD_ARTICLE_ERROR:
@@ -76,7 +73,9 @@ export const loadArticle = (slug: ArticleSlug) => {
     dispatch(loadArticleRequest);
 
     container.getArticle(slug, {
-      onSuccess: (article) => dispatch(loadArticleSuccess(article)),
+      onSuccess: ({ article, comments }) => {
+        dispatch(loadArticleSuccess(article, comments));
+      },
       onError: (error) => dispatch(loadArticleError(error))
     });
   };
@@ -86,37 +85,13 @@ const loadArticleRequest = {
   type: ARTICLE.LOAD_ARTICLE_REQUEST
 };
 
-const loadArticleSuccess = (article) => ({
+const loadArticleSuccess = (article, comments) => ({
   type: ARTICLE.LOAD_ARTICLE_SUCCESS,
-  article
+  article,
+  comments
 });
 
 const loadArticleError = (error) => ({
   type: ARTICLE.LOAD_ARTICLE_ERROR,
-  error
-});
-
-export const loadComments = (slug: ArticleSlug) => {
-  return (dispatch: Dispatch<any>, _: any, container: Container) => {
-    dispatch(loadCommentsRequest);
-
-    container.getComments(slug, {
-      onSuccess: (comments) => dispatch(loadCommentsSuccess(comments)),
-      onError: (error) => dispatch(loadCommentsError(error))
-    });
-  };
-};
-
-const loadCommentsRequest = {
-  type: ARTICLE.LOAD_COMMENTS_REQUEST
-};
-
-const loadCommentsSuccess = (comments) => ({
-  type: ARTICLE.LOAD_COMMENTS_SUCCESS,
-  comments
-});
-
-const loadCommentsError = (error) => ({
-  type: ARTICLE.LOACOMMENTSLE_ERROR,
   error
 });
