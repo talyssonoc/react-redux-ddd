@@ -1,6 +1,8 @@
 /* @flow */
 import type { Dispatch, Reducer } from 'redux';
+import type { User } from '../../domain/user';
 import type { Article, ArticleSlug, Comment } from '../../domain/article';
+import type { GetState } from '../store';
 import typeof * as Container from '../../container';
 import { ARTICLE } from '../actionTypes';
 
@@ -63,6 +65,15 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
         errorComments: action.error
       };
 
+    case ARTICLE.ADD_COMMENT_SUCCESS:
+      return {
+        ...state,
+        comments: [
+          action.comment,
+          ...state.comments
+        ]
+      };
+
     default:
       return state;
   }
@@ -93,5 +104,32 @@ const loadArticleSuccess = (article, comments) => ({
 
 const loadArticleError = (error) => ({
   type: ARTICLE.LOAD_ARTICLE_ERROR,
+  error
+});
+
+export const addComment = (commentBody: string, articleSlug: ArticleSlug) => {
+  return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
+    dispatch(addCommentRequest);
+
+    const { user } = getState();
+
+    container.addComment(commentBody, { articleSlug, user: ((user: any): User) }, {
+      onSuccess: (comment) => dispatch(addCommentSuccess(comment)),
+      onError: (error) => dispatch(addCommentError(error))
+    });
+  };
+};
+
+const addCommentRequest = {
+  type: ARTICLE.ADD_COMMENT_REQUEST
+};
+
+const addCommentSuccess = (comment) => ({
+  type: ARTICLE.ADD_COMMENT_SUCCESS,
+  comment
+});
+
+const addCommentError = (error) => ({
+  type: ARTICLE.ADD_COMMENT_ERROR,
   error
 });

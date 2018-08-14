@@ -13,12 +13,15 @@ const axios = Axios.create({
 
 type Options = $Shape<AxiosXHRConfigBase<any, any>>;
 
-export const post = (url: string, options?: Options | mixed) => axios.post(url, options);
+export const post = (url: string, data?: mixed, options?: Options) => axios.post(url, data, options);
 
 export const get = (url: string, options?: Options) => axios.get(url, options);
 
 export const authGet = (url: string, user: User, options: Options = {}) =>
   get(url, withUserToken(options, user));
+
+export const authPost = (url: string, user: User, data?: mixed = {}, options?: Options = {}) =>
+  post(url, data, withUserToken(options, user));
 
 const withUserToken = (options: Options, user: User): Options => ({
   ...options,

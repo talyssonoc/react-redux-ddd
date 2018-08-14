@@ -40,7 +40,8 @@ export type Comment = {
 };
 
 export type CommentRepository = {
-  fromArticle: (ArticleSlug) => Promise<Array<Comment>>
+  fromArticle: (ArticleSlug) => Promise<Array<Comment>>,
+  addComment: (string, { articleSlug: ArticleSlug, user: User } ) => Promise<Comment>
 };
 
 export const isAuthoredBy = (article: Article, user: ?User) => (

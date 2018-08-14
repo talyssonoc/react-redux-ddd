@@ -1,23 +1,62 @@
 /* @flow */
-import React from 'react';
+import React, { Component } from 'react';
 import { type User } from '../../domain/user';
 
 type Props = {
-  currentUser: User
+  currentUser: User,
+  onSubmit: (string) => void
 };
 
-const CommentForm = ({ currentUser }: Props) => (
-  <form className="card comment-form">
-    <div className="card-block">
-      <textarea className="form-control" placeholder="Write a comment..." rows="3"></textarea>
-    </div>
-    <div className="card-footer">
-      <img src={ currentUser.image } className="comment-author-img" alt={ currentUser.username } />
-      <button className="btn btn-sm btn-primary">
-       Post Comment
-      </button>
-    </div>
-  </form>
-);
+type State = {
+  commentBody: string
+};
+
+class CommentForm extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      commentBody: ''
+    };
+  }
+
+  updateBody(commentBody: string) {
+    this.setState({ commentBody });
+  }
+
+  handleSubmit = (event: Event) => {
+    event.preventDefault();
+    this.props.onSubmit(this.state.commentBody);
+    this.setState({ commentBody: '' });
+  };
+
+  render() {
+    const { currentUser } = this.props;
+    const { commentBody } = this.state;
+
+    return (
+      <form
+        onSubmit={ this.handleSubmit }
+        className="card comment-form"
+      >
+        <div className="card-block">
+          <textarea
+            onChange={ (e) => this.updateBody(e.target.value) }
+            value={ commentBody }
+            className="form-control"
+            placeholder="Write a comment..."
+            rows="3"
+          ></textarea>
+        </div>
+        <div className="card-footer">
+          <img src={ currentUser.image } className="comment-author-img" alt={ currentUser.username } />
+          <button className="btn btn-sm btn-primary">
+           Post Comment
+          </button>
+        </div>
+      </form>
+    );
+  }
+}
 
 export default CommentForm;

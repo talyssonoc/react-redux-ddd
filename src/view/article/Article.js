@@ -20,7 +20,8 @@ type Props = {
   article: ?ArticleType,
   comments: Array<CommentType>,
   isLoading: bool,
-  loadArticle: (ArticleSlug) => void
+  loadArticle: (ArticleSlug) => void,
+  addComment: (string, ArticleSlug) => void
 };
 
 class Article extends Component<Props> {
@@ -31,6 +32,15 @@ class Article extends Component<Props> {
     } = this.props;
 
     loadArticle(articleSlug);
+  }
+
+  addComment(commentBody) {
+    const {
+      addComment,
+      articleSlug
+    } = this.props;
+
+    addComment(commentBody, articleSlug);
   }
 
   render() {
@@ -74,7 +84,10 @@ class Article extends Component<Props> {
 
               {
                 user && (
-                  <CommentForm currentUser={ user } />
+                  <CommentForm
+                    currentUser={ user }
+                    onSubmit={ (commentBody) => this.addComment(commentBody) }
+                  />
                 )
               }
 
@@ -87,7 +100,6 @@ class Article extends Component<Props> {
                 )
               }
             </div>
-
           </div>
         </div>
       </div>
@@ -104,7 +116,8 @@ const mapStateToProps = ({ article, user }, props) => ({
 });
 
 const mapDispatchToProps = {
-  loadArticle: article.loadArticle
+  loadArticle: article.loadArticle,
+  addComment: article.addComment
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Article);
