@@ -1,6 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import { type User } from '../../domain/user';
 import type {
@@ -19,6 +20,7 @@ type Props = {
   articleSlug: ArticleSlug,
   article: ?ArticleType,
   comments: Array<CommentType>,
+  error: Error,
   isLoading: bool,
   loadArticle: (ArticleSlug) => void,
   addComment: (string, ArticleSlug) => void,
@@ -54,7 +56,15 @@ class Article extends Component<Props> {
   }
 
   render() {
-    const { user, article, comments, isLoading } = this.props;
+    const {
+      user,
+      article, comments,
+      isLoading, error
+    } = this.props;
+
+    if(error) {
+      return <Redirect to="/" />;
+    }
 
     if(isLoading || !article) {
       return null;
@@ -124,6 +134,7 @@ const mapStateToProps = ({ article, user }, props) => ({
   article: article.article,
   comments: article.comments,
   isLoading: article.isLoading,
+  error: article.error,
   articleSlug: props.match.params.slug
 });
 

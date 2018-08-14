@@ -37,9 +37,13 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
   },
 
   async getArticle(slug) {
-    const { data } = await conduitApiService.get(`articles/${slug}`);
+    try {
+      const { data } = await conduitApiService.get(`articles/${slug}`);
 
-    return this._coerceArticle(data.article);
+      return this._coerceArticle(data.article);
+    } catch(ajaxError) {
+      throw conduitApiService.extractError(ajaxError);
+    }
   },
 
   _coerceArticle(rawArticle: any) {

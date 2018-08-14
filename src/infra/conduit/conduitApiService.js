@@ -1,5 +1,5 @@
 /* @flow */
-import Axios, { type AxiosXHRConfigBase } from 'axios';
+import Axios, { type AxiosXHRConfigBase, type $AxiosError } from 'axios';
 import type { User } from '../../domain/user';
 
 const API_URL: string = process.env.REACT_APP_API_URL || '';
@@ -15,6 +15,10 @@ type Options = $Shape<AxiosXHRConfigBase<any, any>>;
 
 type AuthRequestWithoutData = (string, User, Options) => Promise<any>;
 type AuthRequestWithData = (string, User, mixed, Options) => Promise<any>;
+
+type ConduitError = Error & {
+  errors: Object
+};
 
 export const post = axios.post;
 
@@ -38,3 +42,21 @@ const withUserToken = (options: Options, user: User): Options => ({
     Authorization: `Token ${user.token}`
   }
 });
+
+type SuccessResponse = Object;
+
+type FailureResponse = {
+  errors: Object
+};
+
+type Response = SuccessResponse | FailureResponse;
+
+export const extractErrors = (ajaxError: $AxiosError<any, Response>) => {
+  const error = ((new Error(): any): ConduitError);
+
+  if(ajaxError.response) {
+    error.errors = ajaxError.response.data.errors;
+  }
+
+  return error;
+};

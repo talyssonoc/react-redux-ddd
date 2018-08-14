@@ -6,10 +6,6 @@ type Dependencies = {
   conduitApiService: ConduitApiService
 };
 
-class AuthError extends Error {
-  errors: Object
-}
-
 export default ({ conduitApiService }: Dependencies): UserRepository => ({
   fromAuthInfo(userAuthInfo) {
     return this._authUser(userAuthInfo, 'users/login');
@@ -25,15 +21,7 @@ export default ({ conduitApiService }: Dependencies): UserRepository => ({
 
       return data.user;
     } catch(ajaxError) {
-      const error = this._extractErrors(ajaxError);
-      throw error;
+      throw conduitApiService.extractErrors(ajaxError);
     }
-  },
-
-  _extractErrors(ajaxError) {
-    const error = new AuthError();
-    error.errors = ajaxError.response.data.errors;
-
-    return error;
   }
 });
