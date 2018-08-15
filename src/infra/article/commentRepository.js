@@ -13,11 +13,7 @@ export default ({ conduitApiService }: Dependencies): CommentRepository => ({
     return data.comments.map(this._coerceComment);
   },
 
-  async addComment(commentBody, { articleSlug, user }) {
-    const comment = {
-      body: commentBody
-    };
-
+  async add(comment, { articleSlug, user }) {
     const { data } = await conduitApiService.authPost(`articles/${articleSlug}/comments`, user, {
       comment
     });
@@ -25,7 +21,7 @@ export default ({ conduitApiService }: Dependencies): CommentRepository => ({
     return this._coerceComment(data.comment);
   },
 
-  removeComment(comment, { articleSlug, user }) {
+  remove(comment, { articleSlug, user }) {
     return conduitApiService.authDel(
       `articles/${articleSlug}/comments/${comment.id}`,
       user

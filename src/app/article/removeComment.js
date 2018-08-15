@@ -24,7 +24,7 @@ type Callbacks = {
 export default ({ commentRepository }: Dependencies) => {
   return async (comment: Comment, { articleSlug, user }: Config, { onSuccess, onError }: Callbacks) => {
     try {
-      await commentRepository.removeComment(comment, {
+      await commentRepository.remove(comment, {
         articleSlug,
         user
       });

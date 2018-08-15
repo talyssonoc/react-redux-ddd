@@ -2,6 +2,7 @@
 import type {
   ArticleSlug,
   Comment,
+  NewComment,
   CommentRepository
 } from '../../domain/article';
 
@@ -24,7 +25,11 @@ type Callbacks = {
 export default ({ commentRepository }: Dependencies) => {
   return async (commentBody: string, { articleSlug, user }: Config, { onSuccess, onError }: Callbacks) => {
     try {
-      const globalFeed = await commentRepository.addComment(commentBody, {
+      const comment: NewComment = {
+        body: commentBody
+      };
+
+      const globalFeed = await commentRepository.add(comment, {
         articleSlug,
         user
       });

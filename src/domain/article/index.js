@@ -43,16 +43,19 @@ export type ArticleRepository = {
   add: (EditingArticle, { user: User }) => Promise<Article>
 };
 
-export type Comment = Authorable & {
+export type NewComment = {
+  body: string
+};
+
+export type Comment = Authorable & NewComment & {
   id: number,
-  body: string,
   createdAt: Date
 };
 
 export type CommentRepository = {
   fromArticle: (ArticleSlug) => Promise<Array<Comment>>,
-  addComment: (string, { articleSlug: ArticleSlug, user: User } ) => Promise<Comment>,
-  removeComment: (Comment, { articleSlug: ArticleSlug, user: User } ) => Promise<void>
+  add: (NewComment, { articleSlug: ArticleSlug, user: User } ) => Promise<Comment>,
+  remove: (Comment, { articleSlug: ArticleSlug, user: User } ) => Promise<void>
 };
 
 export const isAuthoredBy = (authorable: Authorable, user: ?User) => (
