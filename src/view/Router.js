@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { PrivateRoute, PublicOnlyRoute } from './auth/controlledRoute';
 import Layout from './layout/Layout';
 import HomePage from './home/HomePage';
@@ -18,6 +18,7 @@ const Router = () => (
         <PublicOnlyRoute path='/register' component={ RegisterPage } />
         <Route path='/article/:slug' component={ Article } />
         <PrivateRoute path='/editor' exact component={ CreateArticlePage } />
+        <Redirect to='/' />
       </Switch>
     </Layout>
   </BrowserRouter>
