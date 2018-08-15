@@ -8,6 +8,10 @@ type Props = {
 };
 
 const Feed = ({ feed }: Props) => {
+  if(feed.error) {
+    return <div className="article-preview">Error while loading articles.</div>;
+  }
+
   if(feed.isLoading) {
     return <div className="article-preview">Loading articles...</div>;
   }

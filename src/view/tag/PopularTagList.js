@@ -8,7 +8,8 @@ import TagList, { type Props as TagListProps } from './TagList';
 
 type Props = TagListProps & {
   loadPopularTags: Function,
-  isLoading: bool
+  isLoading: bool,
+  error: any
 };
 
 class PopularTagList extends Component<Props> {
@@ -17,10 +18,14 @@ class PopularTagList extends Component<Props> {
   }
 
   render() {
-    const { isLoading, tags } = this.props;
+    const { isLoading, tags, error } = this.props;
 
     if(isLoading) {
       return 'Loading tags...';
+    }
+
+    if(error) {
+      return 'Error while loading tags.';
     }
 
     return <TagList tags={ tags } {...this.props} />;
@@ -29,7 +34,8 @@ class PopularTagList extends Component<Props> {
 
 const mapStateToProps = ({ popularTags }) => ({
   tags: popularTags.tags,
-  isLoading: popularTags.isLoading
+  isLoading: popularTags.isLoading,
+  error: popularTags.error
 });
 
 const mapDispatchToProps = {

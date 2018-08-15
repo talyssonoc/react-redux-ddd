@@ -16,12 +16,8 @@ export default ({ conduitApiService }: Dependencies): UserRepository => ({
   },
 
   async _authUser(user, url) {
-    try {
-      const { data } = await conduitApiService.post(url, { user });
+    const { data } = await conduitApiService.post(url, { user });
 
-      return data.user;
-    } catch(ajaxError) {
-      throw conduitApiService.extractErrors(ajaxError);
-    }
+    return data.user;
   }
 });

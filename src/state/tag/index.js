@@ -6,7 +6,7 @@ import { TAG } from '../actionTypes';
 
 export type PopularTagsState = {|
   tags: Array<Tag>,
-  error: ?Object,
+  error: any,
   isLoading: bool
 |};
 

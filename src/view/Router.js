@@ -1,5 +1,7 @@
+/* @flow */
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { PrivateRoute, PublicOnlyRoute } from './auth/controlledRoute';
 import Layout from './layout/Layout';
 import HomePage from './home/HomePage';
 import LoginPage from './auth/LoginPage';
@@ -12,10 +14,10 @@ const Router = () => (
     <Layout>
       <Switch>
         <Route path='/' exact component={ HomePage } />
-        <Route path='/login' component={ LoginPage } />
-        <Route path='/register' component={ RegisterPage } />
+        <PublicOnlyRoute path='/login' component={ LoginPage } />
+        <PublicOnlyRoute path='/register' component={ RegisterPage } />
         <Route path='/article/:slug' component={ Article } />
-        <Route path='/editor' exact component={ CreateArticlePage } />
+        <PrivateRoute path='/editor' exact component={ CreateArticlePage } />
       </Switch>
     </Layout>
   </BrowserRouter>

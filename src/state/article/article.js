@@ -170,11 +170,7 @@ export const createArticle = (editingArticle: EditingArticle) => {
 
     const { user } = getState();
 
-    if(!user) {
-      return dispatch(createArticleError(new Error('Not authorized')));
-    }
-
-    container.createArticle(editingArticle, user, {
+    container.createArticle(editingArticle, ((user: any): User), {
       onSuccess: (article: Article) => dispatch(createArticleSuccess(article)),
       onError: (error) => dispatch(createArticleError(error.errors))
     });

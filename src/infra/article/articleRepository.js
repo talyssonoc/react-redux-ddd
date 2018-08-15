@@ -37,25 +37,17 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
   },
 
   async getArticle(slug) {
-    try {
-      const { data } = await conduitApiService.get(`articles/${slug}`);
+    const { data } = await conduitApiService.get(`articles/${slug}`);
 
-      return this._coerceArticle(data.article);
-    } catch(ajaxError) {
-      throw conduitApiService.extractErrors(ajaxError);
-    }
+    return this._coerceArticle(data.article);
   },
 
   async add(editingArticle, { user }) {
-    try {
-      const { data } = await conduitApiService.authPost('/articles', user, {
-        article: editingArticle
-      });
+    const { data } = await conduitApiService.authPost('articles', user, {
+      article: editingArticle
+    });
 
-      return this._coerceArticle(data.article);
-    } catch(ajaxError) {
-      throw conduitApiService.extractErrors(ajaxError);
-    }
+    return this._coerceArticle(data.article);
   },
 
   _coerceArticle(rawArticle: any) {

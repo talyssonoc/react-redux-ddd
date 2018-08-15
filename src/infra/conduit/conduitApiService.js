@@ -13,18 +13,29 @@ const axios = Axios.create({
 
 type Options = $Shape<AxiosXHRConfigBase<any, any>>;
 
+type RequestWithoutData = (string, Options) => Promise<any>;
+type RequestWithData = (string, User, mixed, Options) => Promise<any>;
 type AuthRequestWithoutData = (string, User, Options) => Promise<any>;
 type AuthRequestWithData = (string, User, mixed, Options) => Promise<any>;
+type Request = RequestWithoutData | RequestWithData;
 
 type ConduitError = Error & {
   errors: Object
 };
 
-export const post = axios.post;
+const wrapErrorExtraction = (request: Request): any => async (...args) => {
+  try {
+    return await request(...args);
+  } catch(error) {
+    throw extractErrors(error);
+  }
+};
 
-export const get = axios.get;
+export const post = wrapErrorExtraction(axios.post);
 
-const del = axios.delete;
+export const get = wrapErrorExtraction(axios.get);
+
+const del = wrapErrorExtraction(axios.delete);
 
 export const authGet: AuthRequestWithoutData = (url, user, options = {}) =>
   get(url, withUserToken(options, user));
@@ -35,14 +46,6 @@ export const authPost: AuthRequestWithData = (url, user, data = {}, options = {}
 export const authDel: AuthRequestWithoutData = (url, user, options = {}) =>
   del(url, withUserToken(options, user));
 
-const withUserToken = (options: Options, user: User): Options => ({
-  ...options,
-  headers: {
-    ...options.headers,
-    Authorization: `Token ${user.token}`
-  }
-});
-
 type SuccessResponse = Object;
 
 type FailureResponse = {
@@ -51,12 +54,22 @@ type FailureResponse = {
 
 type Response = SuccessResponse | FailureResponse;
 
-export const extractErrors = (ajaxError: $AxiosError<any, Response>) => {
+const extractErrors = (ajaxError: $AxiosError<any, Response>) => {
   const error = ((new Error(): any): ConduitError);
 
-  if(ajaxError.response) {
-    error.errors = ajaxError.response.data.errors;
+  if(!ajaxError.response) {
+    return ajaxError;
   }
+
+  error.errors = ajaxError.response.data.errors;
 
   return error;
 };
+
+const withUserToken = (options: Options, user: User): Options => ({
+  ...options,
+  headers: {
+    ...options.headers,
+    Authorization: `Token ${user.token}`
+  }
+});
