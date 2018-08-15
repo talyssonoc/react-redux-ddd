@@ -24,17 +24,25 @@ type Props = {
   isLoading: bool,
   loadArticle: (ArticleSlug) => void,
   addComment: (string, ArticleSlug) => void,
-  removeComment: (CommentType, ArticleSlug) => void
+  removeComment: (CommentType, ArticleSlug) => void,
+  unloadArticle: Function
 };
 
 class Article extends Component<Props> {
   componentDidMount() {
     const {
       loadArticle,
-      articleSlug
+      articleSlug,
+      article
     } = this.props;
 
-    loadArticle(articleSlug);
+    if(!article) {
+      loadArticle(articleSlug);
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.unloadArticle();
   }
 
   addComment = (commentBody) => {
@@ -141,7 +149,8 @@ const mapStateToProps = ({ article, user }, props) => ({
 const mapDispatchToProps = {
   loadArticle: article.loadArticle,
   addComment: article.addComment,
-  removeComment: article.removeComment
+  removeComment: article.removeComment,
+  unloadArticle: article.unloadArticle
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Article);

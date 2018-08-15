@@ -1,9 +1,21 @@
 /* @flow */
 import React from 'react';
+import { connect } from 'react-redux';
+import { article } from '../../state/article';
 import ArticleEditor from './ArticleEditor';
 
-const CreateArticlePage = () => (
-  <ArticleEditor />
+type Props = {
+  createArticle: Function
+};
+
+const CreateArticlePage = (props: Props) => (
+  <ArticleEditor
+    onSubmit={ props.createArticle }
+  />
 );
 
-export default CreateArticlePage;
+const mapDispatchToProps = {
+  createArticle: article.createArticle
+};
+
+export default connect(null, mapDispatchToProps)(CreateArticlePage);

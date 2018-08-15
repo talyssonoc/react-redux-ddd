@@ -1,16 +1,23 @@
 /* @flow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import TagList from '../tag/TagList';
-import type { EditingArticle } from '../../domain/article';
+import { Redirect } from 'react-router-dom';
+import type { Article, EditingArticle } from '../../domain/article';
 import { editor } from '../../state/article';
+import TagList from '../tag/TagList';
+import ErrorMessages from '../error/ErrorMessages';
 
 type Props = {
   article: EditingArticle,
+  savedArticle: ?Article,
   resetEditor: Function,
   updateField: Function,
   addTag: Function,
-  removeTag: Function
+  removeTag: Function,
+  onSubmit: Function,
+  isSaving: bool,
+  isSaved: bool,
+  errors: ?Object
 };
 
 type State = {
@@ -36,7 +43,7 @@ class ArticleEditor extends Component<Props, State> {
     };
   }
 
-  componentDidMount() {
+  componentWillUnmount() {
     this.props.resetEditor();
   }
 
@@ -52,7 +59,8 @@ class ArticleEditor extends Component<Props, State> {
     }
 
     if(event.type === EventTypes.KEYDOWN) {
-      if(event.key === Keys.ENTER && tag) {
+      if(event.key === Keys.ENTER && tag.trim()) {
+        event.preventDefault();
         return this.addTag(tag);
       }
 
@@ -71,21 +79,36 @@ class ArticleEditor extends Component<Props, State> {
     this.setEditingTag('');
   }
 
-  removeTag(tag) {
-    this.props.removeTag(tag);
-  }
-
   removeLastTag() {
     const { tagList } = this.props.article;
 
     if(tagList.length) {
-      this.removeTag(tagList[tagList.length - 1]);
+      this.props.removeTag(tagList[tagList.length - 1]);
     }
   }
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    const { article, onSubmit } = this.props;
+
+    onSubmit(article);
+  };
+
   render() {
-    const { article, removeTag } = this.props;
+    const {
+      article,
+      removeTag,
+      isSaved,
+      isSaving,
+      savedArticle,
+      errors
+    } = this.props;
     const { editingTag } = this.state;
+
+    if(isSaved && savedArticle) {
+      return <Redirect to={ `/article/${savedArticle.slug}` } />
+    }
 
     return (
       <div className="editor-page">
@@ -93,7 +116,9 @@ class ArticleEditor extends Component<Props, State> {
           <div className="row">
 
             <div className="col-md-10 offset-md-1 col-xs-12">
-              <form>
+              <ErrorMessages errors={ errors }/>
+
+              <form onSubmit={ this.handleSubmit }>
                 <fieldset>
                   <fieldset className="form-group">
                     <input
@@ -102,6 +127,7 @@ class ArticleEditor extends Component<Props, State> {
                       type="text"
                       className="form-control form-control-lg"
                       placeholder="Article Title"
+                      disabled={ isSaving }
                     />
                   </fieldset>
                   <fieldset className="form-group">
@@ -111,6 +137,7 @@ class ArticleEditor extends Component<Props, State> {
                       type="text"
                       className="form-control"
                       placeholder="What's this article about?"
+                      disabled={ isSaving }
                     />
                   </fieldset>
                   <fieldset className="form-group">
@@ -120,6 +147,7 @@ class ArticleEditor extends Component<Props, State> {
                       className="form-control"
                       rows="8"
                       placeholder="Write your article (in markdown)"
+                      disabled={ isSaving }
                     ></textarea>
                   </fieldset>
                   <fieldset className="form-group">
@@ -130,6 +158,7 @@ class ArticleEditor extends Component<Props, State> {
                       type="text"
                       className="form-control"
                       placeholder="Enter tags"
+                      disabled={ isSaving }
                     />
                     <TagList
                       tags={ article.tagList }
@@ -137,13 +166,16 @@ class ArticleEditor extends Component<Props, State> {
                       onClickIcon={ removeTag }
                     />
                   </fieldset>
-                  <button className="btn btn-lg pull-xs-right btn-primary" type="button">
+                  <button
+                    className="btn btn-lg pull-xs-right btn-primary"
+                    type="submit"
+                    disabled={ isSaving }
+                  >
                     Publish Article
                   </button>
                 </fieldset>
               </form>
             </div>
-
           </div>
         </div>
       </div>
@@ -151,8 +183,12 @@ class ArticleEditor extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = ({ editor }) => ({
-  article: editor.article
+const mapStateToProps = ({ editor, article }) => ({
+  article: editor.article,
+  isSaved: editor.isSaved,
+  isSaving: editor.isSaving,
+  errors: editor.errors,
+  savedArticle: article.article
 });
 
 const mapDispatchToProps = {

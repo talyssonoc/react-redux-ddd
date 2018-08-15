@@ -1,7 +1,7 @@
 /* @flow */
 import type { Dispatch, Reducer } from 'redux';
 import type { User } from '../../domain/user';
-import type { Article, ArticleSlug, Comment } from '../../domain/article';
+import type { Article, ArticleSlug, Comment, EditingArticle } from '../../domain/article';
 import type { GetState } from '../store';
 import typeof * as Container from '../../container';
 import { ARTICLE } from '../actionTypes';
@@ -30,6 +30,7 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
       };
 
     case ARTICLE.LOAD_ARTICLE_SUCCESS:
+    case ARTICLE.CREATE_ARTICLE_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -59,13 +60,20 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
         comments: state.comments.filter((comment) => comment.id !== action.comment.id)
       };
 
+    case ARTICLE.UNLOAD_ARTICLE:
+      return initialState;
+
     default:
       return state;
   }
 };
 
 export const loadArticle = (slug: ArticleSlug) => {
-  return (dispatch: Dispatch<any>, _: any, container: Container) => {
+  return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
+    if(!shouldLoadArticle(getState(), slug)) {
+      return;
+    }
+
     dispatch(loadArticleRequest);
 
     container.getArticle(slug, {
@@ -75,6 +83,12 @@ export const loadArticle = (slug: ArticleSlug) => {
       onError: (error) => dispatch(loadArticleError(error))
     });
   };
+};
+
+const shouldLoadArticle = (state, slug) => {
+  const { article } = state;
+
+  return !article.article || !(article.article.slug === slug);
 };
 
 const loadArticleRequest = {
@@ -144,4 +158,40 @@ const removeCommentSuccess = (comment) => ({
 const removeCommentError = (error) => ({
   type: ARTICLE.REMOVE_COMMENT_ERROR,
   error
+});
+
+export const unloadArticle = () => ({
+  type: ARTICLE.UNLOAD_ARTICLE
+});
+
+export const createArticle = (editingArticle: EditingArticle) => {
+  return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
+    dispatch(createArticleRequest);
+
+    const { user } = getState();
+
+    if(!user) {
+      return dispatch(createArticleError(new Error('Not authorized')));
+    }
+
+    container.createArticle(editingArticle, user, {
+      onSuccess: (article: Article) => dispatch(createArticleSuccess(article)),
+      onError: (error) => dispatch(createArticleError(error.errors))
+    });
+  };
+};
+
+const createArticleRequest = {
+  type: ARTICLE.CREATE_ARTICLE_REQUEST
+};
+
+const createArticleSuccess = (article) => ({
+  type: ARTICLE.CREATE_ARTICLE_SUCCESS,
+  article,
+  comments: []
+});
+
+const createArticleError = (errors) => ({
+  type: ARTICLE.CREATE_ARTICLE_ERROR,
+  errors
 });

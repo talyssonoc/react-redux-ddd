@@ -1,12 +1,14 @@
 /* @flow */
-import type { Dispatch, Reducer } from 'redux';
+import type { Reducer } from 'redux';
 import type { EditingArticle } from '../../domain/article';
 import type { Tag } from '../../domain/tag';
-import { EDITOR } from '../actionTypes';
+import { ARTICLE, EDITOR } from '../actionTypes';
 
 export type EditorState = {
   article: EditingArticle,
-  isLoading: bool
+  isSaving: bool,
+  isSaved: bool,
+  errors: ?Object
 };
 
 const initialState: EditorState = {
@@ -16,7 +18,9 @@ const initialState: EditorState = {
     body: '',
     tagList: []
   },
-  isLoading: false
+  isSaving: false,
+  isSaved: false,
+  errors: null
 };
 
 export const editorReducer: Reducer<EditorState, any> = (state = initialState, action) => {
@@ -53,6 +57,27 @@ export const editorReducer: Reducer<EditorState, any> = (state = initialState, a
           ...state.article,
           tagList: state.article.tagList.filter((tag) => tag !== action.tag)
         }
+      };
+
+    case ARTICLE.CREATE_ARTICLE_REQUEST:
+      return {
+        ...state,
+        isSaving: true
+      };
+
+    case ARTICLE.CREATE_ARTICLE_SUCCESS:
+      return {
+        ...state,
+        isSaving: false,
+        isSaved: true
+      };
+
+    case ARTICLE.CREATE_ARTICLE_ERROR:
+      return {
+        ...state,
+        isSaving: false,
+        isSaved: false,
+        errors: action.errors
       };
 
     case EDITOR.RESET:

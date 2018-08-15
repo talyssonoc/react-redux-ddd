@@ -39,7 +39,8 @@ export type ArticleRepository = {
   fromGlobalFeed: () => Promise<Feed>,
   fromUserFeed: (User) => Promise<Feed>,
   fromTagFeed: (Tag) => Promise<Feed>,
-  getArticle: (ArticleSlug) => Promise<Article>
+  getArticle: (ArticleSlug) => Promise<Article>,
+  add: (EditingArticle, { user: User }) => Promise<Article>
 };
 
 export type Comment = Authorable & {

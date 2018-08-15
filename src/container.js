@@ -12,6 +12,7 @@ import makeGetTagFeed from './app/article/getTagFeed';
 import makeGetArticle from './app/article/getArticle';
 import makeAddComment from './app/article/addComment';
 import makeRemoveComment from './app/article/removeComment';
+import makeCreateArticle from './app/article/createArticle';
 import makeGetPopularTags from './app/tag/getPopularTags';
 
 // Infra
@@ -65,6 +66,10 @@ const removeComment = makeRemoveComment({
   commentRepository
 });
 
+const createArticle = makeCreateArticle({
+  articleRepository
+});
+
 const getPopularTags = makeGetPopularTags({
   tagRepository
 });
@@ -78,6 +83,7 @@ export {
   getPopularTags,
   getArticle,
   addComment,
-  removeComment
+  removeComment,
+  createArticle
 };
 
