@@ -2,20 +2,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import type { User, UserAuthInfo } from '../../domain/user';
+import type { AuthState } from '../../state/auth';
+import type { UserState } from '../../state/user';
 import ErrorMessages from '../error/ErrorMessages';
 import { updateAuthField } from '../../state/auth';
 
 type Props = {
+  user: UserState,
+  userAuthInfo: $PropertyType<AuthState, 'userAuthInfo'>,
+  isLoading: $PropertyType<AuthState, 'isLoading'>,
+  errors?: $PropertyType<AuthState, 'errors'>,
   actionTitle?: string,
-  user: ?User,
-  userAuthInfo: UserAuthInfo,
-  errors?: Object,
   showUsernameField: boolean,
   onSubmit: Function,
   updateAuthField: Function,
-  renderSwitch: Function,
-  isLoading: boolean
+  renderSwitch: Function
 };
 
 class AuthPage extends Component<Props> {

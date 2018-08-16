@@ -2,23 +2,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import type { Article, EditingArticle } from '../../domain/article';
-import { editor, type EditorStatus } from '../../state/article';
+import { editor, type EditorState, type ArticleState } from '../../state/article';
 import TagList from '../tag/TagList';
 import ErrorMessages from '../error/ErrorMessages';
 
 const { EditorStatuses } = editor;
 
 type Props = {
-  article: EditingArticle,
-  savedArticle: ?Article,
-  resetEditor: Function,
-  updateField: Function,
+  article: $PropertyType<EditorState, 'article'>,
+  errors: $PropertyType<EditorState, 'errors'>,
+  status: $PropertyType<EditorState, 'status'>,
+  savedArticle: $PropertyType<ArticleState, 'article'>,
   addTag: Function,
   removeTag: Function,
   onSubmit: Function,
-  errors: ?Object,
-  status: EditorStatus
+  resetEditor: Function,
+  updateField: Function
 };
 
 type State = {

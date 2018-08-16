@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import type { User } from '../../domain/user';
-import type { Tag } from '../../domain/tag';
 import Feed from '../article/Feed';
 import PopularTagList from '../tag/PopularTagList';
+import type { Tag } from '../../domain/tag';
+import type { UserState } from '../../state/user';
 import {
   globalFeed,
   userFeed,
@@ -21,7 +21,7 @@ const Tabs = {
 type Tab = $Keys<typeof Tabs>;
 
 type Props = {
-  user: User,
+  user: UserState,
   globalFeed: FeedState,
   userFeed: FeedState,
   loadGlobalFeed: Function,

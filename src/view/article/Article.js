@@ -3,25 +3,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Markdown from 'react-markdown';
-import { type User } from '../../domain/user';
 import type {
-  Article as ArticleType,
   ArticleSlug,
   Comment as CommentType
 } from '../../domain/article';
-import { article } from '../../state/article';
+import { article, type ArticleState } from '../../state/article';
+import { type UserState } from '../../state/user';
 import TagList from '../tag/TagList';
 import ArticleMeta from './ArticleMeta';
 import CommentForm from './CommentForm';
 import Comment from './Comment';
 
 type Props = {
-  user: ?User,
   articleSlug: ArticleSlug,
-  article: ?ArticleType,
-  comments: Array<CommentType>,
-  error: Error,
-  isLoading: bool,
+  user: UserState,
+  article: $PropertyType<ArticleState, 'article'>,
+  comments: $PropertyType<ArticleState, 'comments'>,
+  error: $PropertyType<ArticleState, 'error'>,
+  isLoading: $PropertyType<ArticleState, 'isLoading'>,
   loadArticle: (ArticleSlug) => void,
   addComment: (string, ArticleSlug) => void,
   removeComment: (CommentType, ArticleSlug) => void,

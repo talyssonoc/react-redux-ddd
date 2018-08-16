@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import type { ArticleSlug } from '../../domain/article';
-import { article, editor, type EditorStatus } from '../../state/article';
+import { article, editor, type EditorState } from '../../state/article';
 import ArticleEditor from './ArticleEditor';
 
 const { EditorStatuses } = editor;
 
 type Props = {
-  status: EditorStatus,
+  status: $PropertyType<EditorState, 'status'>,
   articleSlug: ArticleSlug,
   editArticle: Function,
   setEditingArticle: Function

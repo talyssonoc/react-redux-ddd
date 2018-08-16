@@ -2,14 +2,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  loadPopularTags
+  loadPopularTags,
+  type PopularTagsState
 } from '../../state/tag';
 import TagList, { type Props as TagListProps } from './TagList';
 
 type Props = TagListProps & {
   loadPopularTags: Function,
-  isLoading: bool,
-  error: any
+  isLoading: $PropertyType<PopularTagsState, 'isLoading'>,
+  error: $PropertyType<PopularTagsState, 'error'>
 };
 
 class PopularTagList extends Component<Props> {
