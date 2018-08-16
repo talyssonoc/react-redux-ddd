@@ -32,10 +32,9 @@ const wrapErrorExtraction = (request: Request): any => async (...args) => {
 };
 
 export const post = wrapErrorExtraction(axios.post);
-
 export const get = wrapErrorExtraction(axios.get);
-
 const del = wrapErrorExtraction(axios.delete);
+const put = wrapErrorExtraction(axios.put);
 
 export const authGet: AuthRequestWithoutData = (url, user, options = {}) =>
   get(url, withUserToken(options, user));
@@ -45,6 +44,9 @@ export const authPost: AuthRequestWithData = (url, user, data = {}, options = {}
 
 export const authDel: AuthRequestWithoutData = (url, user, options = {}) =>
   del(url, withUserToken(options, user));
+
+export const authPut: AuthRequestWithData = (url, user, data = {}, options = {}) =>
+  put(url, data, withUserToken(options, user));
 
 type SuccessResponse = Object;
 

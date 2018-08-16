@@ -31,6 +31,7 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
 
     case ARTICLE.LOAD_ARTICLE_SUCCESS:
     case ARTICLE.CREATE_ARTICLE_SUCCESS:
+    case ARTICLE.EDIT_ARTICLE_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -76,7 +77,7 @@ export const loadArticle = (slug: ArticleSlug) => {
 
     dispatch(loadArticleRequest);
 
-    container.getArticle(slug, {
+    container.getArticle(slug, { withComments: true }, {
       onSuccess: ({ article, comments }) => {
         dispatch(loadArticleSuccess(article, comments));
       },
@@ -189,5 +190,33 @@ const createArticleSuccess = (article) => ({
 
 const createArticleError = (errors) => ({
   type: ARTICLE.CREATE_ARTICLE_ERROR,
+  errors
+});
+
+export const editArticle = (editingArticle: EditingArticle) => {
+  return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
+    dispatch(editArticleRequest);
+
+    const { user } = getState();
+
+    container.editArticle(editingArticle, ((user: any): User), {
+      onSuccess: ({ article, comments }) => dispatch(editArticleSuccess(article, comments)),
+      onError: (error) => dispatch(editArticleError(error.errors))
+    });
+  };
+};
+
+const editArticleRequest = {
+  type: ARTICLE.EDIT_ARTICLE_REQUEST
+};
+
+const editArticleSuccess = (article, comments) => ({
+  type: ARTICLE.EDIT_ARTICLE_SUCCESS,
+  article,
+  comments
+});
+
+const editArticleError = (errors) => ({
+  type: ARTICLE.EDIT_ARTICLE_ERROR,
   errors
 });

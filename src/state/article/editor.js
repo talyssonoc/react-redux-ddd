@@ -1,25 +1,38 @@
 /* @flow */
 import type { Reducer } from 'redux';
-import type { EditingArticle } from '../../domain/article';
+import type { EditingArticle, ArticleSlug } from '../../domain/article';
 import type { Tag } from '../../domain/tag';
+import typeof * as Container from '../../container';
 import { ARTICLE, EDITOR } from '../actionTypes';
 
+export const EditorStatuses = {
+  INIT: 'INIT',
+  LOADING: 'LOADING',
+  LOADED: 'LOADED',
+  FAILED_LOADING: 'FAILED_LOADING',
+  SAVING: 'SAVING',
+  SAVED: 'SAVED',
+  FAILED_SAVING: 'FAILED_SAVING'
+};
+
+export type EditorStatus = $Keys<typeof EditorStatuses>;
+
 export type EditorState = {
+  status: EditorStatus,
   article: EditingArticle,
-  isSaving: bool,
-  isSaved: bool,
+  isLoading: bool,
   errors: ?Object
 };
 
 const initialState: EditorState = {
+  status: EditorStatuses.INIT,
   article: {
     title: '',
     description: '',
     body: '',
     tagList: []
   },
-  isSaving: false,
-  isSaved: false,
+  isLoading: false,
   errors: null
 };
 
@@ -60,28 +73,49 @@ export const editorReducer: Reducer<EditorState, any> = (state = initialState, a
       };
 
     case ARTICLE.CREATE_ARTICLE_REQUEST:
+    case ARTICLE.EDIT_ARTICLE_REQUEST:
       return {
         ...state,
-        isSaving: true
+        status: EditorStatuses.SAVING
       };
 
     case ARTICLE.CREATE_ARTICLE_SUCCESS:
+    case ARTICLE.EDIT_ARTICLE_SUCCESS:
       return {
         ...state,
-        isSaving: false,
-        isSaved: true
+        status: EditorStatuses.SAVED
       };
 
     case ARTICLE.CREATE_ARTICLE_ERROR:
+    case ARTICLE.EDIT_ARTICLE_ERROR:
       return {
         ...state,
-        isSaving: false,
-        isSaved: false,
+        status: EditorStatuses.FAILED_SAVING,
         errors: action.errors
       };
 
     case EDITOR.RESET:
       return initialState;
+
+    case EDITOR.SET_EDITING_ARTICLE_REQUEST:
+      return {
+        ...state,
+        status: EditorStatuses.LOADING
+      };
+
+    case EDITOR.SET_EDITING_ARTICLE_SUCCESS:
+      return {
+        ...state,
+        article: action.article,
+        status: EditorStatuses.LOADED
+      };
+
+    case EDITOR.SET_EDITING_ARTICLE_ERROR:
+      return {
+        ...state,
+        error: action.error,
+        status: EditorStatuses.FAILED_LOADING
+      };
 
     default:
       return state;
@@ -106,4 +140,29 @@ export const addTag = (tag: Tag) => ({
 export const removeTag = (tag: Tag) => ({
   type: EDITOR.REMOVE_TAG,
   tag
+});
+
+export const setEditingArticle = (articleSlug: ArticleSlug) => {
+  return (dispatch: Dispatch<any>, _: any, container: Container) => {
+    dispatch(setEditingArticleRequest);
+
+    container.getArticle(articleSlug, { withComments: false }, {
+      onSuccess: ({ article }) => dispatch(setEditingArticleSuccess(article)),
+      onError: (error) => dispatch(setEditingArticleError(error))
+    });
+  };
+};
+
+const setEditingArticleRequest = {
+  type: EDITOR.SET_EDITING_ARTICLE_REQUEST
+};
+
+const setEditingArticleSuccess = (article) => ({
+  type: EDITOR.SET_EDITING_ARTICLE_SUCCESS,
+  article
+});
+
+const setEditingArticleError = (error) => ({
+  type: EDITOR.SET_EDITING_ARTICLE_ERROR,
+  error
 });

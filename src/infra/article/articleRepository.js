@@ -1,5 +1,5 @@
 /* @flow */
-import type { ArticleRepository } from '../../domain/article';
+import type { EditingArticle, ArticleRepository } from '../../domain/article';
 import typeof * as ConduitApiService from '../conduit/conduitApiService';
 
 type Dependencies = {
@@ -50,10 +50,36 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
     return this._coerceArticle(data.article);
   },
 
+  async update(article, { user }) {
+    const slug = article.slug || '';
+
+    const { data } = await conduitApiService.authPut(`articles/${slug}`, user, {
+      article: this._serializeArticle(article)
+    });
+
+    return this._coerceArticle(data.article);
+  },
+
   _coerceArticle(rawArticle: any) {
     return {
       ...rawArticle,
       createdAt: new Date(rawArticle.createdAt)
+    };
+  },
+
+  _serializeArticle(article: EditingArticle) {
+    const {
+      title,
+      description,
+      body,
+      tagList
+    } = article;
+
+    return {
+      title,
+      description,
+      body,
+      tagList
     };
   }
 });

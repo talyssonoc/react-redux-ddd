@@ -6,7 +6,7 @@ import * as userFeed from './userFeed';
 import * as editor from './editor';
 
 export type { ArticleState } from './article';
-export type { EditorState } from './editor';
+export type { EditorState, EditorStatus } from './editor';
 
 export type FeedState = {|
   articles: Array<Article>,

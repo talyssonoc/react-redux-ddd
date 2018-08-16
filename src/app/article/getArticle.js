@@ -12,9 +12,13 @@ type Dependencies = {
   commentRepository: CommentRepository
 };
 
+type Options = {
+  withComments: bool
+};
+
 type SuccessResult = {
   article: Article,
-  comments: Array<Comment>
+  comments: ?Array<Comment>
 };
 
 type Callbacks = {
@@ -23,11 +27,11 @@ type Callbacks = {
 };
 
 export default ({ articleRepository, commentRepository }: Dependencies) => {
-  return async (slug: ArticleSlug, { onSuccess, onError }: Callbacks) => {
+  return async (slug: ArticleSlug, options: Options, { onSuccess, onError }: Callbacks) => {
     try {
       const [ article, comments ] = await Promise.all([
         articleRepository.getArticle(slug),
-        commentRepository.fromArticle(slug)
+        options.withComments ? commentRepository.fromArticle(slug) : undefined
       ]);
 
       onSuccess({ article, comments });

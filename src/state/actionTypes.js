@@ -26,7 +26,10 @@ export const ARTICLE = keyMirror({
   REMOVE_COMMENT_ERROR: null,
   CREATE_ARTICLE_REQUEST: null,
   CREATE_ARTICLE_SUCCESS: null,
-  CREATE_ARTICLE_ERROR: null
+  CREATE_ARTICLE_ERROR: null,
+  EDIT_ARTICLE_REQUEST: null,
+  EDIT_ARTICLE_SUCCESS: null,
+  EDIT_ARTICLE_ERROR: null
 }, glue, 'ARTICLE');
 
 export const FEED = keyMirror({
@@ -45,7 +48,10 @@ export const EDITOR = keyMirror({
   UPDATE_FIELD: null,
   ADD_TAG: null,
   REMOVE_TAG: null,
-  RESET: null
+  RESET: null,
+  SET_EDITING_ARTICLE_REQUEST: null,
+  SET_EDITING_ARTICLE_SUCCESS: null,
+  SET_EDITING_ARTICLE_ERROR: null
 }, glue, 'EDITOR');
 
 export const TAG = keyMirror({

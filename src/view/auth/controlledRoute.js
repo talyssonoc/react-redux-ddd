@@ -12,14 +12,22 @@ type Props = {
 const _PrivateRoute = ({ isAuthenticated, component: Component, ...props }: Props) => (
   <Route
     {...props}
-    render={ () => isAuthenticated ? <Component {...props} /> : <Redirect to="/login" /> }
+    render={ (matchProps) => (
+      isAuthenticated
+        ? <Component {...matchProps} />
+        : <Redirect to="/login" />
+    ) }
   />
 );
 
 const _PublicOnlyRoute = ({ isAuthenticated, component: Component, ...props }: Props) => (
   <Route
     {...props}
-    render={ () => !isAuthenticated ? <Component {...props} /> : <Redirect to="/" /> }
+    render={ (matchProps) => (
+      !isAuthenticated
+        ? <Component {...matchProps} />
+        : <Redirect to="/" />
+    ) }
   />
 );
 

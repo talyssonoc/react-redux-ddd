@@ -1,5 +1,6 @@
 /* @flow */
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { type User } from '../../domain/user';
 import { isAuthoredBy, type Article } from '../../domain/article';
 import FormattedDate from '../date/FormattedDate';
@@ -23,11 +24,14 @@ const ArticleMeta = ({ article, currentUser }: Props) => (
     {
       isAuthoredBy(article, currentUser) ? (
         <Fragment>
-          <button className="btn btn-sm btn-outline-secondary">
+          <Link
+            to={ `/editor/${article.slug}` }
+            className="btn btn-sm btn-outline-secondary"
+          >
             <i className="ion-edit"></i>
             &nbsp;
             Edit Article
-          </button>
+          </Link>
           &nbsp;&nbsp;
           <button className="btn btn-sm btn-outline-danger">
             <i className="ion-trash-a"></i>

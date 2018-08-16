@@ -26,6 +26,7 @@ export type Article = Authorable & {
 export type EditingArticle = {
   title: string,
   description: string,
+  slug?: ArticleSlug,
   body: string,
   tagList: Array<Tag>
 };
@@ -40,7 +41,8 @@ export type ArticleRepository = {
   fromUserFeed: (User) => Promise<Feed>,
   fromTagFeed: (Tag) => Promise<Feed>,
   getArticle: (ArticleSlug) => Promise<Article>,
-  add: (EditingArticle, { user: User }) => Promise<Article>
+  add: (EditingArticle, { user: User }) => Promise<Article>,
+  update: (EditingArticle, { user: User }) => Promise<Article>
 };
 
 export type NewComment = {

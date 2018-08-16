@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import type { Article, EditingArticle } from '../../domain/article';
-import { editor } from '../../state/article';
+import { editor, type EditorStatus } from '../../state/article';
 import TagList from '../tag/TagList';
 import ErrorMessages from '../error/ErrorMessages';
+
+const { EditorStatuses } = editor;
 
 type Props = {
   article: EditingArticle,
@@ -15,9 +17,8 @@ type Props = {
   addTag: Function,
   removeTag: Function,
   onSubmit: Function,
-  isSaving: bool,
-  isSaved: bool,
-  errors: ?Object
+  errors: ?Object,
+  status: EditorStatus
 };
 
 type State = {
@@ -97,16 +98,18 @@ class ArticleEditor extends Component<Props, State> {
 
   render() {
     const {
+      status,
       article,
       removeTag,
-      isSaved,
-      isSaving,
       savedArticle,
       errors
     } = this.props;
+
     const { editingTag } = this.state;
 
-    if(isSaved && savedArticle) {
+    const isSaving = status === EditorStatuses.SAVING;
+
+    if(status === EditorStatuses.SAVED && savedArticle) {
       return <Redirect to={ `/article/${savedArticle.slug}` } />
     }
 
@@ -128,6 +131,7 @@ class ArticleEditor extends Component<Props, State> {
                       className="form-control form-control-lg"
                       placeholder="Article Title"
                       disabled={ isSaving }
+                      required
                     />
                   </fieldset>
                   <fieldset className="form-group">
@@ -138,6 +142,7 @@ class ArticleEditor extends Component<Props, State> {
                       className="form-control"
                       placeholder="What's this article about?"
                       disabled={ isSaving }
+                      required
                     />
                   </fieldset>
                   <fieldset className="form-group">
@@ -148,6 +153,7 @@ class ArticleEditor extends Component<Props, State> {
                       rows="8"
                       placeholder="Write your article (in markdown)"
                       disabled={ isSaving }
+                      required
                     ></textarea>
                   </fieldset>
                   <fieldset className="form-group">
@@ -184,9 +190,8 @@ class ArticleEditor extends Component<Props, State> {
 }
 
 const mapStateToProps = ({ editor, article }) => ({
+  status: editor.status,
   article: editor.article,
-  isSaved: editor.isSaved,
-  isSaving: editor.isSaving,
   errors: editor.errors,
   savedArticle: article.article
 });
