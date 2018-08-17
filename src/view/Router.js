@@ -9,6 +9,7 @@ import RegisterPage from './auth/RegisterPage';
 import Article from './article/Article';
 import CreateArticlePage from './article/CreateArticlePage';
 import EditArticlePage from './article/EditArticlePage';
+import AuthorPage from './article/AuthorPage';
 
 const Router = () => (
   <BrowserRouter>
@@ -18,6 +19,7 @@ const Router = () => (
         <PublicOnlyRoute path='/login' component={ LoginPage } />
         <PublicOnlyRoute path='/register' component={ RegisterPage } />
         <Route path='/article/:slug' component={ Article } />
+        <Route path='/@:username' exact component={ AuthorPage } />
         <PrivateRoute path='/editor' exact component={ CreateArticlePage } />
         <PrivateRoute path='/editor/:slug' exact component={ EditArticlePage } />
         <Redirect to='/' />

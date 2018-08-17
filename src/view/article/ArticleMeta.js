@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { type User } from '../../domain/user';
 import { isAuthoredBy, type Article } from '../../domain/article';
 import FormattedDate from '../date/FormattedDate';
+import AuthorLink from './AuthorLink';
 
 type Props = {
   article: Article,
@@ -16,7 +17,12 @@ const ArticleMeta = ({ article, currentUser }: Props) => (
       <img src={ article.author.image } alt={ article.author.username } />
     </a>
     <div className="info">
-      <a href="" className="author">{ article.author.username }</a>
+      <AuthorLink
+        author={ article.author }
+        className="author"
+      >
+        { article.author.username }
+      </AuthorLink>
       <span className="date">
         <FormattedDate date={ article.createdAt } />
       </span>

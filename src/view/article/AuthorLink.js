@@ -11,7 +11,7 @@ type Props = {
 const AuthorLink = ({ author, ...props}: Props) => (
   <Link
     {...props}
-    to={ `/@${author.username}` }
+    to={ `/@${ author.username }` }
   />
 );
 
