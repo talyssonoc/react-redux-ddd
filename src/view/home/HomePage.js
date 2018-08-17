@@ -7,8 +7,7 @@ import PopularTagList from '../tag/PopularTagList';
 import type { Tag } from '../../domain/tag';
 import type { UserState } from '../../state/user';
 import {
-  globalFeed,
-  userFeed,
+  feed,
   type FeedState
 } from '../../state/article';
 
@@ -22,20 +21,15 @@ type Tab = $Keys<typeof Tabs>;
 
 type Props = {
   user: UserState,
-  globalFeed: FeedState,
-  userFeed: FeedState,
-  loadGlobalFeed: typeof globalFeed.loadGlobalFeed,
-  loadUserFeed: typeof userFeed.loadUserFeed,
-  loadTagFeed: typeof globalFeed.loadTagFeed
+  feed: FeedState,
+  loadGlobalFeed: typeof feed.loadGlobalFeed,
+  loadUserFeed: typeof feed.loadUserFeed,
+  loadTagFeed: typeof feed.loadTagFeed
 };
 
 type State = {
   selectedTab: Tab,
   selectedTag?: ?Tag
-};
-
-type WithTabCallbacks = {
-  [Tab]: (Tag) => any
 };
 
 class HomePage extends Component<Props, State> {
@@ -61,25 +55,20 @@ class HomePage extends Component<Props, State> {
   }
 
   loadTab(tab: Tab, tag: ?Tag) {
-    this.withTab(tab, tag, {
-      [Tabs.USER]: this.props.loadUserFeed,
-      [Tabs.GLOBAL]: this.props.loadGlobalFeed,
-      [Tabs.TAG]: (tag) => this.props.loadTagFeed(tag)
-    });
-  }
-
-  withTab(tab: Tab, tag: ?Tag, callbacks: WithTabCallbacks) {
-    return callbacks[tab](((tag: any): Tab));
+    switch(tab) {
+      case Tabs.USER:
+        return this.props.loadUserFeed();
+      case Tabs.TAG:
+        return this.props.loadTagFeed(((tag: any): Tag))
+      case Tabs.GLOBAL:
+      default:
+        return this.props.loadGlobalFeed();
+    }
   }
 
   render() {
-    const { user, globalFeed, userFeed } = this.props;
+    const { user, feed } = this.props;
     const { selectedTab, selectedTag } = this.state;
-    const currentFeed = this.withTab(selectedTab, null, {
-      [Tabs.USER]: () => userFeed,
-      [Tabs.GLOBAL]: () => globalFeed,
-      [Tabs.TAG]: () => globalFeed
-    });
 
     return (
       <div className="home-page">
@@ -145,7 +134,7 @@ class HomePage extends Component<Props, State> {
                 </ul>
               </div>
 
-              <Feed feed={ currentFeed } />
+              <Feed feed={ feed } />
             </div>
 
             <div className="col-md-3">
@@ -164,16 +153,15 @@ class HomePage extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = ({ user, globalFeed, userFeed }) => ({
+const mapStateToProps = ({ user, feed }) => ({
   user,
-  globalFeed,
-  userFeed
+  feed
 });
 
 const mapDispatchToProps = {
-  loadGlobalFeed: globalFeed.loadGlobalFeed,
-  loadUserFeed: userFeed.loadUserFeed,
-  loadTagFeed: globalFeed.loadTagFeed
+  loadGlobalFeed: feed.loadGlobalFeed,
+  loadUserFeed: feed.loadUserFeed,
+  loadTagFeed: feed.loadTagFeed
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

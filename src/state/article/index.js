@@ -1,22 +1,14 @@
 /* @flow */
-import type { Article } from '../../domain/article';
 import * as article from './article';
-import * as globalFeed from './globalFeed';
-import * as userFeed from './userFeed';
+import * as feed from './feed';
 import * as editor from './editor';
 
+export type { FeedState } from './feed';
 export type { ArticleState } from './article';
 export type { EditorState, EditorStatus } from './editor';
 
-export type FeedState = {|
-  articles: Array<Article>,
-  isLoading: bool,
-  error: ?Error
-|};
-
 export {
   article,
-  globalFeed,
-  userFeed,
+  feed,
   editor
 };

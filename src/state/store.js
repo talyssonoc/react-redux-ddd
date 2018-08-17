@@ -14,8 +14,7 @@ import { userReducer as user, type UserState } from './user';
 import { popularTagsReducer as popularTags, type PopularTagsState } from './tag';
 
 import {
-  globalFeed,
-  userFeed,
+  feed,
   article,
   editor,
   type FeedState,
@@ -28,8 +27,7 @@ type State = {|
   user: UserState,
   popularTags: PopularTagsState,
   article: ArticleState,
-  globalFeed: FeedState,
-  userFeed: FeedState,
+  feed: FeedState,
   editor: EditorState
 |};
 
@@ -47,8 +45,7 @@ const reducer: CombinedReducer<State, any> = combineReducers({
   user,
   popularTags,
   article: article.articleReducer,
-  globalFeed: globalFeed.globalFeedReducer,
-  userFeed: userFeed.userFeedReducer,
+  feed: feed.feedReducer,
   editor: editor.editorReducer
 });
 

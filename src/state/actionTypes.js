@@ -34,14 +34,10 @@ export const ARTICLE = keyMirror({
 
 export const FEED = keyMirror({
   LOAD_GLOBAL_FEED_REQUEST: null,
-  LOAD_GLOBAL_FEED_SUCCESS: null,
-  LOAD_GLOBAL_FEED_ERROR: null,
   LOAD_USER_FEED_REQUEST: null,
-  LOAD_USER_FEED_SUCCESS: null,
-  LOAD_USER_FEED_ERROR: null,
   LOAD_TAG_FEED_REQUEST: null,
-  LOAD_TAG_FEED_SUCCESS: null,
-  LOAD_TAG_FEED_ERROR: null
+  LOAD_FEED_SUCCESS: null,
+  LOAD_FEED_ERROR: null
 }, glue, 'FEED');
 
 export const EDITOR = keyMirror({
