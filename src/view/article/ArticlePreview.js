@@ -1,7 +1,8 @@
 /* @flow */
 import React from 'react';
-import { Link } from 'react-router-dom';
 import type { Article } from '../../domain/article';
+import AuthorLink from './AuthorLink';
+import ArticleLink from './ArticleLink';
 import FormattedDate from '../date/FormattedDate';
 
 type Props = {
@@ -11,13 +12,13 @@ type Props = {
 const ArticlePreview = ({ article }: Props) => (
   <div className="article-preview">
     <div className="article-meta">
-      <Link to={ `/@${article.author.username}` }>
+      <AuthorLink author={ article.author }>
         <img src={ article.author.image } alt={ article.author.username } />
-      </Link>
+      </AuthorLink>
       <div className="info">
-        <Link to={ `/@${article.author.username}` } className="author">
+        <AuthorLink author={ article.author } className="author">
           { article.author.username }
-        </Link>
+        </AuthorLink>
         <span className="date">
           <FormattedDate date={ article.createdAt } />
         </span>
@@ -26,8 +27,8 @@ const ArticlePreview = ({ article }: Props) => (
         <i className="ion-heart"></i> { article.favoritesCount }
       </button>
     </div>
-    <Link
-      to={ `/article/${article.slug}` }
+    <ArticleLink
+      article={ article }
       className="preview-link"
     >
       <h1>{ article.title }</h1>
@@ -35,7 +36,7 @@ const ArticlePreview = ({ article }: Props) => (
         { article.description }
       </p>
       <span>Read more...</span>
-    </Link>
+    </ArticleLink>
   </div>
 );
 

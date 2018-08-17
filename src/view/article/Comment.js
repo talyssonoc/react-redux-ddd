@@ -1,8 +1,8 @@
 /* @flow */
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { type User } from '../../domain/user';
 import { isAuthoredBy, type Comment as CommentType } from '../../domain/article';
+import AuthorLink from './AuthorLink';
 import FormattedDate from '../date/FormattedDate';
 
 type Props = {
@@ -17,17 +17,17 @@ const Comment = ({ comment, currentUser, onClickDelete }: Props) => (
       <p className="card-text">{ comment.body }</p>
     </div>
     <div className="card-footer">
-      <Link to={ `/@${comment.author.username}` } className="comment-author">
+      <AuthorLink author={ comment.author } className="comment-author">
         <img
           src={ comment.author.image }
           alt={ comment.author.username }
           className="comment-author-img"
         />
-      </Link>
+      </AuthorLink>
       &nbsp;
-      <Link to={ `/@${comment.author.username}` } className="comment-author">
+      <AuthorLink author={ comment.author } className="comment-author">
         { comment.author.username }
-      </Link>
+      </AuthorLink>
       <span className="date-posted">
         <FormattedDate date={ comment.createdAt } />
       </span>
