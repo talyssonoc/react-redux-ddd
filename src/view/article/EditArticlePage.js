@@ -11,8 +11,8 @@ const { EditorStatuses } = editor;
 type Props = {
   status: $PropertyType<EditorState, 'status'>,
   articleSlug: ArticleSlug,
-  editArticle: Function,
-  setEditingArticle: Function
+  editArticle: typeof article.editArticle,
+  setEditingArticle: typeof editor.setEditingArticle
 };
 
 class EditArticlePage extends Component<Props> {

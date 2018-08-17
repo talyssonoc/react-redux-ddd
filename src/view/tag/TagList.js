@@ -5,10 +5,10 @@ import type { Tag } from '../../domain/tag';
 
 export type Props = {
   tags: Array<Tag>,
-  onClickTag?: Function,
+  onClickTag?: (Tag) => *,
   tagClassName?: string,
   iconClassName?: string,
-  onClickIcon?: Function
+  onClickIcon?: (Tag) => *
 };
 
 const TagList = (props: Props) => (

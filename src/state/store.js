@@ -1,5 +1,11 @@
 /* @flow */
-import { createStore, applyMiddleware, combineReducers, type CombinedReducer } from 'redux';
+import {
+  createStore,
+  applyMiddleware,
+  combineReducers,
+  type CombinedReducer,
+  type Store as ReduxStore
+} from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import typeof * as Container from '../container';
@@ -27,12 +33,14 @@ type State = {|
   editor: EditorState
 |};
 
+export type Store = ReduxStore<State, *, *>;
+
+export type GetState = $PropertyType<Store, 'getState'>;
+
 type Dependencies = {
   container: Container,
   initialState: State
 };
-
-export type GetState = () => State;
 
 const reducer: CombinedReducer<State, any> = combineReducers({
   auth,
@@ -44,7 +52,7 @@ const reducer: CombinedReducer<State, any> = combineReducers({
   editor: editor.editorReducer
 });
 
-export default ({ container, initialState }: Dependencies) => (
+export default ({ container, initialState }: Dependencies): Store => (
   createStore(
     reducer,
     initialState,

@@ -24,9 +24,9 @@ type Props = {
   user: UserState,
   globalFeed: FeedState,
   userFeed: FeedState,
-  loadGlobalFeed: Function,
-  loadUserFeed: Function,
-  loadTagFeed: Function
+  loadGlobalFeed: typeof globalFeed.loadGlobalFeed,
+  loadUserFeed: typeof userFeed.loadUserFeed,
+  loadTagFeed: typeof globalFeed.loadTagFeed
 };
 
 type State = {
@@ -35,7 +35,7 @@ type State = {
 };
 
 type WithTabCallbacks = {
-  [Tab]: (?Tag) => any
+  [Tab]: (Tag) => any
 };
 
 class HomePage extends Component<Props, State> {
@@ -64,12 +64,12 @@ class HomePage extends Component<Props, State> {
     this.withTab(tab, tag, {
       [Tabs.USER]: this.props.loadUserFeed,
       [Tabs.GLOBAL]: this.props.loadGlobalFeed,
-      [Tabs.TAG]: () => this.props.loadTagFeed(tag)
+      [Tabs.TAG]: (tag) => this.props.loadTagFeed(tag)
     });
   }
 
   withTab(tab: Tab, tag: ?Tag, callbacks: WithTabCallbacks) {
-    return callbacks[tab](tag);
+    return callbacks[tab](((tag: any): Tab));
   }
 
   render() {

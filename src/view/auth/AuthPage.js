@@ -1,11 +1,11 @@
 /* @flow */
-import React, { Component } from 'react';
+import React, { Component, type Node } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import type { AuthState } from '../../state/auth';
 import type { UserState } from '../../state/user';
 import ErrorMessages from '../error/ErrorMessages';
-import { updateAuthField } from '../../state/auth';
+import * as auth from '../../state/auth';
 
 type Props = {
   user: UserState,
@@ -14,9 +14,9 @@ type Props = {
   errors?: $PropertyType<AuthState, 'errors'>,
   actionTitle?: string,
   showUsernameField: boolean,
-  onSubmit: Function,
-  updateAuthField: Function,
-  renderSwitch: Function
+  onSubmit: ($PropertyType<Props, 'userAuthInfo'>) => *,
+  updateAuthField: typeof auth.updateAuthField,
+  renderSwitch: () => Node
 };
 
 class AuthPage extends Component<Props> {
@@ -137,7 +137,7 @@ const mapStateToProps = ({ auth, user }) => ({
 });
 
 const mapDispatchToProps = {
-  updateAuthField
+  updateAuthField: auth.updateAuthField
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthPage);

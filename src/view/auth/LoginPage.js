@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AuthPage from './AuthPage';
-import { signInUser } from '../../state/auth';
+import * as auth from '../../state/auth';
 
-type Props = { signInUser: Function };
+type Props = {
+  signInUser: typeof auth.signInUser
+};
 
 class LoginPage extends Component<Props> {
   render() {
@@ -22,7 +24,7 @@ class LoginPage extends Component<Props> {
 }
 
 const mapDispatchToProps = {
-  signInUser
+  signInUser: auth.signInUser
 };
 
 export default connect(null, mapDispatchToProps)(LoginPage);

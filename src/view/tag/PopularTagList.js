@@ -8,7 +8,7 @@ import {
 import TagList, { type Props as TagListProps } from './TagList';
 
 type Props = TagListProps & {
-  loadPopularTags: Function,
+  loadPopularTags: typeof loadPopularTags,
   isLoading: $PropertyType<PopularTagsState, 'isLoading'>,
   error: $PropertyType<PopularTagsState, 'error'>
 };

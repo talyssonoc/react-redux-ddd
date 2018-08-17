@@ -6,12 +6,12 @@ import type { GetState } from '../store';
 import typeof * as Container from '../../container';
 import { ARTICLE } from '../actionTypes';
 
-export type ArticleState = {
+export type ArticleState = {|
   article: ?Article,
   isLoading: bool,
   error: ?Object,
   comments: Array<Comment>
-};
+|};
 
 const initialState: ArticleState = {
   article: null,
@@ -77,10 +77,8 @@ export const loadArticle = (slug: ArticleSlug) => {
 
     dispatch(loadArticleRequest);
 
-    container.getArticle(slug, { withComments: true }, {
-      onSuccess: ({ article, comments }) => {
-        dispatch(loadArticleSuccess(article, comments));
-      },
+    return container.getArticle(slug, { withComments: true }, {
+      onSuccess: ({ article, comments }) => dispatch(loadArticleSuccess(article, comments)),
       onError: (error) => dispatch(loadArticleError(error))
     });
   };

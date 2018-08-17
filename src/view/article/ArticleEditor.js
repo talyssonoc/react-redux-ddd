@@ -13,11 +13,11 @@ type Props = {
   errors: $PropertyType<EditorState, 'errors'>,
   status: $PropertyType<EditorState, 'status'>,
   savedArticle: $PropertyType<ArticleState, 'article'>,
-  addTag: Function,
-  removeTag: Function,
-  onSubmit: Function,
-  resetEditor: Function,
-  updateField: Function
+  addTag: typeof editor.addTag,
+  removeTag: typeof editor.removeTag,
+  resetEditor: typeof editor.resetEditor,
+  updateField: typeof editor.updateField,
+  onSubmit: ($PropertyType<Props, 'article'>) => *
 };
 
 type State = {
@@ -85,7 +85,7 @@ class ArticleEditor extends Component<Props, State> {
     if(tagList.length) {
       this.props.removeTag(tagList[tagList.length - 1]);
     }
-  }
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -109,7 +109,7 @@ class ArticleEditor extends Component<Props, State> {
     const isSaving = status === EditorStatuses.SAVING;
 
     if(status === EditorStatuses.SAVED && savedArticle) {
-      return <Redirect to={ `/article/${savedArticle.slug}` } />
+      return <Redirect to={ `/article/${savedArticle.slug}` } />;
     }
 
     return (

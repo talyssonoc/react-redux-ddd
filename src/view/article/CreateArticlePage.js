@@ -5,7 +5,7 @@ import { article } from '../../state/article';
 import ArticleEditor from './ArticleEditor';
 
 type Props = {
-  createArticle: Function
+  createArticle: typeof article.createArticle
 };
 
 const CreateArticlePage = (props: Props) => (

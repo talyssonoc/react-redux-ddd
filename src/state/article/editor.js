@@ -17,12 +17,12 @@ export const EditorStatuses = {
 
 export type EditorStatus = $Keys<typeof EditorStatuses>;
 
-export type EditorState = {
+export type EditorState = {|
   status: EditorStatus,
   article: EditingArticle,
   isLoading: bool,
   errors: ?Object
-};
+|};
 
 const initialState: EditorState = {
   status: EditorStatuses.INIT,
@@ -113,7 +113,7 @@ export const editorReducer: Reducer<EditorState, any> = (state = initialState, a
     case EDITOR.SET_EDITING_ARTICLE_ERROR:
       return {
         ...state,
-        error: action.error,
+        errors: action.error,
         status: EditorStatuses.FAILED_LOADING
       };
 

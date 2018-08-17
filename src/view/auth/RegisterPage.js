@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AuthPage from './AuthPage';
-import { registerUser } from '../../state/auth';
+import * as auth from '../../state/auth';
 
-type Props = { registerUser: Function };
+type Props = {
+  registerUser: typeof auth.registerUser
+};
 
 class Register extends Component<Props> {
   render() {
@@ -23,7 +25,7 @@ class Register extends Component<Props> {
 }
 
 const mapDispatchToProps = {
-  registerUser
+  registerUser: auth.registerUser
 };
 
 export default connect(null, mapDispatchToProps)(Register);
