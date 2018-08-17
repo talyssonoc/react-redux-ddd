@@ -8,8 +8,8 @@ import { type UserState } from '../../state/user';
 import { article, type ArticleState } from '../../state/article';
 import TagList from '../tag/TagList';
 import ArticleMeta from './ArticleMeta';
-import CommentForm from './CommentForm';
-import Comment from './Comment';
+import CommentForm from '../comment/CommentForm';
+import Comment from '../comment/Comment';
 
 type Props = {
   articleSlug: ArticleSlug,
