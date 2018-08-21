@@ -4,6 +4,7 @@ import type { Article } from '../../domain/article';
 import AuthorLink from '../author/AuthorLink';
 import ArticleLink from './ArticleLink';
 import FormattedDate from '../date/FormattedDate';
+import TagList from '../tag/TagList';
 
 type Props = {
   article: Article
@@ -36,6 +37,11 @@ const ArticlePreview = ({ article }: Props) => (
         { article.description }
       </p>
       <span>Read more...</span>
+      <TagList
+        as="ul"
+        tags={ article.tagList }
+        tagClassName="tag-outline"
+      />
     </ArticleLink>
   </div>
 );
