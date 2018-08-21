@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import type { Article } from '../../domain/article';
-import AuthorLink from './AuthorLink';
+import AuthorLink from '../author/AuthorLink';
 import ArticleLink from './ArticleLink';
 import FormattedDate from '../date/FormattedDate';
 

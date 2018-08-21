@@ -1,8 +1,9 @@
 /* @flow */
 import React from 'react';
 import { type User } from '../../domain/user';
-import { isAuthoredBy, type Comment as CommentType } from '../../domain/article';
-import AuthorLink from '../article/AuthorLink';
+import { type Comment as CommentType } from '../../domain/article';
+import { isAuthoredBy } from '../../domain/author';
+import AuthorLink from '../author/AuthorLink';
 import FormattedDate from '../date/FormattedDate';
 
 type Props = {

@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import type { Author } from '../../domain/article';
+import type { Author } from '../../domain/author';
 
 type Props = {
   author: Author,

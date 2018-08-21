@@ -1,15 +1,7 @@
 /* @flow */
 import type { User } from '../user';
 import type { Tag } from '../tag';
-
-export type Author = {
-  username: string,
-  image: ?string
-};
-
-type Authorable = {
-  author: Author
-};
+import type { Authorable } from '../author';
 
 export type ArticleSlug = string;
 
@@ -40,6 +32,8 @@ export type ArticleRepository = {
   fromGlobalFeed: () => Promise<Feed>,
   fromUserFeed: (User) => Promise<Feed>,
   fromTagFeed: (Tag) => Promise<Feed>,
+  fromAuthorFeed: (string) => Promise<Feed>,
+  fromAuthorFavorites: (string) => Promise<Feed>,
   getArticle: (ArticleSlug) => Promise<Article>,
   add: (EditingArticle, { user: User }) => Promise<Article>,
   update: (EditingArticle, { user: User }) => Promise<Article>
@@ -59,7 +53,3 @@ export type CommentRepository = {
   add: (NewComment, { articleSlug: ArticleSlug, user: User } ) => Promise<Comment>,
   remove: (Comment, { articleSlug: ArticleSlug, user: User } ) => Promise<void>
 };
-
-export const isAuthoredBy = (authorable: Authorable, user: ?User) => (
-  user && (authorable.author.username === user.username)
-);

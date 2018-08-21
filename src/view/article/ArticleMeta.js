@@ -2,9 +2,10 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { type User } from '../../domain/user';
-import { isAuthoredBy, type Article } from '../../domain/article';
+import { type Article } from '../../domain/article';
+import { isAuthoredBy } from '../../domain/author';
 import FormattedDate from '../date/FormattedDate';
-import AuthorLink from './AuthorLink';
+import AuthorLink from '../author/AuthorLink';
 
 type Props = {
   article: Article,

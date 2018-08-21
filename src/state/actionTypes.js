@@ -36,6 +36,8 @@ export const FEED = keyMirror({
   LOAD_GLOBAL_FEED_REQUEST: null,
   LOAD_USER_FEED_REQUEST: null,
   LOAD_TAG_FEED_REQUEST: null,
+  LOAD_AUTHOR_FEED_REQUEST: null,
+  LOAD_AUTHOR_FAVORITES_FEED_REQUEST: null,
   LOAD_FEED_SUCCESS: null,
   LOAD_FEED_ERROR: null
 }, glue, 'FEED');
@@ -55,3 +57,9 @@ export const TAG = keyMirror({
   LOAD_POPULAR_TAGS_SUCCESS: null,
   LOAD_POPULAR_TAGS_ERROR: null
 }, glue, 'TAG');
+
+export const AUTHOR = keyMirror({
+  LOAD_AUTHOR_REQUEST: null,
+  LOAD_AUTHOR_SUCCESS: null,
+  LOAD_AUTHOR_ERROR: null
+}, glue, 'AUTHOR');

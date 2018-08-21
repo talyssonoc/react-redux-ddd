@@ -11,6 +11,7 @@ import thunk from 'redux-thunk';
 import typeof * as Container from '../container';
 import { authReducer as auth, type AuthState } from './auth';
 import { userReducer as user, type UserState } from './user';
+import { authorReducer as author, type AuthorState } from './author';
 import { popularTagsReducer as popularTags, type PopularTagsState } from './tag';
 
 import {
@@ -28,7 +29,8 @@ type State = {|
   popularTags: PopularTagsState,
   article: ArticleState,
   feed: FeedState,
-  editor: EditorState
+  editor: EditorState,
+  author: AuthorState
 |};
 
 export type Store = ReduxStore<State, *, *>;
@@ -44,6 +46,7 @@ const reducer: CombinedReducer<State, any> = combineReducers({
   auth,
   user,
   popularTags,
+  author,
   article: article.articleReducer,
   feed: feed.feedReducer,
   editor: editor.editorReducer

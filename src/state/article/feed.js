@@ -24,6 +24,8 @@ export const feedReducer: Reducer<FeedState, any> = (state = initialState, actio
     case FEED.LOAD_GLOBAL_FEED_REQUEST:
     case FEED.LOAD_USER_FEED_REQUEST:
     case FEED.LOAD_TAG_FEED_REQUEST:
+    case FEED.LOAD_AUTHOR_FEED_REQUEST:
+    case FEED.LOAD_AUTHOR_FAVORITES_FEED_REQUEST:
       return {
         ...state,
         isLoading: true,
@@ -85,6 +87,32 @@ export const loadTagFeed = (tag: Tag) => (dispatch: Dispatch<any>, _: any, conta
     onSuccess: (feed) => dispatch(loadFeedSuccess(feed)),
     onError: (error) => dispatch(loadFeedError(error))
   });
+};
+
+export const loadAuthorFeed = (authorUsername: string) => (dispatch: Dispatch<any>, _: any, container: Container) => {
+  dispatch(loadAuthorFeedRequest);
+
+  container.getAuthorFeed(authorUsername, {
+    onSuccess: (feed) => dispatch(loadFeedSuccess(feed)),
+    onError: (error) => dispatch(loadFeedError(error))
+  });
+};
+
+export const loadAuthorFavoritesFeed = (authorUsername: string) => (dispatch: Dispatch<any>, _: any, container: Container) => {
+  dispatch(loadAuthorFavoritesFeedRequest);
+
+  container.getAuthorFavoritesFeed(authorUsername, {
+    onSuccess: (feed) => dispatch(loadFeedSuccess(feed)),
+    onError: (error) => dispatch(loadFeedError(error))
+  });
+};
+
+const loadAuthorFeedRequest = {
+  type: FEED.LOAD_AUTHOR_FEED_REQUEST
+};
+
+const loadAuthorFavoritesFeedRequest = {
+  type: FEED.LOAD_AUTHOR_FAVORITES_FEED_REQUEST
 };
 
 const loadTagFeedRequest = {

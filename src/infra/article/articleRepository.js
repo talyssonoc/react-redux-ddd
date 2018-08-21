@@ -36,6 +36,28 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
     };
   },
 
+  async fromAuthorFeed(authorUsername) {
+    const { data } = await conduitApiService.get('articles', {
+      params: { author: authorUsername }
+    });
+
+    return {
+      ...data,
+      articles: data.articles.map(this._coerceArticle)
+    };
+  },
+
+  async fromAuthorFavorites(authorUsername) {
+    const { data } = await conduitApiService.get('articles', {
+      params: { favorited: authorUsername }
+    });
+
+    return {
+      ...data,
+      articles: data.articles.map(this._coerceArticle)
+    };
+  },
+
   async getArticle(slug) {
     const { data } = await conduitApiService.get(`articles/${slug}`);
 
