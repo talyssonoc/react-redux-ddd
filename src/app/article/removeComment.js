@@ -13,7 +13,7 @@ type Dependencies = {
 
 type Config = {
   articleSlug: ArticleSlug,
-  user: User
+  currentUser: User
 };
 
 type Callbacks = {
@@ -22,11 +22,11 @@ type Callbacks = {
 };
 
 export default ({ commentRepository }: Dependencies) => {
-  return async (comment: Comment, { articleSlug, user }: Config, { onSuccess, onError }: Callbacks) => {
+  return async (comment: Comment, { articleSlug, currentUser }: Config, { onSuccess, onError }: Callbacks) => {
     try {
       await commentRepository.remove(comment, {
         articleSlug,
-        user
+        currentUser
       });
 
       onSuccess();

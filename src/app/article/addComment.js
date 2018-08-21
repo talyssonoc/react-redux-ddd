@@ -14,7 +14,7 @@ type Dependencies = {
 
 type Config = {
   articleSlug: ArticleSlug,
-  user: User
+  currentUser: User
 };
 
 type Callbacks = {
@@ -23,7 +23,7 @@ type Callbacks = {
 };
 
 export default ({ commentRepository }: Dependencies) => {
-  return async (commentBody: string, { articleSlug, user }: Config, { onSuccess, onError }: Callbacks) => {
+  return async (commentBody: string, { articleSlug, currentUser }: Config, { onSuccess, onError }: Callbacks) => {
     try {
       const comment: NewComment = {
         body: commentBody
@@ -31,7 +31,7 @@ export default ({ commentRepository }: Dependencies) => {
 
       const globalFeed = await commentRepository.add(comment, {
         articleSlug,
-        user
+        currentUser
       });
 
       onSuccess(globalFeed);

@@ -10,6 +10,10 @@ type Dependencies = {
   commentRepository: CommentRepository
 };
 
+type Options = {
+  currentUser: User
+};
+
 type SuccessCallback = {
   article: Article,
   comments: Array<Comment>
@@ -21,9 +25,9 @@ type Callbacks = {
 };
 
 export default ({ articleRepository, commentRepository }: Dependencies) => {
-  return async (editingArticle: EditingArticle, user: User, { onSuccess, onError }: Callbacks) => {
+  return async (editingArticle: EditingArticle, { currentUser }: Options, { onSuccess, onError }: Callbacks) => {
     try {
-      const article = await articleRepository.update(editingArticle, { user });
+      const article = await articleRepository.update(editingArticle, { currentUser });
       const comments = await commentRepository.fromArticle(article.slug);
       onSuccess({ article, comments });
     } catch(error) {

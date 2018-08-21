@@ -111,7 +111,7 @@ export const addComment = (commentBody: string, articleSlug: ArticleSlug) => {
 
     const { user } = getState();
 
-    container.addComment(commentBody, { articleSlug, user: ((user: any): User) }, {
+    container.addComment(commentBody, { articleSlug, currentUser: ((user: any): User) }, {
       onSuccess: (comment) => dispatch(addCommentSuccess(comment)),
       onError: (error) => dispatch(addCommentError(error))
     });
@@ -138,7 +138,7 @@ export const removeComment = (comment: Comment, articleSlug: ArticleSlug) => {
 
     const { user } = getState();
 
-    container.removeComment(comment, { articleSlug, user: ((user: any): User) }, {
+    container.removeComment(comment, { articleSlug, currentUser: ((user: any): User) }, {
       onSuccess: () => dispatch(removeCommentSuccess(comment)),
       onError: (error) => dispatch(removeCommentError(error))
     });
@@ -169,7 +169,7 @@ export const createArticle = (editingArticle: EditingArticle) => {
 
     const { user } = getState();
 
-    container.createArticle(editingArticle, ((user: any): User), {
+    container.createArticle(editingArticle, { currentUser: ((user: any): User) }, {
       onSuccess: (article: Article) => dispatch(createArticleSuccess(article)),
       onError: (error) => dispatch(createArticleError(error.errors))
     });
@@ -197,7 +197,7 @@ export const editArticle = (editingArticle: EditingArticle) => {
 
     const { user } = getState();
 
-    container.editArticle(editingArticle, ((user: any): User), {
+    container.editArticle(editingArticle, { currentUser: ((user: any): User) }, {
       onSuccess: ({ article, comments }) => dispatch(editArticleSuccess(article, comments)),
       onError: (error) => dispatch(editArticleError(error.errors))
     });

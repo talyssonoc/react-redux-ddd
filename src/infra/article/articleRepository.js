@@ -64,18 +64,18 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
     return this._coerceArticle(data.article);
   },
 
-  async add(editingArticle, { user }) {
-    const { data } = await conduitApiService.authPost('articles', user, {
+  async add(editingArticle, { currentUser }) {
+    const { data } = await conduitApiService.authPost('articles', currentUser, {
       article: editingArticle
     });
 
     return this._coerceArticle(data.article);
   },
 
-  async update(article, { user }) {
+  async update(article, { currentUser }) {
     const slug = article.slug || '';
 
-    const { data } = await conduitApiService.authPut(`articles/${slug}`, user, {
+    const { data } = await conduitApiService.authPut(`articles/${slug}`, currentUser, {
       article: this._serializeArticle(article)
     });
 
