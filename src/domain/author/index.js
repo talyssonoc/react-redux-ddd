@@ -4,7 +4,8 @@ import type { User } from '../user';
 export type Author = {
   username: string,
   image: ?string,
-  bio: ?string
+  bio: ?string,
+  following: bool
 };
 
 export type Authorable = {

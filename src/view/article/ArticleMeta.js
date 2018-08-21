@@ -6,6 +6,7 @@ import { type Article } from '../../domain/article';
 import { isAuthoredBy } from '../../domain/author';
 import FormattedDate from '../date/FormattedDate';
 import AuthorLink from '../author/AuthorLink';
+import FollowButton from '../author/FollowButton';
 
 type Props = {
   article: Article,
@@ -48,11 +49,7 @@ const ArticleMeta = ({ article, currentUser }: Props) => (
         </Fragment>
       ) : (
         <Fragment>
-          <button className="btn btn-sm btn-outline-secondary">
-            <i className="ion-plus-round"></i>
-            &nbsp;
-            Follow { article.author.username }
-          </button>
+          <FollowButton author={ article.author } />
           &nbsp;&nbsp;
           <button className="btn btn-sm btn-outline-primary">
             <i className="ion-heart"></i>

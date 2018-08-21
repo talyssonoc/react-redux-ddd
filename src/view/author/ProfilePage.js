@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { loadAuthor, type AuthorState } from '../../state/author';
 import { feed, type FeedState } from '../../state/article';
 import Feed from '../article/Feed';
+import FollowButton from './FollowButton';
 
 const Tabs = {
   ARTICLES: 'ARTICLES',
@@ -99,11 +100,7 @@ class AuthorPage extends Component<Props, State> {
                     <p>
                       { author.bio }
                     </p>
-                    <button className="btn btn-sm btn-outline-secondary action-btn">
-                      <i className="ion-plus-round"></i>
-                      &nbsp;
-                      Follow { author.username }
-                    </button>
+                    <FollowButton author={ author } className='action-btn' />
                   </div>
                 )
               }
