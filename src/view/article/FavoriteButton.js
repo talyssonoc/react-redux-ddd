@@ -7,7 +7,7 @@ type Props = {
   article: Article
 };
 
-const FavoriteButton = ({ article }: Props) => (console.log(article), (
+const FavoriteButton = ({ article }: Props) => (
   <button
     className={
       classNames('btn btn-sm pull-xs-right', {
@@ -18,6 +18,6 @@ const FavoriteButton = ({ article }: Props) => (console.log(article), (
   >
     <i className="ion-heart"></i> { article.favoritesCount }
   </button>
-));
+);
 
 export default FavoriteButton;
