@@ -25,7 +25,7 @@ const ArticlePreview = ({ article }: Props) => (
           <FormattedDate date={ article.createdAt } />
         </span>
       </div>
-      <FavoriteButton article={ article } />
+      <FavoriteButton article={ article } className="pull-xs-right" />
     </div>
     <ArticleLink
       article={ article }

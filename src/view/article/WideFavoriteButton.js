@@ -4,20 +4,23 @@ import classNames from 'classnames';
 import type { Article } from '../../domain/Article';
 
 type Props = {
-  article: Article,
-  className?: string
+  article: Article
 };
 
-const FavoriteButton = ({ article, className }: Props) => (
+const FavoriteButton = ({ article }: Props) => (
   <button
     className={
-      classNames('btn btn-sm', className, {
+      classNames('btn btn-sm', {
         'btn-primary': article.favorited,
         'btn-outline-primary': !article.favorited
       })
     }
   >
-    <i className="ion-heart"></i> { article.favoritesCount }
+    <i className="ion-heart"></i>
+    &nbsp;
+    { article.favorited ? 'Unfavorite Article' : 'Favorite Post' }
+    &nbsp;
+    <span className="counter">{ article.favoritesCount }</span>
   </button>
 );
 

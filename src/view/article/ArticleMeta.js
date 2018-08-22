@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { type User } from '../../domain/user';
 import { type Article } from '../../domain/article';
 import { isAuthoredBy } from '../../domain/author';
+import WideFavoriteButton from './WideFavoriteButton';
 import FormattedDate from '../date/FormattedDate';
 import AuthorLink from '../author/AuthorLink';
 import FollowButton from '../author/FollowButton';
@@ -51,11 +52,7 @@ const ArticleMeta = ({ article, currentUser }: Props) => (
         <Fragment>
           <FollowButton author={ article.author } />
           &nbsp;&nbsp;
-          <button className="btn btn-sm btn-outline-primary">
-            <i className="ion-heart"></i>
-            &nbsp;
-            Favorite Post <span className="counter">{ article.favoritesCount }</span>
-          </button>
+          <WideFavoriteButton article={ article } />
         </Fragment>
       )
     }
