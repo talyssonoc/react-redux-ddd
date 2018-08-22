@@ -2,6 +2,7 @@
 import React, { Fragment } from 'react';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import AuthorLink from '../author/AuthorLink';
 import type { UserState } from '../../state/user';
 
 type Props = {
@@ -40,6 +41,16 @@ const Nav = (props: Props) => (
                 <a className="nav-link" href="">
                   <i className="ion-gear-a"></i>&nbsp;Settings
                 </a>
+              </li>
+              <li className="nav-item">
+                <AuthorLink
+                  as={ NavLink }
+                  className="nav-link"
+                  activeClassName="active"
+                  author={ props.user }
+                >
+                  { props.user.username }
+                </AuthorLink>
               </li>
             </Fragment>
           )
