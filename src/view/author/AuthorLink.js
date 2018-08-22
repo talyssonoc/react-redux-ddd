@@ -1,7 +1,7 @@
 /* @flow */
 import React, { type ComponentType } from 'react';
 import { Link } from 'react-router-dom';
-import type { User } from '../../domain/User';
+import type { User } from '../../domain/user';
 import type { Author } from '../../domain/author';
 
 type Props = {

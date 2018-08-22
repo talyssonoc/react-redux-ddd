@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import classNames from 'classnames';
-import type { Article } from '../../domain/Article';
+import type { Article } from '../../domain/article';
 
 type Props = {
   article: Article,
