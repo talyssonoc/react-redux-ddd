@@ -2,8 +2,9 @@
 import type { Dispatch, Reducer } from 'redux';
 import type { User } from '../../domain/user';
 import type { Article, ArticleSlug, Comment, EditingArticle } from '../../domain/article';
-import type { GetState } from '../store';
 import typeof * as Container from '../../container';
+import type { GetState } from '../store';
+import withCurrentUser from '../withCurrentUser';
 import { ARTICLE } from '../actionTypes';
 
 export type ArticleState = {|
@@ -71,13 +72,20 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
 
 export const loadArticle = (slug: ArticleSlug) => {
   return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
-    if(!shouldLoadArticle(getState(), slug)) {
+    const state = getState();
+
+    if(!shouldLoadArticle(state, slug)) {
       return;
     }
 
+    const options = {
+      ...withCurrentUser(state),
+      withComments: true
+    };
+
     dispatch(loadArticleRequest);
 
-    return container.getArticle(slug, { withComments: true }, {
+    return container.getArticle(slug, options, {
       onSuccess: ({ article, comments }) => dispatch(loadArticleSuccess(article, comments)),
       onError: (error) => dispatch(loadArticleError(error))
     });
@@ -109,9 +117,12 @@ export const addComment = (commentBody: string, articleSlug: ArticleSlug) => {
   return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
     dispatch(addCommentRequest);
 
-    const { user } = getState();
+    const options = {
+      ...withCurrentUser(getState()),
+      articleSlug
+    };
 
-    container.addComment(commentBody, { articleSlug, currentUser: ((user: any): User) }, {
+    container.addComment(commentBody, options, {
       onSuccess: (comment) => dispatch(addCommentSuccess(comment)),
       onError: (error) => dispatch(addCommentError(error))
     });
@@ -136,9 +147,12 @@ export const removeComment = (comment: Comment, articleSlug: ArticleSlug) => {
   return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
     dispatch(removeCommentRequest);
 
-    const { user } = getState();
+    const options = {
+      ...withCurrentUser(getState()),
+      articleSlug
+    };
 
-    container.removeComment(comment, { articleSlug, currentUser: ((user: any): User) }, {
+    container.removeComment(comment, options, {
       onSuccess: () => dispatch(removeCommentSuccess(comment)),
       onError: (error) => dispatch(removeCommentError(error))
     });
@@ -167,9 +181,9 @@ export const createArticle = (editingArticle: EditingArticle) => {
   return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
     dispatch(createArticleRequest);
 
-    const { user } = getState();
+    const options = withCurrentUser(getState());
 
-    container.createArticle(editingArticle, { currentUser: ((user: any): User) }, {
+    container.createArticle(editingArticle, options, {
       onSuccess: (article: Article) => dispatch(createArticleSuccess(article)),
       onError: (error) => dispatch(createArticleError(error.errors))
     });
@@ -195,9 +209,9 @@ export const editArticle = (editingArticle: EditingArticle) => {
   return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
     dispatch(editArticleRequest);
 
-    const { user } = getState();
+    const options = withCurrentUser(getState());
 
-    container.editArticle(editingArticle, { currentUser: ((user: any): User) }, {
+    container.editArticle(editingArticle, options, {
       onSuccess: ({ article, comments }) => dispatch(editArticleSuccess(article, comments)),
       onError: (error) => dispatch(editArticleError(error.errors))
     });

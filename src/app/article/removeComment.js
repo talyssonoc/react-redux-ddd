@@ -5,15 +5,14 @@ import type {
   CommentRepository
 } from '../../domain/article';
 
-import type { User } from '../../domain/user';
+import type { WithCurrentUser } from '../../domain/user';
 
 type Dependencies = {
   commentRepository: CommentRepository
 };
 
-type Config = {
-  articleSlug: ArticleSlug,
-  currentUser: User
+type Config = WithCurrentUser & {
+  articleSlug: ArticleSlug
 };
 
 type Callbacks = {

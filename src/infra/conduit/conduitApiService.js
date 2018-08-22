@@ -16,7 +16,7 @@ type Options = $Shape<AxiosXHRConfigBase<any, any>>;
 type RequestWithoutData = (string, Options) => Promise<any>;
 type RequestWithData = (string, User, mixed, Options) => Promise<any>;
 type AuthRequestWithoutData = (string, ?User, Options) => Promise<any>;
-type AuthRequestWithData = (string, User, mixed, Options) => Promise<any>;
+type AuthRequestWithData = (string, ?User, mixed, Options) => Promise<any>;
 type Request = RequestWithoutData | RequestWithData;
 
 type ConduitError = Error & {

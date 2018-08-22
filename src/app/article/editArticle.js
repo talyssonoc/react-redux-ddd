@@ -1,5 +1,5 @@
 /* @flow */
-import type { User } from '../../domain/user';
+import type { WithCurrentUser } from '../../domain/user';
 import type {
   Article, Comment, EditingArticle,
   ArticleRepository, CommentRepository
@@ -10,9 +10,7 @@ type Dependencies = {
   commentRepository: CommentRepository
 };
 
-type Options = {
-  currentUser: User
-};
+type Options = WithCurrentUser;
 
 type SuccessCallback = {
   article: Article,

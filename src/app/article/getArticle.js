@@ -6,13 +6,14 @@ import type {
   ArticleRepository,
   CommentRepository
 } from '../../domain/article';
+import type { WithCurrentUser } from '../../domain/user';
 
 type Dependencies = {
   articleRepository: ArticleRepository,
   commentRepository: CommentRepository
 };
 
-type Options = {
+type Options = WithCurrentUser & {
   withComments: bool
 };
 
@@ -28,10 +29,12 @@ type Callbacks = {
 
 export default ({ articleRepository, commentRepository }: Dependencies) => {
   return async (slug: ArticleSlug, options: Options, { onSuccess, onError }: Callbacks) => {
+    const { withComments, currentUser } = options;
+
     try {
       const [ article, comments ] = await Promise.all([
-        articleRepository.getArticle(slug),
-        options.withComments ? commentRepository.fromArticle(slug) : undefined
+        articleRepository.getArticle(slug, { currentUser }),
+        withComments ? commentRepository.fromArticle(slug) : undefined
       ]);
 
       onSuccess({ article, comments });

@@ -3,6 +3,8 @@ import type { Reducer } from 'redux';
 import type { EditingArticle, ArticleSlug } from '../../domain/article';
 import type { Tag } from '../../domain/tag';
 import typeof * as Container from '../../container';
+import type { GetState } from '../store';
+import withCurrentUser from '../withCurrentUser';
 import { ARTICLE, EDITOR } from '../actionTypes';
 
 export const EditorStatuses = {
@@ -143,10 +145,15 @@ export const removeTag = (tag: Tag) => ({
 });
 
 export const setEditingArticle = (articleSlug: ArticleSlug) => {
-  return (dispatch: Dispatch<any>, _: any, container: Container) => {
+  return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
     dispatch(setEditingArticleRequest);
 
-    container.getArticle(articleSlug, { withComments: false }, {
+    const options = {
+      ...withCurrentUser(getState()),
+      withComments: false
+    };
+
+    container.getArticle(articleSlug, options, {
       onSuccess: ({ article }) => dispatch(setEditingArticleSuccess(article)),
       onError: (error) => dispatch(setEditingArticleError(error))
     });

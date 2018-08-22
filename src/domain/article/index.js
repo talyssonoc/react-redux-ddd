@@ -35,9 +35,9 @@ export type ArticleRepository = {
   fromTagFeed: (Tag, WithCurrentUser) => Promise<Feed>,
   fromAuthorFeed: (string, WithCurrentUser) => Promise<Feed>,
   fromAuthorFavorites: (string, WithCurrentUser) => Promise<Feed>,
-  getArticle: (ArticleSlug) => Promise<Article>,
-  add: (EditingArticle, { currentUser: User }) => Promise<Article>,
-  update: (EditingArticle, { currentUser: User }) => Promise<Article>
+  getArticle: (ArticleSlug, WithCurrentUser) => Promise<Article>,
+  add: (EditingArticle, WithCurrentUser) => Promise<Article>,
+  update: (EditingArticle, WithCurrentUser) => Promise<Article>
 };
 
 export type NewComment = {
@@ -51,6 +51,6 @@ export type Comment = Authorable & NewComment & {
 
 export type CommentRepository = {
   fromArticle: (ArticleSlug) => Promise<Array<Comment>>,
-  add: (NewComment, { articleSlug: ArticleSlug, currentUser: User } ) => Promise<Comment>,
-  remove: (Comment, { articleSlug: ArticleSlug, currentUser: User } ) => Promise<void>
+  add: (NewComment, WithCurrentUser & { articleSlug: ArticleSlug } ) => Promise<Comment>,
+  remove: (Comment, WithCurrentUser & { articleSlug: ArticleSlug } ) => Promise<void>
 };

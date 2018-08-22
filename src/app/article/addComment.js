@@ -2,19 +2,17 @@
 import type {
   ArticleSlug,
   Comment,
-  NewComment,
   CommentRepository
 } from '../../domain/article';
 
-import type { User } from '../../domain/user';
+import type { WithCurrentUser } from '../../domain/user';
 
 type Dependencies = {
   commentRepository: CommentRepository
 };
 
-type Config = {
-  articleSlug: ArticleSlug,
-  currentUser: User
+type Config = WithCurrentUser & {
+  articleSlug: ArticleSlug
 };
 
 type Callbacks = {
@@ -25,7 +23,7 @@ type Callbacks = {
 export default ({ commentRepository }: Dependencies) => {
   return async (commentBody: string, { articleSlug, currentUser }: Config, { onSuccess, onError }: Callbacks) => {
     try {
-      const comment: NewComment = {
+      const comment = {
         body: commentBody
       };
 
