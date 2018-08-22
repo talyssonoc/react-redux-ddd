@@ -3,6 +3,7 @@ import React from 'react';
 import type { Article } from '../../domain/article';
 import AuthorLink from '../author/AuthorLink';
 import ArticleLink from './ArticleLink';
+import FavoriteButton from './FavoriteButton';
 import FormattedDate from '../date/FormattedDate';
 import TagList from '../tag/TagList';
 
@@ -24,9 +25,7 @@ const ArticlePreview = ({ article }: Props) => (
           <FormattedDate date={ article.createdAt } />
         </span>
       </div>
-      <button className="btn btn-outline-primary btn-sm pull-xs-right">
-        <i className="ion-heart"></i> { article.favoritesCount }
-      </button>
+      <FavoriteButton article={ article } />
     </div>
     <ArticleLink
       article={ article }
