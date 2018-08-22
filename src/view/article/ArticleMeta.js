@@ -16,9 +16,11 @@ type Props = {
 
 const ArticleMeta = ({ article, currentUser }: Props) => (
   <div className="article-meta">
-    <a href="profile.html">
+    <AuthorLink
+      author={ article.author }
+    >
       <img src={ article.author.image } alt={ article.author.username } />
-    </a>
+    </AuthorLink>
     <div className="info">
       <AuthorLink
         author={ article.author }
