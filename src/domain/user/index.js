@@ -14,7 +14,7 @@ export type UserAuthInfo = {
 };
 
 export type UserRepository = {
-  fromAuthInfo: (UserAuthInfo) => Promise<User>,
+  byAuthInfo: (UserAuthInfo) => Promise<User>,
   add: (UserAuthInfo) => Promise<User>
 };
 

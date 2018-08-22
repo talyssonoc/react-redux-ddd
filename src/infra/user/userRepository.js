@@ -7,7 +7,7 @@ type Dependencies = {
 };
 
 export default ({ conduitApiService }: Dependencies): UserRepository => ({
-  fromAuthInfo(userAuthInfo) {
+  byAuthInfo(userAuthInfo) {
     return this._authUser(userAuthInfo, 'users/login');
   },
 

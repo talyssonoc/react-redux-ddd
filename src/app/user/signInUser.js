@@ -13,7 +13,7 @@ type Dependencies = {
 export default ({ userRepository }: Dependencies) => {
   return async (userAuthInfo: UserAuthInfo, { onSuccess, onError }: Callbacks) => {
     try {
-      const authorizedUser = await userRepository.fromAuthInfo(userAuthInfo);
+      const authorizedUser = await userRepository.byAuthInfo(userAuthInfo);
 
       return onSuccess(authorizedUser);
     } catch(error) {
