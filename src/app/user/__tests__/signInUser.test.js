@@ -6,7 +6,7 @@ describe('App :: User :: signInUser', () => {
 
   it('passes the user auth info to the repository', async () => {
     mockUserRepository = {
-      fromAuthInfo: jest.fn()
+      byAuthInfo: jest.fn()
     };
 
     signInUser = makeSignInUser({
@@ -18,13 +18,13 @@ describe('App :: User :: signInUser', () => {
 
     await signInUser('userAuthInfo', { onSuccess, onError });
 
-    expect(mockUserRepository.fromAuthInfo).toBeCalledWith('userAuthInfo');
+    expect(mockUserRepository.byAuthInfo).toBeCalledWith('userAuthInfo');
   });
 
   describe('when it succeeds', () => {
     beforeEach(() => {
       mockUserRepository = {
-        fromAuthInfo: jest.fn().mockReturnValue('signedInUser')
+        byAuthInfo: jest.fn().mockReturnValue('signedInUser')
       };
 
       signInUser = makeSignInUser({
@@ -46,7 +46,7 @@ describe('App :: User :: signInUser', () => {
   describe('when it fails', () => {
     beforeEach(() => {
       mockUserRepository = {
-        fromAuthInfo: jest.fn().mockImplementation(() => {
+        byAuthInfo: jest.fn().mockImplementation(() => {
           throw new Error('Nop!')
         })
       };

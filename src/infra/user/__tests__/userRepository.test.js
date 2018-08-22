@@ -8,7 +8,7 @@ describe('Infra :: User :: userRepository', () => {
     errors: ['fail', 'boom']
   });
 
-  describe('#fromAuthInfo', () => {
+  describe('#byAuthInfo', () => {
     it('uses conduitApiService to make the request', async () => {
       conduitApiService = {
         post: jest.fn().mockReturnValue(successResponse)
@@ -16,7 +16,7 @@ describe('Infra :: User :: userRepository', () => {
 
       userRepository = makeUserRepository({ conduitApiService });
 
-      await userRepository.fromAuthInfo('userAuthInfo');
+      await userRepository.byAuthInfo('userAuthInfo');
 
       expect(conduitApiService.post).toBeCalledWith('users/login', { user: 'userAuthInfo' });
     });
@@ -31,7 +31,7 @@ describe('Infra :: User :: userRepository', () => {
       });
 
       it('resolves with the authorized user', () => {
-        expect(userRepository.fromAuthInfo('userAuthInfo'))
+        expect(userRepository.byAuthInfo('userAuthInfo'))
           .resolves.toEqual('user');
       });
     });
@@ -46,7 +46,7 @@ describe('Infra :: User :: userRepository', () => {
       });
 
       it('rejects with the errors', () => {
-        expect(userRepository.fromAuthInfo('userAuthInfo'))
+        expect(userRepository.byAuthInfo('userAuthInfo'))
           .rejects.toMatchObject({
             errors: ['fail', 'boom']
           });
