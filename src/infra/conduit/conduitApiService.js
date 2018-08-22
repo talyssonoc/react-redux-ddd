@@ -15,7 +15,7 @@ type Options = $Shape<AxiosXHRConfigBase<any, any>>;
 
 type RequestWithoutData = (string, Options) => Promise<any>;
 type RequestWithData = (string, User, mixed, Options) => Promise<any>;
-type AuthRequestWithoutData = (string, User, Options) => Promise<any>;
+type AuthRequestWithoutData = (string, ?User, Options) => Promise<any>;
 type AuthRequestWithData = (string, User, mixed, Options) => Promise<any>;
 type Request = RequestWithoutData | RequestWithData;
 
@@ -68,10 +68,16 @@ const extractErrors = (ajaxError: $AxiosError<any, Response>) => {
   return error;
 };
 
-const withUserToken = (options: Options, user: User): Options => ({
-  ...options,
-  headers: {
-    ...options.headers,
-    Authorization: `Token ${user.token}`
+const withUserToken = (options: Options, user: ?User): Options =>{
+  if(!user) {
+    return options;
   }
-});
+
+  return {
+    ...options,
+    headers: {
+      ...options.headers,
+      Authorization: `Token ${user.token}`
+    }
+  };
+};

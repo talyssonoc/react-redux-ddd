@@ -12,7 +12,7 @@ type Callbacks = {
 };
 
 export default ({ articleRepository }: Dependencies) => {
-  return async (user: User, { onSuccess, onError }: Callbacks) => {
+  return async (user: ?User, { onSuccess, onError }: Callbacks) => {
     try {
       const userFeed = await articleRepository.fromUserFeed(user);
       onSuccess(userFeed);

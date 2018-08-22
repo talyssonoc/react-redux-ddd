@@ -17,3 +17,7 @@ export type UserRepository = {
   fromAuthInfo: (UserAuthInfo) => Promise<User>,
   add: (UserAuthInfo) => Promise<User>
 };
+
+export type WithCurrentUser = {
+  currentUser: ?User
+};

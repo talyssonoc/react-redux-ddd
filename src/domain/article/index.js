@@ -1,5 +1,5 @@
 /* @flow */
-import type { User } from '../user';
+import type { User, WithCurrentUser } from '../user';
 import type { Tag } from '../tag';
 import type { Authorable } from '../author';
 
@@ -12,6 +12,7 @@ export type Article = Authorable & {
   createdAt: Date,
   favoritesCount: number,
   body: string,
+  favorited: bool,
   tagList: Array<Tag>
 };
 
@@ -29,11 +30,11 @@ export type Feed = {
 };
 
 export type ArticleRepository = {
-  fromGlobalFeed: () => Promise<Feed>,
-  fromUserFeed: (User) => Promise<Feed>,
-  fromTagFeed: (Tag) => Promise<Feed>,
-  fromAuthorFeed: (string) => Promise<Feed>,
-  fromAuthorFavorites: (string) => Promise<Feed>,
+  fromGlobalFeed: (WithCurrentUser) => Promise<Feed>,
+  fromUserFeed: (?User) => Promise<Feed>,
+  fromTagFeed: (Tag, WithCurrentUser) => Promise<Feed>,
+  fromAuthorFeed: (string, WithCurrentUser) => Promise<Feed>,
+  fromAuthorFavorites: (string, WithCurrentUser) => Promise<Feed>,
   getArticle: (ArticleSlug) => Promise<Article>,
   add: (EditingArticle, { currentUser: User }) => Promise<Article>,
   update: (EditingArticle, { currentUser: User }) => Promise<Article>

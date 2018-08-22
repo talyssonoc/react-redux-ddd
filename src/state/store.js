@@ -23,7 +23,7 @@ import {
   type EditorState
 } from './article';
 
-type State = {|
+export type State = {|
   auth: AuthState,
   user: UserState,
   popularTags: PopularTagsState,

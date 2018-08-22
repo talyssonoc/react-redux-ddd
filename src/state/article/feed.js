@@ -1,10 +1,10 @@
 /* @flow */
 import type { Dispatch, Reducer } from 'redux';
-import type { User } from '../../domain/user';
 import type { Article } from '../../domain/article';
 import type { Tag } from '../../domain/tag';
-import type { GetState } from '../store';
 import typeof * as Container from '../../container';
+import type { GetState } from '../store';
+import withCurrentUser from '../withCurrentUser';
 import { FEED } from '../actionTypes';
 
 export type FeedState = {|
@@ -51,10 +51,12 @@ export const feedReducer: Reducer<FeedState, any> = (state = initialState, actio
   }
 };
 
-export const loadGlobalFeed = () => (dispatch: Dispatch<any>, _: any, container: Container) => {
+export const loadGlobalFeed = () => (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
   dispatch(loadGlobalFeedRequest);
 
-  container.getGlobalFeed({
+  const options = withCurrentUser(getState());
+
+  container.getGlobalFeed(options, {
     onSuccess: (feed) => dispatch(loadFeedSuccess(feed)),
     onError: (error) => dispatch(loadFeedError(error))
   });
@@ -70,7 +72,7 @@ export const loadUserFeed = () => (dispatch: Dispatch<any>, getState: GetState, 
 
   const { user } = getState();
 
-  container.getUserFeed(((user: any): User), {
+  container.getUserFeed(user, {
     onSuccess: (feed) => dispatch(loadFeedSuccess(feed)),
     onError: (error) => dispatch(loadFeedError(error))
   });
@@ -80,31 +82,43 @@ const loadUserFeedRequest = {
   type: FEED.LOAD_USER_FEED_REQUEST
 };
 
-export const loadTagFeed = (tag: Tag) => (dispatch: Dispatch<any>, _: any, container: Container) => {
-  dispatch(loadTagFeedRequest);
+export const loadTagFeed = (tag: Tag) => {
+  return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
+    dispatch(loadTagFeedRequest);
 
-  container.getTagFeed(tag, {
-    onSuccess: (feed) => dispatch(loadFeedSuccess(feed)),
-    onError: (error) => dispatch(loadFeedError(error))
-  });
+    const options = withCurrentUser(getState());
+
+    container.getTagFeed(tag, options, {
+      onSuccess: (feed) => dispatch(loadFeedSuccess(feed)),
+      onError: (error) => dispatch(loadFeedError(error))
+    });
+  };
 };
 
-export const loadAuthorFeed = (authorUsername: string) => (dispatch: Dispatch<any>, _: any, container: Container) => {
-  dispatch(loadAuthorFeedRequest);
+export const loadAuthorFeed = (authorUsername: string) => {
+  return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
+    dispatch(loadAuthorFeedRequest);
 
-  container.getAuthorFeed(authorUsername, {
-    onSuccess: (feed) => dispatch(loadFeedSuccess(feed)),
-    onError: (error) => dispatch(loadFeedError(error))
-  });
+    const options = withCurrentUser(getState());
+
+    container.getAuthorFeed(authorUsername, options, {
+      onSuccess: (feed) => dispatch(loadFeedSuccess(feed)),
+      onError: (error) => dispatch(loadFeedError(error))
+    });
+  };
 };
 
-export const loadAuthorFavoritesFeed = (authorUsername: string) => (dispatch: Dispatch<any>, _: any, container: Container) => {
-  dispatch(loadAuthorFavoritesFeedRequest);
+export const loadAuthorFavoritesFeed = (authorUsername: string) => {
+  return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
+    dispatch(loadAuthorFavoritesFeedRequest);
 
-  container.getAuthorFavoritesFeed(authorUsername, {
-    onSuccess: (feed) => dispatch(loadFeedSuccess(feed)),
-    onError: (error) => dispatch(loadFeedError(error))
-  });
+    const options = withCurrentUser(getState());
+
+    container.getAuthorFavoritesFeed(authorUsername, options, {
+      onSuccess: (feed) => dispatch(loadFeedSuccess(feed)),
+      onError: (error) => dispatch(loadFeedError(error))
+    });
+  }
 };
 
 const loadAuthorFeedRequest = {

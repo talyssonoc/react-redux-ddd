@@ -7,8 +7,8 @@ type Dependencies = {
 };
 
 export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
-  async fromGlobalFeed() {
-    const { data } = await conduitApiService.get('articles');
+  async fromGlobalFeed({ currentUser }) {
+    const { data } = await conduitApiService.authGet('articles', currentUser);
 
     return {
       ...data,
@@ -25,8 +25,8 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
     };
   },
 
-  async fromTagFeed(tag) {
-    const { data } = await conduitApiService.get('articles', {
+  async fromTagFeed(tag, { currentUser }) {
+    const { data } = await conduitApiService.authGet('articles', currentUser, {
       params: { tag }
     });
 
@@ -36,8 +36,8 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
     };
   },
 
-  async fromAuthorFeed(authorUsername) {
-    const { data } = await conduitApiService.get('articles', {
+  async fromAuthorFeed(authorUsername, { currentUser }) {
+    const { data } = await conduitApiService.authGet('articles', currentUser, {
       params: { author: authorUsername }
     });
 
@@ -47,8 +47,8 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
     };
   },
 
-  async fromAuthorFavorites(authorUsername) {
-    const { data } = await conduitApiService.get('articles', {
+  async fromAuthorFavorites(authorUsername, { currentUser }) {
+    const { data } = await conduitApiService.authGet('articles', currentUser, {
       params: { favorited: authorUsername }
     });
 
