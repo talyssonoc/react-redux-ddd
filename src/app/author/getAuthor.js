@@ -1,14 +1,12 @@
 /* @flow */
 import type { Author, AuthorRepository } from '../../domain/author';
-import type { User } from '../../domain/user';
+import type { WithCurrentUser } from '../../domain/user';
 
 type Dependencies = {
   authorRepository: AuthorRepository
 };
 
-type Options = {
-  currentUser: ?User
-};
+type Options = WithCurrentUser;
 
 type Callbacks = {
   onSuccess: (Author) => void,
@@ -16,10 +14,10 @@ type Callbacks = {
 };
 
 export default ({ authorRepository }: Dependencies) => {
-  return async (authorUsername: string, options: Options, { onSuccess, onError }: Callbacks) => {
+  return async (authorUsername: string, { currentUser }: Options, { onSuccess, onError }: Callbacks) => {
     try {
       const author = await authorRepository.getByUsername(authorUsername, {
-        currentUser: options.currentUser
+        currentUser
       });
 
       onSuccess(author);

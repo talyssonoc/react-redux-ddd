@@ -1,8 +1,9 @@
 /* @flow */
 import type { Dispatch, Reducer } from 'redux';
-import type { GetState } from '../store';
 import typeof * as Container from '../../container';
+import type { GetState } from '../store';
 import type { Author } from '../../domain/author';
+import withCurrentUser from '../withCurrentUser';
 import { AUTHOR } from '../actionTypes';
 
 export type AuthorState = {|
@@ -49,9 +50,9 @@ export const loadAuthor = (authorUsername: string) => {
   return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
     dispatch(loadAuthorRequest);
 
-    const { user } = getState();
+    const options = withCurrentUser(getState());
 
-    container.getAuthor(authorUsername, { currentUser: user }, {
+    container.getAuthor(authorUsername, options, {
       onSuccess: (author) => dispatch(loadAuthorSuccess(author)),
       onError: (error) => dispatch(loadAuthorError(error))
     });

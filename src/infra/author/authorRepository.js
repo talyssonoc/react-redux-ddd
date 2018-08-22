@@ -10,15 +10,7 @@ export default ({ conduitApiService }: Dependencies): AuthorRepository => ({
   async getByUsername(authorUsername, { currentUser }) {
     const url = `/profiles/${authorUsername}`;
 
-    let response;
-
-    if(currentUser) {
-      response = await conduitApiService.authGet(url, currentUser);
-    } else {
-      response = await conduitApiService.get(url);
-    }
-
-    const { data } = response;
+    const { data } = await conduitApiService.authGet(url, currentUser);
 
     return data.profile;
   }
