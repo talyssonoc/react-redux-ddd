@@ -1,6 +1,5 @@
 /* @flow */
 import type { Dispatch, Reducer } from 'redux';
-import type { User } from '../../domain/user';
 import type { Article, ArticleSlug, Comment, EditingArticle } from '../../domain/article';
 import typeof * as Container from '../../container';
 import type { GetState } from '../store';
