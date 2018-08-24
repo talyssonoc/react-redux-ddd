@@ -1,6 +1,12 @@
 /* @flow */
 import type { Dispatch, Reducer } from 'redux';
-import type { Article, ArticleSlug, Comment, EditingArticle } from '../../domain/article';
+import {
+  updateArticle,
+  type Article,
+  type ArticleSlug,
+  type Comment,
+  type EditingArticle
+} from '../../domain/article';
 import typeof * as Container from '../../container';
 import type { GetState } from '../store';
 import withCurrentUser from '../withCurrentUser';
@@ -10,14 +16,16 @@ export type ArticleState = {|
   article: ?Article,
   isLoading: bool,
   error: ?Object,
-  comments: Array<Comment>
+  comments: Array<Comment>,
+  favoritingArticle: ?Article
 |};
 
 const initialState: ArticleState = {
   article: null,
   isLoading: false,
   error: null,
-  comments: []
+  comments: [],
+  favoritingArticle: null
 };
 
 export const articleReducer: Reducer<ArticleState, any> = (state = initialState, action) => {
@@ -59,6 +67,19 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
       return {
         ...state,
         comments: state.comments.filter((comment) => comment.id !== action.comment.id)
+      };
+
+    case ARTICLE.TOGGLE_FAVORITE_ARTICLE_REQUEST:
+      return {
+        ...state,
+        favoritingArticle: action.article
+      };
+
+    case ARTICLE.TOGGLE_FAVORITE_ARTICLE_SUCCESS:
+      return {
+        ...state,
+        favoritingArticle: null,
+        article: updateArticle(state.article, action.article)
       };
 
     case ARTICLE.UNLOAD_ARTICLE:
@@ -229,5 +250,33 @@ const editArticleSuccess = (article, comments) => ({
 
 const editArticleError = (errors) => ({
   type: ARTICLE.EDIT_ARTICLE_ERROR,
+  errors
+});
+
+export const toggleFavoriteArticle = (article: Article) => {
+  return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
+    dispatch(toggleFavoriteArticleRequest(article));
+
+    const options = withCurrentUser(getState());
+
+    container.toggleFavoriteArticle(article, options, {
+      onSuccess: (article) => dispatch(toggleFavoriteArticleSuccess(article)),
+      onError: (error) => dispatch(toggleFavoriteArticleError(error.errors))
+    });
+  };
+};
+
+const toggleFavoriteArticleRequest = (article) => ({
+  type: ARTICLE.TOGGLE_FAVORITE_ARTICLE_REQUEST,
+  article
+});
+
+const toggleFavoriteArticleSuccess = (article) => ({
+  type: ARTICLE.TOGGLE_FAVORITE_ARTICLE_SUCCESS,
+  article
+});
+
+const toggleFavoriteArticleError = (errors) => ({
+  type: ARTICLE.TOGGLE_FAVORITE_ARTICLE_ERROR,
   errors
 });

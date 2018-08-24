@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { type User } from '../../domain/user';
 import { type Article } from '../../domain/article';
 import { isAuthoredBy } from '../../domain/author';
-import WideFavoriteButton from './WideFavoriteButton';
+import { WideFavoriteButton } from './FavoriteButton';
 import FormattedDate from '../date/FormattedDate';
 import AuthorLink from '../author/AuthorLink';
 import FollowButton from '../author/FollowButton';

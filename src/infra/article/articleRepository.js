@@ -82,6 +82,18 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
     return this._coerceArticle(data.article);
   },
 
+  async setAsFavorite(slug, { currentUser }) {
+    const { data } = await conduitApiService.authPost(`articles/${slug}/favorite`, currentUser);
+
+    return this._coerceArticle(data.article);
+  },
+
+  async unsetAsFavorite(slug, { currentUser }) {
+    const { data } = await conduitApiService.authDel(`articles/${slug}/favorite`, currentUser);
+
+    return this._coerceArticle(data.article);
+  },
+
   _coerceArticle(rawArticle: any) {
     return {
       ...rawArticle,

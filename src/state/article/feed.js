@@ -1,11 +1,11 @@
 /* @flow */
 import type { Dispatch, Reducer } from 'redux';
-import type { Article } from '../../domain/article';
+import { updateArticle, type Article } from '../../domain/article';
 import type { Tag } from '../../domain/tag';
 import typeof * as Container from '../../container';
 import type { GetState } from '../store';
 import withCurrentUser from '../withCurrentUser';
-import { FEED } from '../actionTypes';
+import { FEED, ARTICLE } from '../actionTypes';
 
 export type FeedState = {|
   articles: Array<Article>,
@@ -44,6 +44,14 @@ export const feedReducer: Reducer<FeedState, any> = (state = initialState, actio
         ...state,
         isLoading: false,
         error: action.error
+      };
+
+    case ARTICLE.TOGGLE_FAVORITE_ARTICLE_SUCCESS:
+      return {
+        ...state,
+        articles: state.articles.map((article) =>
+          ((updateArticle(article, action.article): any): Article)
+        )
       };
 
     default:

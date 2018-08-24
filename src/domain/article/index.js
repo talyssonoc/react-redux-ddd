@@ -37,7 +37,9 @@ export type ArticleRepository = {
   fromAuthorFavorites: (string, WithCurrentUser) => Promise<Feed>,
   getArticle: (ArticleSlug, WithCurrentUser) => Promise<Article>,
   add: (EditingArticle, WithCurrentUser) => Promise<Article>,
-  update: (EditingArticle, WithCurrentUser) => Promise<Article>
+  update: (EditingArticle, WithCurrentUser) => Promise<Article>,
+  setAsFavorite: (ArticleSlug, WithCurrentUser) => Promise<Article>,
+  unsetAsFavorite: (ArticleSlug, WithCurrentUser) => Promise<Article>
 };
 
 export type NewComment = {
@@ -54,3 +56,11 @@ export type CommentRepository = {
   add: (NewComment, WithCurrentUser & { articleSlug: ArticleSlug } ) => Promise<Comment>,
   remove: (Comment, WithCurrentUser & { articleSlug: ArticleSlug } ) => Promise<void>
 };
+
+export const updateArticle = (oldArticle: ?Article, updatedArticle: ?Article): ?Article => (
+  isSameArticle(oldArticle, updatedArticle) ? updatedArticle : oldArticle
+);
+
+export const isSameArticle = (articleA: ?Article, articleB: ?Article): bool => (
+  !!(articleA && articleB) && (articleA.slug === articleB.slug)
+);

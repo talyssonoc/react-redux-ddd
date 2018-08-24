@@ -3,7 +3,7 @@ import React from 'react';
 import type { Article } from '../../domain/article';
 import AuthorLink from '../author/AuthorLink';
 import ArticleLink from './ArticleLink';
-import FavoriteButton from './FavoriteButton';
+import { FavoriteButton } from './FavoriteButton';
 import FormattedDate from '../date/FormattedDate';
 import TagList from '../tag/TagList';
 
