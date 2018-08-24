@@ -8,10 +8,27 @@ type Dependencies = {
 
 export default ({ conduitApiService }: Dependencies): AuthorRepository => ({
   async getByUsername(authorUsername, { currentUser }) {
-    const url = `/profiles/${authorUsername}`;
-
-    const { data } = await conduitApiService.authGet(url, currentUser);
+    const { data } = await conduitApiService
+      .authGet(this._profileUrl(authorUsername), currentUser);
 
     return data.profile;
+  },
+
+  async setAsFollowing(authorUsername, { currentUser }) {
+    const { data } = await conduitApiService
+      .authPost(`${this._profileUrl(authorUsername)}/follow`, currentUser);
+
+    return data.profile;
+  },
+
+  async unsetAsFollowing(authorUsername, { currentUser }) {
+    const { data } = await conduitApiService
+      .authDel(`${this._profileUrl(authorUsername)}/follow`, currentUser);
+
+    return data.profile;
+  },
+
+  _profileUrl(authorUsername) {
+    return `/profiles/${authorUsername}`;
   }
 });

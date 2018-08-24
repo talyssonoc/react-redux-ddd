@@ -7,10 +7,11 @@ import {
   type Comment,
   type EditingArticle
 } from '../../domain/article';
+import { updateAuthor } from '../../domain/author';
 import typeof * as Container from '../../container';
 import type { GetState } from '../store';
 import withCurrentUser from '../withCurrentUser';
-import { ARTICLE } from '../actionTypes';
+import { ARTICLE, AUTHOR } from '../actionTypes';
 
 export type ArticleState = {|
   article: ?Article,
@@ -80,6 +81,12 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
         ...state,
         favoritingArticle: null,
         article: updateArticle(state.article, action.article)
+      };
+
+    case AUTHOR.TOGGLE_AUTHOR_FOLLOW_STATUS_SUCCESS:
+      return {
+        ...state,
+        article: updateAuthor(state.article, action.author)
       };
 
     case ARTICLE.UNLOAD_ARTICLE:

@@ -9,13 +9,15 @@ import { AUTHOR } from '../actionTypes';
 export type AuthorState = {|
   author: ?Author,
   errors: ?Object,
-  isLoading: bool
+  isLoading: bool,
+  followingAuthor: ?Author
 |};
 
 const initialState: AuthorState = {
   author: null,
   errors: null,
-  isLoading: false
+  isLoading: false,
+  followingAuthor: null
 };
 
 export const authorReducer: Reducer<AuthorState, any> = (state = initialState, action) => {
@@ -39,6 +41,19 @@ export const authorReducer: Reducer<AuthorState, any> = (state = initialState, a
         ...state,
         isLoading: false,
         errors: action.errors
+      };
+
+    case AUTHOR.TOGGLE_AUTHOR_FOLLOW_STATUS_REQUEST:
+      return {
+        ...state,
+        followingAuthor: action.author
+      };
+
+    case AUTHOR.TOGGLE_AUTHOR_FOLLOW_STATUS_SUCCESS:
+      return {
+        ...state,
+        followingAuthor: null,
+        author: action.author
       };
 
     default:
@@ -71,4 +86,32 @@ const loadAuthorSuccess = (author) => ({
 const loadAuthorError = (error) => ({
   type: AUTHOR.LOAD_AUTHOR_ERROR,
   error
+});
+
+export const toggleAuthorFollowStatus = (author: Author) => {
+  return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
+    dispatch(toggleAuthorFollowStatusRequest(author));
+
+    const options = withCurrentUser(getState());
+
+    container.toggleAuthorFollowStatus(author, options, {
+      onSuccess: (author) => dispatch(toggleAuthorFollowStatusSuccess(author)),
+      onError: (error) => dispatch(toggleAuthorFollowStatusError(error.errors))
+    });
+  };
+};
+
+const toggleAuthorFollowStatusRequest = (author) => ({
+  type: AUTHOR.TOGGLE_AUTHOR_FOLLOW_STATUS_REQUEST,
+  author
+});
+
+const toggleAuthorFollowStatusSuccess = (author) => ({
+  type: AUTHOR.TOGGLE_AUTHOR_FOLLOW_STATUS_SUCCESS,
+  author
+});
+
+const toggleAuthorFollowStatusError = (errors) => ({
+  type: AUTHOR.TOGGLE_AUTHOR_FOLLOW_STATUS_ERROR,
+  errors
 });

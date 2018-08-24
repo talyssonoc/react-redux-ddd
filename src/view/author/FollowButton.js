@@ -1,15 +1,21 @@
 /* @flow */
 import React from 'react';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { type Author } from '../../domain/author';
+import { isSameUsername, type Author } from '../../domain/author';
+import { toggleAuthorFollowStatus } from '../../state/author';
 
 type Props = {
+  isFollowing: bool,
   author: Author,
-  className?: string
+  className?: string,
+  toggleAuthorFollowStatus: typeof toggleAuthorFollowStatus
 };
 
-const FollowButton = ({ author, className }: Props) => (
+const FollowButton = ({ author, className, toggleAuthorFollowStatus, isFollowing }: Props) => (
   <button
+    disabled={ isFollowing }
+    onClick={ () => toggleAuthorFollowStatus(author) }
     className={
       classNames('btn btn-sm', className, {
         'btn-secondary': author.following,
@@ -23,4 +29,12 @@ const FollowButton = ({ author, className }: Props) => (
   </button>
 );
 
-export default FollowButton;
+const mapStateToProps = ({ author: { followingAuthor } }, props) => ({
+  isFollowing: isSameUsername(followingAuthor, props.author)
+});
+
+const mapDispatchToProps = {
+  toggleAuthorFollowStatus: toggleAuthorFollowStatus
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FollowButton);

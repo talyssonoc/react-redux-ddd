@@ -20,6 +20,7 @@ import makeEditArticle from './app/article/editArticle';
 import makeToggleArticleFavoriteStatus from './app/article/toggleArticleFavoriteStatus';
 import makeGetPopularTags from './app/tag/getPopularTags';
 import makeGetAuthor from './app/author/getAuthor';
+import makeToggleAuthorFollowStatus from './app/author/toggleAuthorFollowStatus';
 
 // Infra
 const userRepository = makeUserRepository({
@@ -105,6 +106,10 @@ const getAuthor = makeGetAuthor({
   authorRepository
 });
 
+const toggleAuthorFollowStatus = makeToggleAuthorFollowStatus({
+  authorRepository
+});
+
 export {
   signInUser,
   registerUser,
@@ -120,5 +125,6 @@ export {
   createArticle,
   editArticle,
   getAuthor,
-  toggleArticleFavoriteStatus
+  toggleArticleFavoriteStatus,
+  toggleAuthorFollowStatus
 };
