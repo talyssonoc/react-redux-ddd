@@ -46,7 +46,7 @@ export const feedReducer: Reducer<FeedState, any> = (state = initialState, actio
         error: action.error
       };
 
-    case ARTICLE.TOGGLE_FAVORITE_ARTICLE_SUCCESS:
+    case ARTICLE.TOGGLE_ARTICLE_FAVORITE_STATUS_SUCCESS:
       return {
         ...state,
         articles: state.articles.map((article) =>

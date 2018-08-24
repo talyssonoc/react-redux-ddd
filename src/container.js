@@ -17,7 +17,7 @@ import makeAddComment from './app/article/addComment';
 import makeRemoveComment from './app/article/removeComment';
 import makeCreateArticle from './app/article/createArticle';
 import makeEditArticle from './app/article/editArticle';
-import makeToggleFavoriteArticle from './app/article/toggleFavoriteArticle';
+import makeToggleArticleFavoriteStatus from './app/article/toggleArticleFavoriteStatus';
 import makeGetPopularTags from './app/tag/getPopularTags';
 import makeGetAuthor from './app/author/getAuthor';
 
@@ -93,7 +93,7 @@ const editArticle = makeEditArticle({
   commentRepository
 });
 
-const toggleFavoriteArticle = makeToggleFavoriteArticle({
+const toggleArticleFavoriteStatus = makeToggleArticleFavoriteStatus({
   articleRepository
 });
 
@@ -120,5 +120,5 @@ export {
   createArticle,
   editArticle,
   getAuthor,
-  toggleFavoriteArticle
+  toggleArticleFavoriteStatus
 };

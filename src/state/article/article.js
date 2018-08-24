@@ -69,13 +69,13 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
         comments: state.comments.filter((comment) => comment.id !== action.comment.id)
       };
 
-    case ARTICLE.TOGGLE_FAVORITE_ARTICLE_REQUEST:
+    case ARTICLE.TOGGLE_ARTICLE_FAVORITE_STATUS_REQUEST:
       return {
         ...state,
         favoritingArticle: action.article
       };
 
-    case ARTICLE.TOGGLE_FAVORITE_ARTICLE_SUCCESS:
+    case ARTICLE.TOGGLE_ARTICLE_FAVORITE_STATUS_SUCCESS:
       return {
         ...state,
         favoritingArticle: null,
@@ -253,30 +253,30 @@ const editArticleError = (errors) => ({
   errors
 });
 
-export const toggleFavoriteArticle = (article: Article) => {
+export const toggleArticleFavoriteStatus = (article: Article) => {
   return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
-    dispatch(toggleFavoriteArticleRequest(article));
+    dispatch(toggleArticleFavoriteStatusRequest(article));
 
     const options = withCurrentUser(getState());
 
-    container.toggleFavoriteArticle(article, options, {
-      onSuccess: (article) => dispatch(toggleFavoriteArticleSuccess(article)),
-      onError: (error) => dispatch(toggleFavoriteArticleError(error.errors))
+    container.toggleArticleFavoriteStatus(article, options, {
+      onSuccess: (article) => dispatch(toggleArticleFavoriteStatusSuccess(article)),
+      onError: (error) => dispatch(toggleArticleFavoriteStatusError(error.errors))
     });
   };
 };
 
-const toggleFavoriteArticleRequest = (article) => ({
-  type: ARTICLE.TOGGLE_FAVORITE_ARTICLE_REQUEST,
+const toggleArticleFavoriteStatusRequest = (article) => ({
+  type: ARTICLE.TOGGLE_ARTICLE_FAVORITE_STATUS_REQUEST,
   article
 });
 
-const toggleFavoriteArticleSuccess = (article) => ({
-  type: ARTICLE.TOGGLE_FAVORITE_ARTICLE_SUCCESS,
+const toggleArticleFavoriteStatusSuccess = (article) => ({
+  type: ARTICLE.TOGGLE_ARTICLE_FAVORITE_STATUS_SUCCESS,
   article
 });
 
-const toggleFavoriteArticleError = (errors) => ({
-  type: ARTICLE.TOGGLE_FAVORITE_ARTICLE_ERROR,
+const toggleArticleFavoriteStatusError = (errors) => ({
+  type: ARTICLE.TOGGLE_ARTICLE_FAVORITE_STATUS_ERROR,
   errors
 });

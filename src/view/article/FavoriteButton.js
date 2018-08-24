@@ -9,13 +9,13 @@ type Props = {
   isFavoriting: bool,
   article: Article,
   className?: string,
-  toggleFavoriteArticle: typeof article.toggleFavoriteArticle
+  toggleArticleFavoriteStatus: typeof article.toggleArticleFavoriteStatus
 };
 
-const _FavoriteButton = ({ article, className, toggleFavoriteArticle, isFavoriting }: Props) => (
+const _FavoriteButton = ({ article, className, toggleArticleFavoriteStatus, isFavoriting }: Props) => (
   <button
     disabled={ isFavoriting }
-    onClick={ () => toggleFavoriteArticle(article) }
+    onClick={ () => toggleArticleFavoriteStatus(article) }
     className={
       classNames('btn btn-sm', className, {
         'btn-primary': article.favorited,
@@ -27,10 +27,10 @@ const _FavoriteButton = ({ article, className, toggleFavoriteArticle, isFavoriti
   </button>
 );
 
-const _WideFavoriteButton = ({ article, className, toggleFavoriteArticle, isFavoriting }: Props) => (
+const _WideFavoriteButton = ({ article, className, toggleArticleFavoriteStatus, isFavoriting }: Props) => (
   <button
     disabled={ isFavoriting }
-    onClick={ () => toggleFavoriteArticle(article) }
+    onClick={ () => toggleArticleFavoriteStatus(article) }
     className={
       classNames('btn btn-sm', className, {
         'btn-primary': article.favorited,
@@ -51,7 +51,7 @@ const mapStateToProps = ({ article: { favoritingArticle } }, props) => ({
 });
 
 const mapDispatchToProps = {
-  toggleFavoriteArticle: article.toggleFavoriteArticle
+  toggleArticleFavoriteStatus: article.toggleArticleFavoriteStatus
 };
 
 export const FavoriteButton = connect(mapStateToProps, mapDispatchToProps)(_FavoriteButton);
