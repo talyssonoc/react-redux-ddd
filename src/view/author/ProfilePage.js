@@ -37,6 +37,22 @@ class AuthorPage extends Component<Props, State> {
   }
 
   componentDidMount() {
+    this.loadAuthorAndArticles();
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.authorUsername === this.props.authorUsername) {
+      return;
+    }
+
+    this.setState({
+      selectedTab: Tabs.ARTICLES
+    });
+
+    this.loadAuthorAndArticles();
+  }
+
+  loadAuthorAndArticles() {
     const {
       authorUsername,
       loadAuthor

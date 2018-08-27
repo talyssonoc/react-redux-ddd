@@ -25,6 +25,7 @@ export const authorReducer: Reducer<AuthorState, any> = (state = initialState, a
     case AUTHOR.LOAD_AUTHOR_REQUEST:
       return {
         ...state,
+        author: null,
         isLoading: true,
         errors: null
       };
