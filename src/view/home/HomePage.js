@@ -20,7 +20,7 @@ const Tabs = {
 type Tab = $Keys<typeof Tabs>;
 
 type Props = {
-  user: UserState,
+  user: $PropertyType<UserState, 'user'>,
   feed: FeedState,
   loadGlobalFeed: typeof feed.loadGlobalFeed,
   loadUserFeed: typeof feed.loadUserFeed,
@@ -154,7 +154,7 @@ class HomePage extends Component<Props, State> {
 }
 
 const mapStateToProps = ({ user, feed }) => ({
-  user,
+  user: user.user,
   feed
 });
 

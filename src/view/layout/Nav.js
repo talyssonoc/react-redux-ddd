@@ -6,7 +6,7 @@ import AuthorLink from '../author/AuthorLink';
 import type { UserState } from '../../state/user';
 
 type Props = {
-  user: UserState
+  user: $PropertyType<UserState, 'user'>
 };
 
 const Nav = (props: Props) => (
@@ -89,7 +89,7 @@ const Nav = (props: Props) => (
 );
 
 const mapStateToProps = ({ user }) => ({
-  user
+  user: user.user
 });
 
 export default withRouter(connect(mapStateToProps)(Nav));

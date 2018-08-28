@@ -75,7 +75,7 @@ export const settingsReducer: Reducer<SettingsState, any> = (state = initialStat
 };
 
 export const loadEditingUser = () => (dispatch: Dispatch<any>, getState: GetState) => {
-  const { user } = getState();
+  const { user } = getState().user;
 
   dispatch({
     type: SETTINGS.LOAD_EDITING_USER,
@@ -93,7 +93,7 @@ export const updateSettings = () => {
     dispatch(updateSettingsRequest);
 
     const {
-      user: currentUser,
+      user: { user: currentUser },
       settings: { user: editingUser }
     } = getState();
 

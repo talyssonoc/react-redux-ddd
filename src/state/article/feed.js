@@ -78,7 +78,7 @@ const loadGlobalFeedRequest = {
 export const loadUserFeed = () => (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
   dispatch(loadUserFeedRequest);
 
-  const { user } = getState();
+  const { user } = getState().user;
 
   container.getUserFeed(user, {
     onSuccess: (feed) => dispatch(loadFeedSuccess(feed)),

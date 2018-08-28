@@ -8,7 +8,7 @@ import ErrorMessages from '../error/ErrorMessages';
 import * as auth from '../../state/auth';
 
 type Props = {
-  user: UserState,
+  user: $PropertyType<UserState, 'user'>,
   userAuthInfo: $PropertyType<AuthState, 'userAuthInfo'>,
   isLoading: $PropertyType<AuthState, 'isLoading'>,
   errors?: $PropertyType<AuthState, 'errors'>,
@@ -130,7 +130,7 @@ class AuthPage extends Component<Props> {
 }
 
 const mapStateToProps = ({ auth, user }) => ({
-  user: user,
+  user: user.user,
   userAuthInfo: auth.userAuthInfo,
   isLoading: auth.isLoading,
   errors: auth.errors

@@ -19,7 +19,7 @@ type Tab = $Keys<typeof Tabs>;
 
 type Props = {
   authorUsername: string,
-  user: UserState,
+  user: $PropertyType<UserState, 'user'>,
   author: $PropertyType<AuthorState, 'author'>,
   feed: FeedState,
   loadAuthor: typeof loadAuthor,
@@ -180,7 +180,7 @@ class AuthorPage extends Component<Props, State> {
 }
 
 const mapStateToProps = ({ user, author, feed }, props) => ({
-  user,
+  user: user.user,
   feed,
   author: author.author,
   authorUsername: props.match.params.username

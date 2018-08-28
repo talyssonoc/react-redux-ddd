@@ -13,7 +13,7 @@ import Comment from '../comment/Comment';
 
 type Props = {
   articleSlug: ArticleSlug,
-  user: UserState,
+  user: $PropertyType<UserState, 'user'>,
   article: $PropertyType<ArticleState, 'article'>,
   comments: $PropertyType<ArticleState, 'comments'>,
   error: $PropertyType<ArticleState, 'error'>,
@@ -134,7 +134,7 @@ class Article extends Component<Props> {
 }
 
 const mapStateToProps = ({ article, user }, props) => ({
-  user,
+  user: user.user,
   article: article.article,
   comments: article.comments,
   isLoading: article.isLoading,

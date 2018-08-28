@@ -32,7 +32,7 @@ const _PublicOnlyRoute = ({ isAuthenticated, component: Component, ...props }: P
 );
 
 const mapStateToProps = ({ user }) => ({
-  isAuthenticated: Boolean(user)
+  isAuthenticated: Boolean(user.user)
 });
 
 export const PrivateRoute = connect(mapStateToProps)(_PrivateRoute);

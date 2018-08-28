@@ -14,7 +14,7 @@ import {
 import { type UserState } from '../../state/user';
 
 type Props = {
-  user: UserState,
+  user: $PropertyType<UserState, 'user'>,
   editingUser: $PropertyType<SettingsState, 'user'>,
   status: $PropertyType<SettingsState, 'status'>,
   loadEditingUser: typeof loadEditingUser,
@@ -145,7 +145,7 @@ class SettingsPage extends Component<Props> {
 
 const mapStateToProps = ({ settings, user }) => ({
   editingUser: settings.user,
-  user,
+  user: user.user,
   status: settings.status
 });
 
