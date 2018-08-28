@@ -69,3 +69,15 @@ export const AUTHOR = keyMirror({
   TOGGLE_AUTHOR_FOLLOW_STATUS_SUCCESS: null,
   TOGGLE_AUTHOR_FOLLOW_STATUS_ERROR: null
 }, glue, 'AUTHOR');
+
+export const SETTINGS = keyMirror({
+  LOAD_EDITING_USER: null,
+  UPDATE_USER_FIELD: null,
+  RESET: null
+}, glue, 'SETTINGS');
+
+export const USER = keyMirror({
+  UPDATE_SETTINGS_REQUEST: null,
+  UPDATE_SETTINGS_SUCCESS: null,
+  UPDATE_SETTINGS_ERROR: null
+}, glue, 'USER');

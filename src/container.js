@@ -7,6 +7,7 @@ import makeTagRepository from './infra/tag/tagRepository';
 import makeAuthorRepository from './infra/author/authorRepository';
 import makeSignInUser from './app/user/signInUser';
 import makeRegisterUser from './app/user/registerUser';
+import makeChangeSettings from './app/user/changeSettings';
 import makeGetGlobalFeed from './app/article/getGlobalFeed';
 import makeGetUserFeed from './app/article/getUserFeed';
 import makeGetTagFeed from './app/article/getTagFeed';
@@ -49,6 +50,10 @@ const signInUser = makeSignInUser({
 });
 
 const registerUser = makeRegisterUser({
+  userRepository
+});
+
+const changeSettings = makeChangeSettings({
   userRepository
 });
 
@@ -126,5 +131,6 @@ export {
   editArticle,
   getAuthor,
   toggleArticleFavoriteStatus,
-  toggleAuthorFollowStatus
+  toggleAuthorFollowStatus,
+  changeSettings
 };

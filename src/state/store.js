@@ -13,6 +13,7 @@ import { authReducer as auth, type AuthState } from './auth';
 import { userReducer as user, type UserState } from './user';
 import { authorReducer as author, type AuthorState } from './author';
 import { popularTagsReducer as popularTags, type PopularTagsState } from './tag';
+import { settingsReducer as settings, type SettingsState } from './settings';
 
 import {
   feed,
@@ -30,7 +31,8 @@ export type State = {|
   article: ArticleState,
   feed: FeedState,
   editor: EditorState,
-  author: AuthorState
+  author: AuthorState,
+  settings: SettingsState
 |};
 
 export type Store = ReduxStore<State, *, *>;
@@ -47,6 +49,7 @@ const reducer: CombinedReducer<State, any> = combineReducers({
   user,
   popularTags,
   author,
+  settings,
   article: article.articleReducer,
   feed: feed.feedReducer,
   editor: editor.editorReducer

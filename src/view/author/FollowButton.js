@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { isSameUsername, type Author } from '../../domain/author';
+import { isSame, type Author } from '../../domain/author';
 import { toggleAuthorFollowStatus } from '../../state/author';
 
 type Props = {
@@ -30,7 +30,7 @@ const FollowButton = ({ author, className, toggleAuthorFollowStatus, isFollowing
 );
 
 const mapStateToProps = ({ author: { followingAuthor } }, props) => ({
-  isFollowing: isSameUsername(followingAuthor, props.author)
+  isFollowing: isSame(followingAuthor, props.author)
 });
 
 const mapDispatchToProps = {

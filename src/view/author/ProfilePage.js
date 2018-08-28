@@ -2,10 +2,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { isSame } from '../../domain/author';
+import { type UserState } from '../../state/user';
 import { loadAuthor, type AuthorState } from '../../state/author';
 import { feed, type FeedState } from '../../state/article';
 import Feed from '../article/Feed';
 import FollowButton from './FollowButton';
+import EditProfileButton from '../settings/EditProfileButton';
 
 const Tabs = {
   ARTICLES: 'ARTICLES',
@@ -16,6 +19,7 @@ type Tab = $Keys<typeof Tabs>;
 
 type Props = {
   authorUsername: string,
+  user: UserState,
   author: $PropertyType<AuthorState, 'author'>,
   feed: FeedState,
   loadAuthor: typeof loadAuthor,
@@ -91,7 +95,8 @@ class AuthorPage extends Component<Props, State> {
   render() {
     const {
       author,
-      feed
+      feed,
+      user
     } = this.props;
 
     const {
@@ -116,7 +121,11 @@ class AuthorPage extends Component<Props, State> {
                     <p>
                       { author.bio }
                     </p>
-                    <FollowButton author={ author } className='action-btn' />
+                    {
+                      isSame(user, author)
+                        ? <EditProfileButton className="action-btn" />
+                        : <FollowButton author={ author } className='action-btn' />
+                    }
                   </div>
                 )
               }
@@ -170,7 +179,8 @@ class AuthorPage extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = ({ author, feed }, props) => ({
+const mapStateToProps = ({ user, author, feed }, props) => ({
+  user,
   feed,
   author: author.author,
   authorUsername: props.match.params.username

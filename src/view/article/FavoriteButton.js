@@ -40,7 +40,7 @@ const _WideFavoriteButton = ({ article, className, toggleArticleFavoriteStatus, 
   >
     <i className="ion-heart"></i>
     &nbsp;
-    { article.favorited ? 'Unfavorite Article' : 'Favorite Post' }
+    { article.favorited ? 'Unfavorite Article' : 'Favorite Article' }
     &nbsp;
     <span className="counter">{ article.favoritesCount }</span>
   </button>

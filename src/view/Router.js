@@ -10,6 +10,7 @@ import Article from './article/Article';
 import CreateArticlePage from './article/CreateArticlePage';
 import EditArticlePage from './article/EditArticlePage';
 import ProfilePage from './author/ProfilePage';
+import SettingsPage from './settings/SettingsPage';
 
 const Router = () => (
   <BrowserRouter>
@@ -22,6 +23,7 @@ const Router = () => (
         <Route path='/@:username' exact component={ ProfilePage } />
         <PrivateRoute path='/editor' exact component={ CreateArticlePage } />
         <PrivateRoute path='/editor/:slug' exact component={ EditArticlePage } />
+        <PrivateRoute path='/settings' exact component={ SettingsPage } />
         <Redirect to='/' />
       </Switch>
     </Layout>

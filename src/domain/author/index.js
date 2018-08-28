@@ -19,7 +19,7 @@ export type AuthorRepository = {
 };
 
 export const isAuthoredBy = (authorable: Authorable, user: ?User): bool => (
-  !!user && isSameUsername(authorable.author, user)
+  !!user && isSame(authorable.author, user)
 );
 
 export const updateAuthor = (authorable: ?Authorable, author: Author): ?$Subtype<Authorable> => {
@@ -29,12 +29,12 @@ export const updateAuthor = (authorable: ?Authorable, author: Author): ?$Subtype
 
   return {
     ...authorable,
-    author: isSameUsername(authorable.author, author) ? author : authorable.author
+    author: isSame(authorable.author, author) ? author : authorable.author
   };
 };
 
 type WithUsername = { username: string };
 
-export const isSameUsername = (a: ?WithUsername, b: ?WithUsername) => (
+export const isSame = (a: ?WithUsername, b: ?WithUsername) => (
   (a && b) ? a.username === b.username : false
 );

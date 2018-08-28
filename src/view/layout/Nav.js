@@ -34,13 +34,17 @@ const Nav = (props: Props) => (
                   to="/editor"
                   exact
                 >
-                  <i className="ion-compose"></i>&nbsp;New Post
+                  <i className="ion-compose"></i>&nbsp;New Article
                 </NavLink>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="">
+                <NavLink
+                  className="nav-link"
+                  activeClassName="active"
+                  to="/settings"
+                >
                   <i className="ion-gear-a"></i>&nbsp;Settings
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
                 <AuthorLink
