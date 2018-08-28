@@ -28,5 +28,6 @@ export type WithCurrentUser = {
 export type UserRepository = {
   byAuthInfo: (UserAuthInfo) => Promise<User>,
   add: (UserAuthInfo) => Promise<User>,
-  update: (EditingUser, WithCurrentUser) => Promise<User>
+  update: (EditingUser, WithCurrentUser) => Promise<User>,
+  getByToken: (WithCurrentUser) => Promise<User>
 };

@@ -23,6 +23,12 @@ export default ({ conduitApiService }: Dependencies): UserRepository => ({
     return data.user;
   },
 
+  async getByToken({ currentUser }) {
+    const { data } = await conduitApiService.authGet('user', currentUser);
+
+    return data.user;
+  },
+
   async _authUser(user, url) {
     const { data } = await conduitApiService.post(url, { user });
 

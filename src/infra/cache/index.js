@@ -22,6 +22,10 @@ export const PERSISTED_STATE_KEY = 'persistedState';
 export const getCachedState = () => get(PERSISTED_STATE_KEY) || {};
 export const cacheState = (state: any) => set(PERSISTED_STATE_KEY, extractPersistableState(state));
 
-const extractPersistableState = (state) => ({
-  user: state.user
+const extractPersistableState = ({ user }) => ({
+  user: {
+    user: user.user
+      ? { token: user.user.token }
+      : null
+  }
 });

@@ -79,5 +79,9 @@ export const SETTINGS = keyMirror({
 export const USER = keyMirror({
   UPDATE_SETTINGS_REQUEST: null,
   UPDATE_SETTINGS_SUCCESS: null,
-  UPDATE_SETTINGS_ERROR: null
+  UPDATE_SETTINGS_ERROR: null,
+  LOAD_USER_REQUEST: null,
+  LOAD_USER_SUCCESS: null,
+  LOAD_USER_ERROR: null,
+  SET_USER_SIGNED_OUT: null
 }, glue, 'USER');

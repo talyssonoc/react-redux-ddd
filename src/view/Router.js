@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { PrivateRoute, PublicOnlyRoute } from './auth/controlledRoute';
 import Layout from './layout/Layout';
 import HomePage from './home/HomePage';
+import AuthBoundary from './auth/AuthBoundary';
 import LoginPage from './auth/LoginPage';
 import RegisterPage from './auth/RegisterPage';
 import Article from './article/Article';
@@ -13,21 +14,23 @@ import ProfilePage from './author/ProfilePage';
 import SettingsPage from './settings/SettingsPage';
 
 const Router = () => (
-  <BrowserRouter>
-    <Layout>
-      <Switch>
-        <Route path='/' exact component={ HomePage } />
-        <PublicOnlyRoute path='/login' component={ LoginPage } />
-        <PublicOnlyRoute path='/register' component={ RegisterPage } />
-        <Route path='/article/:slug' component={ Article } />
-        <Route path='/@:username' exact component={ ProfilePage } />
-        <PrivateRoute path='/editor' exact component={ CreateArticlePage } />
-        <PrivateRoute path='/editor/:slug' exact component={ EditArticlePage } />
-        <PrivateRoute path='/settings' exact component={ SettingsPage } />
-        <Redirect to='/' />
-      </Switch>
-    </Layout>
-  </BrowserRouter>
+  <AuthBoundary>
+    <BrowserRouter>
+      <Layout>
+        <Switch>
+          <Route path='/' exact component={ HomePage } />
+          <PublicOnlyRoute path='/login' component={ LoginPage } />
+          <PublicOnlyRoute path='/register' component={ RegisterPage } />
+          <Route path='/article/:slug' component={ Article } />
+          <Route path='/@:username' exact component={ ProfilePage } />
+          <PrivateRoute path='/editor' exact component={ CreateArticlePage } />
+          <PrivateRoute path='/editor/:slug' exact component={ EditArticlePage } />
+          <PrivateRoute path='/settings' exact component={ SettingsPage } />
+          <Redirect to='/' />
+        </Switch>
+      </Layout>
+    </BrowserRouter>
+  </AuthBoundary>
 );
 
 export default Router;
