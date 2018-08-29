@@ -93,7 +93,13 @@ export const toggleAuthorFollowStatus = (author: Author) => {
   return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
     dispatch(toggleAuthorFollowStatusRequest(author));
 
-    const options = withCurrentUser(getState());
+    const state = getState();
+
+    if(!state.user.user) {
+      return dispatch(toggleAuthorFollowStatusError(new Error('Not authenticated')));
+    }
+
+    const options = withCurrentUser(state);
 
     container.toggleAuthorFollowStatus(author, options, {
       onSuccess: (author) => dispatch(toggleAuthorFollowStatusSuccess(author)),
