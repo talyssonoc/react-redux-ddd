@@ -31,7 +31,8 @@ const initialState: EditorState = {
     title: '',
     description: '',
     body: '',
-    tagList: []
+    tagList: [],
+    author: null
   },
   errors: null
 };
