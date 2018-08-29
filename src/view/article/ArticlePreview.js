@@ -3,7 +3,7 @@ import React from 'react';
 import type { Article } from '../../domain/article';
 import AuthorLink from '../author/AuthorLink';
 import ArticleLink from './ArticleLink';
-import { FavoriteButton } from './FavoriteButton';
+import { NarrowFavoriteButton } from './FavoriteButton';
 import FormattedDate from '../date/FormattedDate';
 import TagList from '../tag/TagList';
 import AuthorImage from '../author/AuthorImage';
@@ -26,7 +26,7 @@ const ArticlePreview = ({ article }: Props) => (
           <FormattedDate date={ article.createdAt } />
         </span>
       </div>
-      <FavoriteButton article={ article } className="pull-xs-right" />
+      <NarrowFavoriteButton article={ article } className="pull-xs-right" />
     </div>
     <ArticleLink
       article={ article }
