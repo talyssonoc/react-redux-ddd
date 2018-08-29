@@ -7,7 +7,7 @@ import HomePage from './home/HomePage';
 import AuthBoundary from './auth/AuthBoundary';
 import LoginPage from './auth/LoginPage';
 import RegisterPage from './auth/RegisterPage';
-import Article from './article/Article';
+import ArticlePage from './article/ArticlePage';
 import CreateArticlePage from './article/CreateArticlePage';
 import EditArticlePage from './article/EditArticlePage';
 import ProfilePage from './author/ProfilePage';
@@ -21,7 +21,7 @@ const Router = () => (
           <Route path='/' exact component={ HomePage } />
           <PublicOnlyRoute path='/login' component={ LoginPage } />
           <PublicOnlyRoute path='/register' component={ RegisterPage } />
-          <Route path='/article/:slug' component={ Article } />
+          <Route path='/article/:slug' component={ ArticlePage } />
           <Route path='/@:username' exact component={ ProfilePage } />
           <PrivateRoute path='/editor' exact component={ CreateArticlePage } />
           <PrivateRoute path='/editor/:slug' exact component={ EditArticlePage } />
