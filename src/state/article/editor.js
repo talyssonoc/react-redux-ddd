@@ -22,7 +22,6 @@ export type EditorStatus = $Keys<typeof EditorStatuses>;
 export type EditorState = {|
   status: EditorStatus,
   article: EditingArticle,
-  isLoading: bool,
   errors: ?Object
 |};
 
@@ -34,7 +33,6 @@ const initialState: EditorState = {
     body: '',
     tagList: []
   },
-  isLoading: false,
   errors: null
 };
 
