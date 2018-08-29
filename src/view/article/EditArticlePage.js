@@ -1,7 +1,8 @@
 /* @flow */
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import Head from '../layout/Head';
 import type { ArticleSlug } from '../../domain/article';
 import { article, editor, type EditorState } from '../../state/article';
 import ArticleEditor from './ArticleEditor';
@@ -37,9 +38,12 @@ class EditArticlePage extends Component<Props> {
     }
 
     return (
-      <ArticleEditor
-        onSubmit={ editArticle }
-      />
+      <Fragment>
+        <Head title="Editor" />
+        <ArticleEditor
+          onSubmit={ editArticle }
+        />
+      </Fragment>
     );
   }
 }

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import Head from '../layout/Head';
 import {
   loadEditingUser,
   updateUserField,
@@ -62,6 +63,8 @@ class SettingsPage extends Component<Props> {
 
     return (
       <div className="settings-page">
+        <Head title="Settings" />
+
         <div className="container page">
           <div className="row">
 

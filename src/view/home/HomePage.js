@@ -1,6 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Head from '../layout/Head';
 import classNames from 'classnames';
 import Feed from '../article/Feed';
 import PopularTagList from '../tag/PopularTagList';
@@ -72,6 +73,8 @@ class HomePage extends Component<Props, State> {
 
     return (
       <div className="home-page">
+        <Head title="Home"/>
+
         {
           !user && (
             <div className="banner">

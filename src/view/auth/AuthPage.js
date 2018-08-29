@@ -2,6 +2,7 @@
 import React, { Component, type Node } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import Head from '../layout/Head';
 import type { AuthState } from '../../state/auth';
 import type { UserState } from '../../state/user';
 import ErrorMessages from '../error/ErrorMessages';
@@ -58,6 +59,7 @@ class AuthPage extends Component<Props> {
 
     return (
       <div className="auth-page">
+        <Head title={ actionTitle } />
         <div className="container page">
           <div className="row">
 

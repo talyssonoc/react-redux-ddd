@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Markdown from 'react-markdown';
+import Head from '../layout/Head';
 import type { ArticleSlug } from '../../domain/article';
 import { type UserState } from '../../state/user';
 import { article, type ArticleState } from '../../state/article';
@@ -76,6 +77,7 @@ class Article extends Component<Props> {
 
     return (
       <div className="article-page">
+        <Head title={ article.title } />
 
         <div className="banner">
           <div className="container">

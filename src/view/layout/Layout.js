@@ -1,5 +1,6 @@
 /* @flow */
 import React, { Fragment, type Node } from 'react';
+import Head from './Head';
 import Nav from './Nav';
 import Footer from './Footer';
 
@@ -10,6 +11,7 @@ const Layout = (props: Props) => {
 
   return (
     <Fragment>
+      <Head />
       <Nav />
       { children }
       <Footer />

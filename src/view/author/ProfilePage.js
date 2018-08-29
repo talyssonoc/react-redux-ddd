@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import Head from '../layout/Head';
 import { isSame } from '../../domain/author';
 import { type UserState } from '../../state/user';
 import { loadAuthor, type AuthorState } from '../../state/author';
@@ -105,6 +106,7 @@ class AuthorPage extends Component<Props, State> {
 
     return (
       <div className="profile-page">
+        <Head title={ author ? `@${ author.username }` : '' } />
 
         <div className="user-info">
           <div className="container">
