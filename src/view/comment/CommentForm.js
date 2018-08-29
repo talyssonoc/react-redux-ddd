@@ -1,6 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import { type User } from '../../domain/user';
+import AuthorImage from '../author/AuthorImage';
 
 type Props = {
   currentUser: User,
@@ -49,7 +50,7 @@ class CommentForm extends Component<Props, State> {
           ></textarea>
         </div>
         <div className="card-footer">
-          <img src={ currentUser.image } className="comment-author-img" alt={ currentUser.username } />
+          <AuthorImage author={ currentUser } className="comment-author-img" />
           <button className="btn btn-sm btn-primary">
            Post Comment
           </button>

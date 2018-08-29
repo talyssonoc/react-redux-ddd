@@ -2,8 +2,9 @@
 import React, { Fragment } from 'react';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import AuthorLink from '../author/AuthorLink';
 import type { UserState } from '../../state/user';
+import AuthorLink from '../author/AuthorLink';
+import AuthorImage from '../author/AuthorImage';
 
 type Props = {
   user: $PropertyType<UserState, 'user'>
@@ -53,6 +54,8 @@ const Nav = (props: Props) => (
                   activeClassName="active"
                   author={ props.user }
                 >
+                  <AuthorImage author={ props.user } className="user-pic" />
+
                   { props.user.username }
                 </AuthorLink>
               </li>

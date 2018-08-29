@@ -9,6 +9,7 @@ import RemoveButton from './RemoveButton';
 import FormattedDate from '../date/FormattedDate';
 import AuthorLink from '../author/AuthorLink';
 import FollowButton from '../author/FollowButton';
+import AuthorImage from '../author/AuthorImage';
 
 type Props = {
   isRemoving: bool,
@@ -21,7 +22,7 @@ const ArticleMeta = ({ article, currentUser, isRemoving }: Props) => (
     <AuthorLink
       author={ article.author }
     >
-      <img src={ article.author.image } alt={ article.author.username } />
+      <AuthorImage author={ article.author } />
     </AuthorLink>
     <div className="info">
       <AuthorLink

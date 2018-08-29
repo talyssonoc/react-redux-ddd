@@ -4,6 +4,7 @@ import { type User } from '../../domain/user';
 import { type Comment as CommentType } from '../../domain/article';
 import { isAuthoredBy } from '../../domain/author';
 import AuthorLink from '../author/AuthorLink';
+import AuthorImage from '../author/AuthorImage';
 import FormattedDate from '../date/FormattedDate';
 
 type Props = {
@@ -19,11 +20,7 @@ const Comment = ({ comment, currentUser, onClickDelete }: Props) => (
     </div>
     <div className="card-footer">
       <AuthorLink author={ comment.author } className="comment-author">
-        <img
-          src={ comment.author.image }
-          alt={ comment.author.username }
-          className="comment-author-img"
-        />
+        <AuthorImage author={ comment.author } className="comment-author-img" />
       </AuthorLink>
       &nbsp;
       <AuthorLink author={ comment.author } className="comment-author">

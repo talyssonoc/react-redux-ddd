@@ -6,6 +6,7 @@ import ArticleLink from './ArticleLink';
 import { FavoriteButton } from './FavoriteButton';
 import FormattedDate from '../date/FormattedDate';
 import TagList from '../tag/TagList';
+import AuthorImage from '../author/AuthorImage';
 
 type Props = {
   article: Article
@@ -15,7 +16,7 @@ const ArticlePreview = ({ article }: Props) => (
   <div className="article-preview">
     <div className="article-meta">
       <AuthorLink author={ article.author }>
-        <img src={ article.author.image } alt={ article.author.username } />
+        <AuthorImage author={ article.author } />
       </AuthorLink>
       <div className="info">
         <AuthorLink author={ article.author } className="author">

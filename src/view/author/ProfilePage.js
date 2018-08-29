@@ -10,6 +10,7 @@ import { feed, type FeedState } from '../../state/article';
 import Feed from '../article/Feed';
 import FollowButton from './FollowButton';
 import EditProfileButton from '../settings/EditProfileButton';
+import AuthorImage from './AuthorImage';
 
 const Tabs = {
   ARTICLES: 'ARTICLES',
@@ -114,11 +115,7 @@ class AuthorPage extends Component<Props, State> {
               {
                 author && (
                   <div className="col-xs-12 col-md-10 offset-md-1">
-                    <img
-                      src={ author.image }
-                      alt={ author.username }
-                      className="user-img"
-                    />
+                    <AuthorImage author={ author } className="user-img" />
                     <h4>{ author.username }</h4>
                     <p>
                       { author.bio }
