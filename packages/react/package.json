@@ -1,0 +1,26 @@
+{
+  "name": "@rw-ddd/react",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom"
+  },
+  "dependencies": {
+    "@rw-ddd/core": "0.1.0",
+    "classnames": "^2.2.6",
+    "keymirror-nested": "^1.0.3",
+    "lodash.throttle": "^4.1.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-helmet": "^5.2.0",
+    "react-markdown": "^3.4.1",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "redux": "^4.0.0",
+    "redux-devtools-extension": "^2.13.5",
+    "redux-thunk": "^2.3.0"
+  }
+}
