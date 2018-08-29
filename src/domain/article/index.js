@@ -37,6 +37,7 @@ export type ArticleRepository = {
   fromAuthorFavorites: (string, WithCurrentUser) => Promise<Feed>,
   getArticle: (ArticleSlug, WithCurrentUser) => Promise<Article>,
   add: (EditingArticle, WithCurrentUser) => Promise<Article>,
+  remove: (Article, WithCurrentUser) => Promise<void>,
   update: (EditingArticle, WithCurrentUser) => Promise<Article>,
   setAsFavorite: (ArticleSlug, WithCurrentUser) => Promise<Article>,
   unsetAsFavorite: (ArticleSlug, WithCurrentUser) => Promise<Article>

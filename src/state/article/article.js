@@ -13,9 +13,20 @@ import type { GetState } from '../store';
 import withCurrentUser from '../withCurrentUser';
 import { ARTICLE, AUTHOR } from '../actionTypes';
 
+export const ArticleStatuses = {
+  INIT: 'INIT',
+  LOADING: 'LOADING',
+  LOADED: 'LOADED',
+  FAILED_LOADING: 'FAILED_LOADING',
+  REMOVING: 'REMOVING',
+  REMOVED: 'REMOVED'
+};
+
+export type ArticleStatus = $Keys<typeof ArticleStatuses>;
+
 export type ArticleState = {|
   article: ?Article,
-  isLoading: bool,
+  status: ArticleStatus,
   error: ?Object,
   comments: Array<Comment>,
   favoritingArticle: ?Article
@@ -23,7 +34,7 @@ export type ArticleState = {|
 
 const initialState: ArticleState = {
   article: null,
-  isLoading: false,
+  status: ArticleStatuses.INIT,
   error: null,
   comments: [],
   favoritingArticle: null
@@ -34,7 +45,7 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
     case ARTICLE.LOAD_ARTICLE_REQUEST:
       return {
         ...state,
-        isLoading: true,
+        status: ArticleStatuses.LOADING,
         error: null
       };
 
@@ -43,7 +54,7 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
     case ARTICLE.EDIT_ARTICLE_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        status: ArticleStatuses.LOADED,
         article: action.article,
         comments: action.comments
       };
@@ -51,7 +62,7 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
     case ARTICLE.LOAD_ARTICLE_ERROR:
       return {
         ...state,
-        isLoading: false,
+        status: ArticleStatuses.FAILED_LOADING,
         error: action.error
       };
 
@@ -87,6 +98,24 @@ export const articleReducer: Reducer<ArticleState, any> = (state = initialState,
       return {
         ...state,
         article: updateAuthor(state.article, action.author)
+      };
+
+    case ARTICLE.REMOVE_ARTICLE_REQUEST:
+      return {
+        ...state,
+        status: ArticleStatuses.REMOVING
+      };
+
+    case ARTICLE.REMOVE_ARTICLE_SUCCESS:
+      return {
+        ...state,
+        status: ArticleStatuses.REMOVED
+      };
+
+    case ARTICLE.REMOVE_ARTICLE_ERROR:
+      return {
+        ...state,
+        status: ArticleStatuses.LOADED
       };
 
     case ARTICLE.UNLOAD_ARTICLE:
@@ -285,5 +314,31 @@ const toggleArticleFavoriteStatusSuccess = (article) => ({
 
 const toggleArticleFavoriteStatusError = (errors) => ({
   type: ARTICLE.TOGGLE_ARTICLE_FAVORITE_STATUS_ERROR,
+  errors
+});
+
+export const removeArticle = (article: Article) => {
+  return (dispatch: Dispatch<any>, getState: GetState, container: Container) => {
+    dispatch(removeArticleRequest);
+
+    const options = withCurrentUser(getState());
+
+    container.removeArticle(article, options, {
+      onSuccess: (article) => dispatch(removeArticleSuccess),
+      onError: (error) => dispatch(removeArticleError(error.errors))
+    });
+  };
+};
+
+const removeArticleRequest = {
+  type: ARTICLE.REMOVE_ARTICLE_REQUEST
+};
+
+const removeArticleSuccess = {
+  type: ARTICLE.REMOVE_ARTICLE_SUCCESS,
+};
+
+const removeArticleError = (errors) => ({
+  type: ARTICLE.REMOVE_ARTICLE_ERROR,
   errors
 });

@@ -11,18 +11,23 @@ import Comment from '../comment/Comment';
 type Props = {
   user: User,
   article: ArticleType,
+  isRemoving: bool,
   comments: Array<CommentType>,
   addComment: (*) => void,
   removeComment: (*) => void
 };
 
-const Article = ({ user, article, comments, addComment, removeComment }: Props) => (
+const Article = ({ user, article, isRemoving, comments, addComment, removeComment }: Props) => (
   <Fragment>
     <div className="banner">
       <div className="container">
         <h1>{ article.title }</h1>
 
-        <ArticleMeta article={ article } currentUser={ user } />
+        <ArticleMeta
+          article={ article }
+          currentUser={ user }
+          isRemoving={ isRemoving }
+        />
       </div>
     </div>
 
@@ -40,7 +45,11 @@ const Article = ({ user, article, comments, addComment, removeComment }: Props) 
       <hr />
 
       <div className="article-actions">
-        <ArticleMeta article={ article } currentUser={ user } />
+        <ArticleMeta
+          article={ article }
+          currentUser={ user }
+          isRemoving={ isRemoving }
+        />
       </div>
 
       <div className="row">

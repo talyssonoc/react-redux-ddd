@@ -72,6 +72,10 @@ export default ({ conduitApiService }: Dependencies): ArticleRepository => ({
     return this._coerceArticle(data.article);
   },
 
+  async remove(article, { currentUser }) {
+    await conduitApiService.authDel(`articles/${article.slug}`, currentUser);
+  },
+
   async update(article, { currentUser }) {
     const slug = article.slug || '';
 

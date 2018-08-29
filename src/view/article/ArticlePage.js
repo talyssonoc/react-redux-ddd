@@ -8,13 +8,14 @@ import { type UserState } from '../../state/user';
 import { article, type ArticleState } from '../../state/article';
 import Article from './Article';
 
+const { ArticleStatuses } = article;
+
 type Props = {
   articleSlug: ArticleSlug,
   user: $PropertyType<UserState, 'user'>,
   article: $PropertyType<ArticleState, 'article'>,
   comments: $PropertyType<ArticleState, 'comments'>,
-  error: $PropertyType<ArticleState, 'error'>,
-  isLoading: $PropertyType<ArticleState, 'isLoading'>,
+  status: $PropertyType<ArticleState, 'status'>,
   loadArticle: typeof article.loadArticle,
   addComment: typeof article.addComment,
   removeComment: typeof article.removeComment,
@@ -60,14 +61,14 @@ class ArticlePage extends Component<Props> {
     const {
       user,
       article, comments,
-      isLoading, error
+      status
     } = this.props;
 
-    if(error) {
+    if(status === ArticleStatuses.FAILED_LOADING || status === ArticleStatuses.REMOVED) {
       return <Redirect to="/" />;
     }
 
-    if(isLoading || !article || !user) {
+    if(status === ArticleStatuses.LOADING || !article || !user) {
       return null;
     }
 
@@ -78,6 +79,7 @@ class ArticlePage extends Component<Props> {
         <Article
           user={ user }
           article={ article }
+          isRemoving={ status === ArticleStatuses.REMOVING }
           comments={ comments }
           addComment={ this.addComment }
           removeComment={ this.removeComment }
@@ -92,7 +94,7 @@ const mapStateToProps = ({ article, user }, props) => ({
   article: article.article,
   comments: article.comments,
   isLoading: article.isLoading,
-  error: article.error,
+  status: article.status,
   articleSlug: props.match.params.slug
 });
 

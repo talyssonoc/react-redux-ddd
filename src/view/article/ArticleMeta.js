@@ -5,16 +5,18 @@ import { type User } from '../../domain/user';
 import { type Article } from '../../domain/article';
 import { isAuthoredBy } from '../../domain/author';
 import { WideFavoriteButton } from './FavoriteButton';
+import RemoveButton from './RemoveButton';
 import FormattedDate from '../date/FormattedDate';
 import AuthorLink from '../author/AuthorLink';
 import FollowButton from '../author/FollowButton';
 
 type Props = {
+  isRemoving: bool,
   article: Article,
   currentUser: ?User
 };
 
-const ArticleMeta = ({ article, currentUser }: Props) => (
+const ArticleMeta = ({ article, currentUser, isRemoving }: Props) => (
   <div className="article-meta">
     <AuthorLink
       author={ article.author }
@@ -44,11 +46,7 @@ const ArticleMeta = ({ article, currentUser }: Props) => (
             Edit Article
           </Link>
           &nbsp;&nbsp;
-          <button className="btn btn-sm btn-outline-danger">
-            <i className="ion-trash-a"></i>
-            &nbsp;
-            Delete Article
-          </button>
+          <RemoveButton article={ article } isRemoving={ isRemoving } />
         </Fragment>
       ) : (
         <Fragment>
