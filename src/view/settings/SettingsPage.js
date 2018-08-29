@@ -11,6 +11,7 @@ import {
   SettingsStatuses,
   type SettingsState
 } from '../../state/settings';
+import { signOutUser } from '../../state/auth';
 
 import { type UserState } from '../../state/user';
 
@@ -21,7 +22,8 @@ type Props = {
   loadEditingUser: typeof loadEditingUser,
   updateUserField: typeof updateUserField,
   updateSettings: typeof updateSettings,
-  resetSettingsPage: typeof resetSettingsPage
+  resetSettingsPage: typeof resetSettingsPage,
+  signOutUser: typeof signOutUser
 };
 
 class SettingsPage extends Component<Props> {
@@ -48,7 +50,8 @@ class SettingsPage extends Component<Props> {
     const {
       user,
       editingUser,
-      status
+      status,
+      signOutUser
     } = this.props;
 
     if(user && status === SettingsStatuses.SAVED) {
@@ -136,9 +139,15 @@ class SettingsPage extends Component<Props> {
                       Update Settings
                     </button>
                 </fieldset>
+                <hr />
+                <button
+                  onClick={ signOutUser }
+                  className="btn btn-outline-danger"
+                >
+                  Or click here to logout.
+                </button>
               </form>
             </div>
-
           </div>
         </div>
       </div>
@@ -156,7 +165,8 @@ const mapDispatchToProps = {
   loadEditingUser,
   updateUserField,
   updateSettings,
-  resetSettingsPage
+  resetSettingsPage,
+  signOutUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsPage);

@@ -110,3 +110,7 @@ const registerUserError = (errors) => ({
   type: AUTH.REGISTER_ERROR,
   errors
 });
+
+export const signOutUser = () => ({
+  type: AUTH.SIGN_OUT_USER
+});

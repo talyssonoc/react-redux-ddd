@@ -37,6 +37,13 @@ export const userReducer: Reducer<UserState, any> = (state = initialState, actio
         status: UserStatuses.SIGNED_IN
       };
 
+    case AUTH.SIGN_OUT_USER:
+      return {
+        ...state,
+        user: null,
+        status: UserStatuses.SIGNED_OUT
+      };
+
     case USER.LOAD_USER_REQUEST:
       return {
         ...state,

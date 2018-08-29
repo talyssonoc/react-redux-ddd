@@ -7,6 +7,7 @@ export const AUTH = keyMirror({
   SIGN_IN_REQUEST: null,
   SIGN_IN_SUCCESS: null,
   SIGN_IN_ERROR: null,
+  SIGN_OUT_USER: null,
   REGISTER_REQUEST: null,
   REGISTER_SUCCESS: null,
   REGISTER_ERROR: null,
