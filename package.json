@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "cd packages/react && yarn start",
+    "start": "RW_APP=${RW_APP:-react}; cd packages/$RW_APP && yarn start",
+    "build": "RW_APP=${RW_APP:-react}; cd packages/$RW_APP && yarn build",
+    "test:core": "cd packages/core && yarn test",
+    "test:app": "RW_APP=${RW_APP:-react}; cd packages/$RW_APP && yarn test",
+    "test": "yarn test:core && yarn test:app",
     "e2e": "BROWSER=none server-test start http-get://localhost:3000 cy:open",
     "e2e:ci": "BROWSER=none server-test start http-get://localhost:3000 cy:run",
     "cy:open": "cypress open",
