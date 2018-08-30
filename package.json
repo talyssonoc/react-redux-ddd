@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "cd packages/react && yarn start",
     "e2e": "BROWSER=none server-test start http-get://localhost:3000 cy:open",
     "e2e:ci": "BROWSER=none server-test start http-get://localhost:3000 cy:run",
     "cy:open": "cypress open",
