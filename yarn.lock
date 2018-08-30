@@ -545,7 +545,7 @@ babel-core@6.26.0:
 
 babel-core@^6.0.0, babel-core@^6.26.0, babel-core@^6.26.3:
   version "6.26.3"
-  resolved "https://artifactory.secureserver.net/artifactory/api/npm/node-virt/babel-core/-/babel-core-6.26.3.tgz#b2e2f09e342d0f0c88e2f02e067794125e75c207"
+  resolved "https://registry.npmjs.org/babel-core/-/babel-core-6.26.3.tgz#b2e2f09e342d0f0c88e2f02e067794125e75c207"
   dependencies:
     babel-code-frame "^6.26.0"
     babel-generator "^6.26.0"
@@ -6268,7 +6268,7 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
 
 react-app-rewired@^1.5.2:
   version "1.5.2"
-  resolved "https://artifactory.secureserver.net/artifactory/api/npm/node-virt/react-app-rewired/-/react-app-rewired-1.5.2.tgz#0f5cdbc92f47f166bb0bcadf8a5d00999b90f68f"
+  resolved "https://registry.yarnpkg.com/react-app-rewired/-/react-app-rewired-1.5.2.tgz#0f5cdbc92f47f166bb0bcadf8a5d00999b90f68f"
   dependencies:
     cross-spawn "^5.1.0"
     dotenv "^4.0.0"
@@ -6551,7 +6551,7 @@ regenerator-runtime@^0.11.0:
 
 regenerator-runtime@^0.12.1:
   version "0.12.1"
-  resolved "https://artifactory.secureserver.net/artifactory/api/npm/node-virt/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
 
 regenerator-transform@^0.10.0:
   version "0.10.1"
