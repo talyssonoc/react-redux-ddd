@@ -3,10 +3,11 @@
 # dependencies
 node_modules
 
-# cypress
-/cypress/screenshots
-/cypress/videos
-cypress.env.json
+# testing
+/coverage
+
+# production
+/build
 
 # misc
 .DS_Store
