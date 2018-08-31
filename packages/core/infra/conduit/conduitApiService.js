@@ -2,7 +2,7 @@
 import Axios, { type AxiosXHRConfigBase, type $AxiosError } from 'axios';
 import type { User } from '../../domain/user';
 
-const API_URL: string = process.env.REACT_APP_API_URL || '';
+const API_URL: string = process.env.REACT_APP_API_URL || 'https://conduit.productionready.io/api';
 
 const axios = Axios.create({
   baseURL: API_URL,
