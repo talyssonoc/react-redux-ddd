@@ -19,7 +19,7 @@
     "flow-watch": "^1.1.3",
     "start-server-and-test": "^1.5.0"
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": {
+    "packages": ["packages/*"]
+  }
 }
